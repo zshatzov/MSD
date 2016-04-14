@@ -1,0 +1,102 @@
+buildscript {	
+	repositories {
+		mavenLocal()
+		jcenter()
+		maven { url 'http://repo.spring.io/libs-release' }
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_starter_version}"
+	}
+}
+
+allprojects{	
+	apply plugin: 'groovy'
+	
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	description = 'Custom Plugin Generator'
+	group = 'com.avocent.plugins'
+	version = '1.0'
+	
+	repositories{
+		maven{
+			name "hsv-artifactory"
+			url "http://hsv-artifactory.emrsn.org:8081/artifactory/libs-release"
+		}
+		jcenter()
+	}
+	
+	ext{
+		spring_version = '4.1.6.RELEASE'
+		groovy_version = '2.4.3'
+	}
+	
+	test{
+		testLogging.exceptionFormat 'full'
+		
+		testLogging{
+			events 'passed'
+			minGranularity = 3
+		}
+	}
+	
+	dependencies{
+		compile "org.codehaus.groovy:groovy-json:${groovy_version}"
+		compile("org.codehaus.groovy:groovy-ant:${groovy_version}"){
+			exclude group: 'org.apache.ant'
+		}		
+		compile "org.codehaus.groovy:groovy-nio:${groovy_version}"
+		compile 'ch.qos.logback:logback-classic:1.1.3'
+		testCompile("junit:junit:4.+"){
+			exclude group:"org.hamecrest"
+		}	
+		testCompile("org.codehaus.groovy:groovy-test:${groovy_version}"){
+			exclude group: 'junit'
+		}
+	}
+}
+
+subprojects{
+		
+	repositories{
+		maven { url "https://repo.spring.io/libs-release" }
+	}
+	
+	dependencies{
+		compile "org.springframework.boot:spring-boot-starter-data-mongodb:${spring_boot_starter_version}"
+		compile "org.springframework:spring-oxm:${spring_version}"
+		compile 'org.apache.ant:ant:1.9.6'
+		runtime('ant-contrib:ant-contrib:1.0b3'){
+			exclude group: 'ant'
+		}
+		testCompile "org.springframework.boot:spring-boot-starter-test:${spring_boot_starter_version}"
+		testCompile "org.mockito:mockito-core:1.+"		
+	}	
+}
+
+project(':model'){
+	dependencies{
+		compile 'org.hibernate:hibernate-validator:5.2.2.Final' 
+	}
+}
+
+project(':dao'){
+	dependencies{
+		compile project(':model')	
+	}
+}
+
+project(':service'){
+	dependencies{
+		compile project(':dao')
+		compile project(':config')
+		compile 'net.percederberg.mibble:mibble-mibs:2.9.3'
+		compile 'net.percederberg.mibble:mibble-parser:2.9.3'
+		compile 'net.percederberg.mibble:grammatica:1.5'
+		compile 'net.percederberg.mibble:snmp:6.0'
+	}
+}
+
+task wrapper(type: Wrapper){
+	gradleVersion = '2.4'
+}

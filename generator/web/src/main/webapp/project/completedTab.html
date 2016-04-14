@@ -1,0 +1,32 @@
+<div class="apg-dashboard-tab"  ng-controller="CompletedProjectCtrl">
+   <form name="completedForm">
+      <table class="table table-striped table-condensed"
+      			st-table="completedProjects"  st-safe-src="rowCollection">
+         <thead>
+            <tr>
+               <th st-sort="name">Project Name</th>
+               <th st-sort="type">Project Type</th>
+               <th st-sort="createdDate">Date Created</th>
+               <th st-sort="lastModified">Date Modified</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="row in completedProjects">
+               <td>{{row.name}}</td>
+               <td>{{row.type}}</td>
+               <td>{{row.createdDateFormatted | date: 'medium' }}</td>
+               <td>{{row.lastModified | date: 'medium'}}</td>
+               <td class="form-group">
+               		<input type="submit" value="Edit" ng-click="open(row)"
+							class="btn btn-success"/> 
+               		<input type="submit" value="Preview"                       
+                      	 	ng-click="previewProject(row)" class="btn btn-info" />			
+					<input type="submit" value="Generate"
+                        ng-click="generateProject(row)" class="btn btn-primary" />
+				</td>
+            </tr>
+         </tbody> 
+      </table>
+   </form>
+</div>

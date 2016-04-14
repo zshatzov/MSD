@@ -1,0 +1,184 @@
+@CHARSET "ISO-8859-1";
+
+main {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f5f6+0,e3eaed+37,c8d7dc+100;Grey+3D+%234 */
+	background: rgb(242, 245, 246); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(242, 245, 246, 1) 0%,
+		rgba(227, 234, 237, 1) 37%, rgba(200, 215, 220, 1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(242,
+		245, 246, 1)), color-stop(37%, rgba(227, 234, 237, 1)),
+		color-stop(100%, rgba(200, 215, 220, 1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(242, 245, 246, 1) 0%,
+		rgba(227, 234, 237, 1) 37%, rgba(200, 215, 220, 1) 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(242, 245, 246, 1) 0%,
+		rgba(227, 234, 237, 1) 37%, rgba(200, 215, 220, 1) 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(242, 245, 246, 1) 0%,
+		rgba(227, 234, 237, 1) 37%, rgba(200, 215, 220, 1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(242, 245, 246, 1) 0%,
+		rgba(227, 234, 237, 1) 37%, rgba(200, 215, 220, 1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6',
+		endColorstr='#c8d7dc', GradientType=0); /* IE6-9 */
+}
+
+.modal-header {
+    border-color: #337ab7;
+    background-color:#337ab7
+}
+
+div.page-header {
+	color: #EDF5F7;
+	text-shadow: 5px 3px 6px #1F2324;
+}
+
+div.apg-dashboard-tab {
+	background-color: #FFFFFF;	
+	padding: 5px;
+	border: 1px solid #59acff;
+	border-top: none;
+}
+
+label.form-group {
+	margin-right: 5px;
+}
+
+tab-heading.cpgTabHeading{
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+	font-weight: bold;
+	font-size: 1.4em;
+	color: #465f88;
+	cursor: default; 
+}
+
+div[active='activeJustified'] * li.ng-isolate-scope{
+	border-bottom: 1px solid #59acff; 
+}
+
+div[active='activeJustified'] * li.ng-isolate-scope.active{
+	border-top:1px solid #59acff;
+	border-left: 1px solid #59acff;
+	border-right: 1px solid #59acff;
+	border-bottom: none;
+}
+
+li[heading='In Progress'],
+li[heading='Completed'],
+li[heading='Generated'],
+button.btn.btn-primary.dropdown-toggle,
+ul.dropdown-menu[role="menu"],
+h4.panel-title > a.accordion-toggle.ng-binding{
+	cursor: default;
+}
+
+.form-group+input[type$="file"] {
+	display: inline;
+}
+
+.btn.fixed_width_60 {
+	margin: 2px;
+	min-width: 56px;
+	max-width: 60Px;
+	background: #8a8382;
+	font-weight: bold;
+	text-align:center;
+	color: white;
+	border: 0;
+    transition: all 0.3s ease 0s;
+}
+
+button.btn.fixed_width_60:hover {
+  background: #515850;
+}
+
+.modal-dialog {
+	width: auto;
+	height: 100%;
+	max-height: 100%;
+}
+
+div.tree_scroll_div {
+	overflow-y: scroll;
+    overflow-x:hidden;
+	height: 540px;
+	background-color: #2e2e1e;
+}
+
+.errorField {
+	border-style: solid;
+	border-width: 2px;
+	border-color: red;
+}
+
+div.modal-header{
+	text-align: center;
+}
+
+div.modal-header > label{	
+	font-weight: bold;
+	color: white;
+}
+
+.required:after {
+	content: " *";
+	color:red;
+}
+
+/* showing progress bar for completed required fields */
+.meter {
+	height: 5px;
+	position: relative;
+	background: #FFA0A0;
+}
+
+.meter > span {
+	display: block;
+	height: 100%;
+	background:#33EE33;
+	position: relative;
+	overflow: hidden;
+}
+
+.meter {
+    display: none;
+}
+
+tab-heading.tabheading.ng-binding.ng-scope:hover .meter {
+    display:block;
+}
+
+.red {
+	color:red;
+}
+.green {
+	color:green;
+}
+
+.st-sort-ascent:before{
+    content: '\25B2';
+}
+
+.st-sort-descent:before{
+    content: '\25BC';
+}
+
+.st-selected{
+   background: none repeat scroll 0 0 #86c2ff;
+   font-weight: bold;
+   color: white;
+}
+
+.nav, .pagination, .carousel, .panel-title a, .accordion-toggle,tr[st-table],
+	 th.cursorPointer:hover{ cursor: pointer; }
+
+select[multiple]{
+	display: none;
+}
+
+div.row.form-group{
+	padding-left: 40px;
+}
+
+.treeNodeSelectedBG{
+	background-color: #6d9201;
+}

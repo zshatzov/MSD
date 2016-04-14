@@ -1,0 +1,388 @@
+ [{
+ 	"name": "DiscoveryFeatureInformation",
+ 	"label": "Discovery",
+ 	"groups": [{
+ 		"group": "AppliancePropertiesInformation",
+ 		"label": "Appliance Properties Info",
+ 		"elements": [{
+ 			"name": "sysObjectId",
+ 			"label": "System Object Id",
+ 			"value": "sysObjectID",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysDescription",
+ 			"label": "System Description",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysContact",
+ 			"label": "System Contact",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysName",
+ 			"label": "System Name",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysLocation",
+ 			"label": "System Location",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysSerialNo",
+ 			"label": "System Serial Number",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysIdentModel",
+ 			"label": "System Model",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "sysVersion",
+ 			"label": "System Version",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSInformation",
+ 		"label": "UPS Info",
+ 		"elements": [{
+ 			"name": "id",
+ 			"label": "Id",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "name",
+ 			"label": "Name",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "status",
+ 			"label": "Status",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "serialNumber",
+ 			"label": "Serial Number",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "modelNumber",
+ 			"label": "Model Number",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "isSwitched",
+ 			"label": "Is Switched",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "isMetered",
+ 			"label": "Is Metered",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}]
+ 	}]
+ }, {
+ 	"name": "PowerCollectionInformation",
+ 	"label": "Power Collection",
+ 	"groups": [{
+ 		"group": "PropertyInformation",
+ 		"label": "Property Info",
+ 		"elements": [{
+ 			"name": "vendor",
+ 			"label": "Vendor",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "model",
+ 			"label": "Model",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "EnvironmentInformation",
+ 		"label": "Environment Info",
+ 		"elements": [{
+ 			"name": "environmentTemperature",
+ 			"label": "Environment Temperature",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "tempUnitOfMeasurement",
+ 			"label": "Temperature Unit Of Measurement",
+ 			"metadata": {
+ 				"required": true,
+ 				"enumeration": [
+ 					"Celsius",
+ 					"Fahrenheit"
+ 				]
+ 			}
+ 		}, {
+ 			"name": "environmentHumidity",
+ 			"label": "Environment Humidity",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}]
+ 	}]
+ }, {
+ 	"name": "RFC1628Information",
+ 	"label": "RFC1628",
+ 	"groups": [{
+ 		"group": "UPSIdent",
+ 		"label": "Identity",
+ 		"elements": [{
+ 			"name": "upsIdentManufacturer",
+ 			"label": "Manufacturer",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "upsIdentModel",
+ 			"label": "Model",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "upsIdentUPSSoftwareVersion",
+ 			"label": "UPS Software Version",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "upsIdentAgentSoftwareVersion",
+ 			"label": "Agent Software Version",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}, {
+ 			"name": "upsIdentName",
+ 			"label": "Name",
+ 			"metadata": {
+ 				"required": true
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSBatteryInformation",
+ 		"label": "UPS Battery Info",
+ 		"elements": [{
+ 			"name": "upsBatteryStatus",
+ 			"label": "Battery Status",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsSecondsOnBattery",
+ 			"label": "Seconds On Battery",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsEstimatedMinutesRemaining",
+ 			"label": "Estimate Mintues Remaining",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsEstimatedChargeRemaining",
+ 			"label": "Estimate Charge Remaining",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBatteryVoltage",
+ 			"label": "Battery Voltage",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBatteryCurrent",
+ 			"label": "Battery Current",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBatteryTemperature",
+ 			"label": "Battery Temperature",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSInputInformation",
+ 		"label": "UPS Input Info",
+ 		"elements": [{
+ 			"name": "upsInputLineBads",
+ 			"label": "Input Line Bads",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsInputNumLines",
+ 			"label": "Input Num Lines",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsInputFrequency",
+ 			"label": "Input Frequency",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsInputVoltage",
+ 			"label": "Input Voltage",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsInputCurrent",
+ 			"label": "Input Current",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsInputTruePower",
+ 			"label": "Input True Power",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSOutputInformation",
+ 		"label": "UPS Output Info",
+ 		"elements": [{
+ 			"name": "upsOutputSource",
+ 			"label": "Output Source",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputFrequency",
+ 			"label": "Output Frequency",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputNumLines",
+ 			"label": "Output Num Lines",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputVoltage",
+ 			"label": "Output Voltage",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputCurrent",
+ 			"label": "Output Current",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputPower",
+ 			"label": "Output Power",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsOutputPercentLoad",
+ 			"label": "Output Percent Load",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSBypassInformation",
+ 		"label": "UPS Bypass Info",
+ 		"elements": [{
+ 			"name": "upsBypassFrequency",
+ 			"label": "Bypass Frequency",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBypassNumLines",
+ 			"label": "Bypass Num Lines",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBypassVoltage",
+ 			"label": "Bypass Voltage",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBypassCurrent",
+ 			"label": "Bypass Current",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsBypassPower",
+ 			"label": "Bypass Power",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}, {
+ 		"group": "UPSControlInformation",
+ 		"label": "UPS Control Info",
+ 		"elements": [{
+ 			"name": "upsShutdownType",
+ 			"label": "Shutdown Type",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsShutdownAfterDelay",
+ 			"label": "Shutdown After Delay",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsStartupAfterDelay",
+ 			"label": "Startup After Delay",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsRebootWithDuration",
+ 			"label": "Reboot With Duration",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}, {
+ 			"name": "upsAutoRestart",
+ 			"label": "Auto Restart",
+ 			"metadata": {
+ 				"required": false
+ 			}
+ 		}]
+ 	}]
+ }]

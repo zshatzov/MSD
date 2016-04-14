@@ -1,0 +1,96 @@
+<div class="container" ng-if="!data.inAddMode" style="padding-left: 40px;">
+	<label class="row" style="font-size: 17px; margin-bottom: 1.5em;">Supported
+		Files Configuration</label>
+
+	<div class="row" style="margin-bottom: 1.5em;">
+		<input type="button" class="btn btn-primary" ng-click="add()"
+			value="Add"></input>
+	</div>
+	<div class="row">
+		<div class="col-md-10">
+			<table class="table table-striped" st-table="filesConfiguration"  st-safe-src="rowCollection">
+				<thead>
+					<tr>
+						<th st-sort="uniqueId" class="cursorPointer">Unique ID</th>
+						<th st-sort="category" class="cursorPointer">File Type</th>
+						<th st-sort="displayString" class="cursorPointer">File Name</th>
+						<th st-sort="familyCode" class="cursorPointer">Family Code</th>
+						<th st-sort="oemCode" class="cursorPointer">OEM</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in filesConfiguration">
+						<td>{{row.uniqueId}}</td>
+						<td>{{row.category}}</td>
+						<td>{{row.displayString}}</td>
+						<td>{{row.familyCode}}</td>
+						<td>{{row.oemCode}}</td>
+						<td>
+							<button type="button" ng-click="delete(row)"
+								class="btn btn-sm btn-danger" title="Delete">	
+								<i class="glyphicon glyphicon-remove-circle"></i>
+							</button>
+							<button type="button" ng-click="edit(row)"
+								class="btn btn-sm btn-primary" title="Edit">
+								<i class="glyphicon glyphicon-edit"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="5" class="text-center">
+							<div st-pagination=""
+							 	 st-items-by-page="itemsPerPage"
+							 	st-displayed-pages="pages"></div>
+						</td>
+					</tr>	
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="container" ng-if="data.inAddMode">
+	<form name="NewFileConfigurationForm">
+		<label class="row" style="font-size: 17px; margin-bottom: 1.5em;">Add
+			Supported File</label>
+		<div class="row form-group">
+			<label for="uniqueId" class="col-md-3 control-label">Unique ID
+			 	<span style="color: red"> *</span></label>
+			<input type="text" name="uniqueId" class="col-md-6" 
+				ng-model="fileConfiguration.uniqueId" required
+				ng-required="true"></input>
+		</div>
+		<div class="row form-group">
+			<label for="category" class="col-md-3 control-label">File
+				Type <span style="color: red">*</span></label>
+			<select name="category" ng-model="fileConfiguration.category" required ng-required="true">
+				<option value="CONFIG_TEMPLATE">ConfigTemplate</option>
+				<option value="FIRMWARE">Firmware</option>
+			</select>
+		</div>
+		<div class="row form-group" name="mapsDiv" id="mapsDiv">
+			<label for="displayString" class="col-md-3 control-label">Display
+				String <span style="color: red"> *</span></label>
+			<input type="text" name="displayString" ng-required="true" ng-readonly="true"
+				class="col-md-6" ng-model="fileConfiguration.displayString" required="required"
+				ng-click="open()"></input>
+		</div>
+		<div class="row form-group">
+			<label for="familyCode" class="col-md-3 control-label">Family
+				Code</label> <input type="text" name="familyCode"
+				class="col-md-6" ng-model="fileConfiguration.familyCode"></input>
+		</div>
+		<div class="row form-group">
+			<label for="OEMCode" class="col-md-3 control-label">OEM Code</label>
+			<input type="text" class="col-md-6" name="OEMCode"
+				ng-model="fileConfiguration.oemCode"></input>
+		</div>
+		<div class="row">
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+			<button class="btn btn-primary" type="button" 
+				ng-disabled="NewFileConfigurationForm.$invalid  || NewFileConfigurationForm.$pristine"
+				ng-click="ok()">OK</button>
+		</div>
+	</form>
+</div>

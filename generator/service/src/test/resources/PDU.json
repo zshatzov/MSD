@@ -1,0 +1,579 @@
+[
+    {
+        "name": "DiscoveryFeatureInformation",
+        "label": "Discovery Feature",
+        "groups": [
+            {
+                "group": "AppliancePropertiesInformation",
+                "label": "Applicance Properties Info",
+                "elements": [
+                    {
+                        "name": "sysObjectId",
+                        "label": "System Object Id",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysDescription",
+                        "label": "System Description",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysContact",
+                        "label": "System Contact",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysName",
+                        "label": "System Name",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysLocation",
+                        "label": "System Location",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysSerialNo",
+                        "label": "System Serial Number",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysSecurityMode",
+                        "label": "System Security Mode",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysPDUCount",
+                        "label": "System PDU Count",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "sysIdentModel",
+                        "label": "System Identification Model",
+                        "metadata": {
+                            "required": false
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PDUInformation",
+                "label": "PDU Info",
+                "elements": [
+                    {
+                        "name": "id",
+                        "label": "Identification",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "label": "Name",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "label": "Status",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "serialNumber",
+                        "label": "Serial Number",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "modelNumber",
+                        "label": "Model Number",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "phaseCount",
+                        "label": "Phase Count",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "capabilities",
+                        "label": "Capabilities",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "isSwitched",
+                        "label": "Is Switched",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "isThreePhases",
+                        "label": "Is Three Phases",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "isMetered",
+                        "label": "Is Metered",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "OutletInformation",
+                "label": "Outlet Info",
+                "elements": [
+                    {
+                        "name": "id",
+                        "label": "Id",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "label": "Name",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "capabilities",
+                        "label": "Capabilities",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "label": "Status",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isSwitched",
+                        "label": "IS Switched",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isMetered",
+                        "label": "Is Metered",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "PowerOperationsInformation",
+        "label": "Power Operations",
+        "groups": [
+            {
+                "group": "PDUCapabilitiesInformation",
+                "label": "PDU Capabilities Info",
+                "elements": [
+                    {
+                        "name": "isPowerOnSupported",
+                        "label": "Is Power On Suppored",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isPowerOffSupported",
+                        "label": "Is Power Off Suppored",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isRebootSupported",
+                        "label": "Is Reboot Suppored",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isPowerCycleSupported",
+                        "label": "Is Power Cycle Suppored",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PDUOutletsCapabilitiesInformation",
+                "label": "PDU Outlets Capabilities Info",
+                "elements": [
+                    {
+                        "name": "isPowerOnSupported",
+                        "label": "Is Power on Supported",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isPowerOffSupported",
+                        "label": "Is Power Off Supported",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isPowerCycleSupported",
+                        "label": "Is Power Cycle Supported",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PDUOperationsInformation",
+                "label": "PDU Power Operations",
+                "elements": [
+                    {
+                        "name": "powerOnOperationMapping",
+                        "label": "Power On Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "powerOffOperationMapping",
+                        "label": "Power Off Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "rebootOperationMapping",
+                        "label": "Reboot Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "powerCycleOperationMapping",
+                        "label": "Power Cycle Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PDUOutletsOperationsInformation",
+                "label": "PDU Outlets Operations Info",
+                "elements": [
+                    {
+                        "name": "powerOnOperationMapping",
+                        "label": "Power On Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "powerOffOperationMapping",
+                        "label": "Power Off Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "powerCycleOperationMapping",
+                        "label": "Power Cycle Operation Mapping",
+                        "metadata": {
+                            "required": false
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "PowerCollectionInformation",
+        "label": "Power Collection Info",
+        "groups": [
+            {
+                "group": "PropertyInformation",
+                "label": "Property Info",
+                "elements": [
+                    {
+                        "name": "vendor",
+                        "label": "Vendor",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "vendor",
+                        "label": "model",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "numberOfOutlets",
+                        "label": "Number Of Outlets",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "outletId",
+                        "label": "Outlet ID",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "isThreePhasePDU",
+                        "label": "Is Three Phase PDU",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "numberOfOutletsPerCircuit",
+                        "label": "Number OF Outlets Per Circuit",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PowerOverallInformation",
+                "label": "Power Overall Info",
+                "elements": [
+                    {
+                        "name": "measurementInAmps",
+                        "label": "Measurement In Amps",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsEst",
+                        "label": "Measurement In Volts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsRead",
+                        "label": "Measurement In Volts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsEst",
+                        "label": "Measurement In Watts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsRead",
+                        "label": "Measurement In Watts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "pduStatus",
+                        "label": "PDU Status",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "powerOverall",
+                        "label": "Power Overall",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PowerPerPhaseInformation",
+                "label": "Power Per Phase Info",
+                "elements": [
+                    {
+                        "name": "measurementInAmps",
+                        "label": "Measurement In Amps",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsEst",
+                        "label": "Measurement In Volts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsRead",
+                        "label": "Measurement In Volts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsEst",
+                        "label": "Measurement In Watts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsRead",
+                        "label": "Measurement In Watts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "pduStatus",
+                        "label": "PDU Status",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "PowerPerOutletInformation",
+                "label": "Power Per Outlet Info",
+                "elements": [
+                    {
+                        "name": "measurementInAmps",
+                        "label": "Measurement In Amps",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsEst",
+                        "label": "Measurement In Volts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInVoltsRead",
+                        "label": "Measurement In Volts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsEst",
+                        "label": "Measurement In Watts Est",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "measurementInWattsRead",
+                        "label": "Measurement In Watts Read",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "pduStatus",
+                        "label": "PDU Status",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "overCurrentThreshold",
+                        "label": "Over Current Threshold",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "turnOnInterval",
+                        "label": "Turn On Interval",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            },
+            {
+                "group": "EnvironmentInformation",
+                "label": "Environment Info",
+                "elements": [
+                    {
+                        "name": "environmentTemperature",
+                        "label": "Environment Temperature",
+                        "metadata": {
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "tempUnitOfMeasurement",
+                        "label": "Temperature Unit Of Measurement",
+                        "metadata": {
+                            "required": true,
+                            "enumeration": [
+                                "Celsius",
+                                "Fahrenheit"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "environmentHumidity",
+                        "label": "Environment Humidity",
+                        "metadata": {
+                            "required": true
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

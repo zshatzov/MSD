@@ -1,0 +1,56 @@
+<div class="row form-group">
+	<label for="nmmId" class="col-md-3">NMM ID <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="nmmId"
+		ng-model="nmmMappings.identitySection.nmmid" ng-required="required"
+		required="required"></input>
+</div>
+<div class="row form-group">
+	<label for="domain" class="col-md-3">Domain <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="domain"
+		ng-model="nmmMappings.identitySection.domain" ng-required="required"
+		required="required"></input>
+</div>
+<div class="row form-group">
+	<label for="licenseId" class="col-md-3">License ID <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="licenseId"
+		ng-model="nmmMappings.identitySection.licenseId" ng-required="required"
+		required="required"></input>
+</div>		
+<div class="row form-group">
+	<label for="vendorName" class="col-md-3">Vendor Name <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="vendorName"
+		ng-model="nmmMappings.identitySection.vendorName" ng-required="required"
+		required="required" ng-click="openIdentitySection('vendorName')"></input>
+</div>
+<div class="row form-group">
+	<label for="pluginName" class="col-md-3">Plugin Name <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="pluginName"
+		ng-model="nmmMappings.identitySection.pluginName" ng-required="required"
+		required="required"
+		ng-click="openIdentitySection('pluginName')"></input>
+</div>
+<div class="row form-group">
+	<label for="pluginDescription" class="col-md-3">Plugin Description <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="pluginDescription"
+		ng-model="nmmMappings.identitySection.pluginDescription" ng-required="required"
+		required="required"
+		ng-click="openIdentitySection('pluginDescription')"></input>
+</div>
+<div class="row form-group">
+	<label for="pluginVersion" class="col-md-3">Plugin version <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="pluginVersion"
+		ng-model="nmmMappings.identitySection.pluginVersion" ng-required="true"
+		placeholder="n.n.n.n"	title="Version number in the form (n.n.n.n)"></input>
+</div>
+<div class="row form-group">
+	<label for="implementationClass" class="col-md-3">Implementation Class <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="implementationClass"
+		ng-model="nmmMappings.identitySection.implementationClass" ng-required="required"
+		required="required"></input>
+</div>
+<div class="row form-group">
+	<label for="locales" class="col-md-3">Locales <span style="color: red"> *</span></label>		
+	<input type="text" class="col-md-6" name="locales"
+		ng-model="nmmMappings.identitySection.locales" ng-required="required"
+		required="required"></input>
+</div>

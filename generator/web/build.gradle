@@ -1,0 +1,43 @@
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+war{
+	archiveName = "${rootProject.name}.war"
+}
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.yaml:snakeyaml:1.15'
+	}
+}
+
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
+
+def options = new DumperOptions()
+options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
+def yaml = new Yaml(options)
+def ymlFile = file('src/main/resources/application.yml')
+def props = yaml.load(ymlFile.text)
+ext{
+	tomcat_version = props['tomcat.version']
+}
+
+dependencies{
+	compile project(':service')
+	compile("org.springframework.boot:spring-boot-starter-web:${spring_boot_starter_version}"){
+		exclude group:'commons-logging'
+	}
+	compile "org.springframework.boot:spring-boot-starter-aop:${spring_boot_starter_version}"
+	compile "org.springframework.boot:spring-boot-autoconfigure:${spring_boot_starter_version}"	 
+	testCompile "org.springframework.boot:spring-boot-starter-test:${spring_boot_starter_version}"
+	runtime 'javax.servlet:jstl:1.2'
+	runtime("org.apache.tomcat.embed:tomcat-embed-jasper:$tomcat_version"){
+		exclude group: 'org.apache.tomcat.embed'
+	}
+	runtime 'cpgxmlapi_pdu:cpgxmlapi_pdu:1.0'
+	runtime 'cpgxmlapi_ups:cpgxmlapi_ups:1.0'
+}

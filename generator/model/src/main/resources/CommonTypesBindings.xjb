@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings schemaLocation="./CommonTypes.xsd"
+	 version="2.0" 
+	 xmlns="http://java.sun.com/xml/ns/jaxb" 
+	 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+	 
+	 
+	 <globalBindings
+	 	fixedAttributeAsConstantProperty="true"
+        collectionType="java.util.ArrayList"
+        choiceContentProperty="false"
+        typesafeEnumMemberName="generateName"
+        enableFailFastCheck="false"   
+        generateIsSetMethod="false"
+        underscoreBinding="asCharInWord"
+        typesafeEnumBase="xs:string">    
+     </globalBindings>   
+	 
+	 <schemaBindings>
+	 	<package name="com.avocent.plugins.generator.model.common"/>	 
+	 </schemaBindings>	 
+	 
+	 <bindings node="//xs:complexType[@name='OBWIConfigurationType']"> 	 
+		 <class name="OBWIConfiguration"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='SNMPConfigurationType']"> 	 
+		 <class name="SNMPConfiguration"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='NMMXMLInformationType']"> 	 
+		 <class name="NMMXMLInformation"/>
+	 </bindings>	 	 	 	 	 
+	 <bindings node="//xs:complexType[@name='IdentitySectionType']"> 	 
+		 <class name="IdentitySection"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='HelpSectionType']"> 	 
+		 <class name="HelpSection"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='OperationInterfaceSectionType']"> 	 
+		 <class name="OperationInterfaceSection"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='ConfigManagementInterfaceSectionType']"> 	 
+		 <class name="ConfigManagementInterfaceSection"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='FaultManagementInterfaceSectionType']"> 	 
+		 <class name="FaultManagementInterfaceSection"/>
+	 </bindings>		 		 		 	 
+	 <bindings node="//xs:complexType[@name='SupportedModelsConfigurationSectionType']"> 	 
+		 <class name="SupportedModelsConfigurationSection"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='ModelConfigurationType']"> 	 
+		 <class name="ModelConfiguration"/>
+	 </bindings>
+	  <bindings node="//xs:simpleType[@name='CapabilitiesType']"> 	 
+		 <class name="Capabilities"/>
+	 </bindings>
+	  <bindings node="//xs:simpleType[@name='ConfigurableRightsType']"> 	 
+		 <class name="ConfigurableRights"/>
+	 </bindings>	 
+	 <bindings node="//xs:complexType[@name='ImagesType']"> 	 
+		 <class name="Images"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='ImageType']"> 	 
+		 <class name="Image"/>
+	 </bindings>	 
+	 <bindings node="//xs:complexType[@name='ImagesGroupingType']"> 	 
+		 <class name="ImagesGrouping"/>
+	 </bindings>	
+	 <bindings node="//xs:complexType[@name = 'SupportedFilesConfigurationSectionType']">
+	 	 <class name="SupportedFilesConfigurationSection" />
+	 </bindings>
+	 <bindings node="//xs:complexType[@name = 'FileConfigurationType']">
+	 	 <class name="FileConfiguration" />
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='CustomCodeInformationType']">
+	 	<class name="CustomCodeInformation" />
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='FirmwareUpgradeType']">
+	 	<class name="FirmwareUpgrade" />
+	 </bindings>	 	
+	 <bindings node="//xs:complexType[@name='TrapsInformationType']"> 	 
+		 <class name="TrapsInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='EventEntriesType']"> 	 
+		 <class name="EventEntries"/>
+	 </bindings>	 	 	 
+	 <bindings node="//xs:complexType[@name='EventEntryType']"> 	 
+		 <class name="EventEntry"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='EventArgumentsType']"> 	 
+		 <class name="EventArguments"/>
+	 </bindings>	 			 	
+	 <bindings node="//xs:complexType[@name='ArgumentType']">
+	 	 <class name="EventArgument" />
+	 </bindings>	 	 	 		 	 	  
+</bindings>

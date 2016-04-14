@@ -1,0 +1,48 @@
+<div class="container-fluid">
+   <div class="row form-group">
+      <label for="nameResourceBundleKey" class="col-md-3 control-label">Name<span style="color: red"> *</span></label>
+      <input type="text" name="nameResourceBundleKey"  ng-model="eventEntry.nameResourceBundleKey" 
+         class="col-md-6" required ng-required="true" ng-click="open(eventEntry, 'nameResourceBundleKey')"></input>
+   </div>
+   <div class="row form-group">
+      <label for="shortDescriptionResourceBundleKey" class="col-md-3  control-label">Short Description<span style="color: red"> *</span></label>
+      <input type="text" name="shortDescriptionResourceBundleKey"  ng-model="eventEntry.shortDescriptionResourceBundleKey"
+         class="col-md-6" required ng-required="true" ng-click="open(eventEntry, 'shortDescriptionResourceBundleKey')"></input>
+   </div>
+   <div class="row form-group">
+      <label for="longDescriptionResourceBundleKey" class="col-md-3 control-label">Long Description<span style="color: red"> *</span></label>
+      <input type="text" name="longDescriptionResourceBundleKey"  ng-model="eventEntry.longDescriptionResourceBundleKey" 
+         class="col-md-6" required ng-required="true" ng-click="open(eventEntry, 'longDescriptionResourceBundleKey')"></input>
+   </div>
+   <div class="form-group">
+      <div class="row">
+         <label class="col-md-3" style="font-size: 17px; margin-bottom: 1.5em;">EventArgs</label>
+      </div>
+      <div class="row" style="margin-bottom: 1.5em;">
+         <input type="button" class="btn btn-primary" ng-click="addArgument(true)" value="Add"></input>
+      </div>
+      <div class="row">
+         <table class="table table-striped" st-table="arguments">
+            <thead>
+               <tr>
+                  <th st-sort="argumentName" class="cursorPointer">Arguments</th>
+                  <th st-sort="isSymbol" class="cursorPointer">Symbol</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="row in arguments">
+                  <td>{{row.argumentName}}</td>
+                  <td><input type="checkbox" ng-model="row.isSymbol" name="isSymbol" value="false"></td>
+                  <td>
+                     <button type="button" ng-click="deleteArgument(row)"
+                        class="btn btn-sm btn-danger" title="Delete">	
+                     <i class="glyphicon glyphicon-remove-circle"></i>
+                     </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+

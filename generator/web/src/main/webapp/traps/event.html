@@ -1,0 +1,26 @@
+ <div class="container-fluid">    
+   <div class="row form-group">
+      <label for="eventId" class="col-md-3">Event ID<span style="color: red"> *</span></label>
+      <input type="text" name="eventId"  ng-model="eventEntry.id" class="col-md-6" 
+      		required ng-required="true" ng-click="expressionBuilder(eventEntry.id, true)"></input>
+   </div>
+   <div class="row form-group">
+      <label for="scope" class="col-md-3 control-label">Element Scope<span style="color: red">*</span></label>
+      <select name="scope" ng-model="eventEntry.elementScope" class="col-md-6" 
+      		required ng-required="true">
+         <option value="Domain">Domain</option>
+         <option value="Local">Local</option>
+      </select>
+   </div>
+   <div class="row form-group">
+      <label for="severity" class="col-md-3">Element Severity<span style="color: red">*</span></label>
+      <select name="severity" ng-model="eventEntry.elementSeverity" class="col-md-6"
+      		 required ng-required="true">
+         <option value="Critical">Critical</option>
+         <option value="Information">Information</option>
+         <option value="NonCritical">NonCritical</option>
+         <option value="NonRecoverable">NonRecoverable</option>
+         <option value="OK">OK</option>
+      </select>
+   </div>  
+</div> 

@@ -1,0 +1,37 @@
+{
+    "pluginName": "PDU Plugin",
+    "enterpriseOID": "1.2.3.4.5.6",
+    "trapMIBBase": "Trap Base",
+    "eventEntries": {
+        "eventEntry": [
+            {
+                "id": "1",
+                "nameResourceBundleKey": "Key-1",
+                "shortDescriptionResourceBundleKey": "Short-Key-1",
+                "longDescriptionResourceBundleKey": "Long-Key-1",
+                "eventArguments": {
+                    "argument": [
+                        "Arg1",
+                        "Arg2"
+                    ]
+                },
+                "elementScope": "E-Scope-1",
+                "elementSeverity": "E-Severtity-2"
+            },
+            {
+                "id": "2",
+                "nameResourceBundleKey": "Key-2",
+                "shortDescriptionResourceBundleKey": "Short-Key-2",
+                "longDescriptionResourceBundleKey": "Long-Key-2",
+                "eventArguments": {
+                    "Argument": [
+                        "Arg1",
+                        "Arg2"
+                    ]
+                },
+                "elementScope": "E-Scope-2",
+                "elementSeverity": "E-Severtity-2"
+            }
+        ]
+    }
+}

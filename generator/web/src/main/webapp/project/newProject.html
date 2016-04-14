@@ -1,0 +1,56 @@
+<header>
+	<nav id="apg-navbar" class="navbar navbar-inverse navbar-static-top">
+		<label class="badge navbar-text"> <img class="icon-bar"
+			alt="Avocent Custom Plugin Generator"
+			src="/resources/images/favicon-32x32.png" />
+			<span style="color: white; font-weight: bold;">Avocent Custom Plugin Generator</span></label>
+	</nav>
+</header>
+<div class="page-header">
+	<h3 class="text text-center">Create New Project</h3>
+</div>
+
+<form name="CreateNewProjectForm" ng-controller="ProjectCtrl">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<label for="project_name" class="form-group col-md-3 required">Project Name</label>
+				<input type="text" required="required" ng-required="true"
+					name="project_name" pattern="^\w{3,50}$" ng-model="project.name"
+					placeholder="Project Name" 	title="Enter at least 3 Characters (No Spaces allowed)"
+					class="form-group col-md-6" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="project_type" class="form-group col-md-3 required">Project Type</label>
+				<select name="project_type"	ng-options="projectType as projectType for projectType in deviceTypes"
+					ng-model="project.type" class="form-group col-md-1" required="required" ng-required="true">
+					<option style="display: none" value="">select a type</option>
+				</select>                         
+			</div>
+        </div>
+        
+		<div class="row">
+			<div class="col-md-12">
+				<label for="file" class="form-group col-md-3 required">MIB file</label>
+				<input type="file" ngf-select name="file" autocomplete="off"
+					ngf-validate-fn="validate($file)"
+					ng-model="mibFile" class="form-group" required="required" />
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="btn btn-group">
+					<input type="submit" value="Create" class="btn btn-success" 
+						style="margin-right: 5px;" ng-click="create(mibFile)" 
+						ng-disabled="CreateNewProjectForm.$invalid || CreateNewProjectForm.$pristine"/>
+					<a href="#/"><button class="btn btn-warning">Cancel</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+

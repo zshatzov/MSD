@@ -1,0 +1,77 @@
+<div ng-controller="CustomCodeCtrl">
+	<accordion close-others="true">
+	   <accordion-group class="panel-primary" heading="Custom Code"
+	      is-open="true">
+	      <div  style="padding-left: 40px; padding-right: 40px;">
+	         <div class="panel panel-default">
+	            <div class="panel-heading">
+	               <h4>Load firmware upgrade custom code</h4>
+	            </div>
+	            <div class="panel-body">
+	               <form name="UploadCustomCodeForm" ng-submit="upload(firmwareFile)" novalidate> 
+	                  <input type="file" ngf-select ng-model="firmwareFile"  name="firmwareFile"
+	                  		 style="padding-bottom: 10px;" ng-required="true"> 	
+	                  <button type="submit" class="btn btn-primary"  
+	                     	ng-disabled="!firmwareFile || UploadCustomCodeForm.$invalid
+	                     		 || firmwareUploaded">Upload</button> 
+	               </form>
+	            </div>
+	         </div>
+	         <div class="panel panel-default" ng-if="firmwareUploaded">
+	            <div class="panel-heading">
+	               <h4>Firmware File Information</h4>
+	            </div>
+	            <div class="panel-body">
+	               <div class="row">
+	                  <div class="col-md-10">
+	                     <table class="table table-striped" st-table="firmwareFiles" 
+	                        st-safe-src="rowCollection">
+	                        <thead>
+	                           <tr>
+	                              <th>Firmware File Name</th>
+	                              <th>Uploaded Date</th>
+	                           </tr>
+	                        </thead>
+	                        <tbody>
+	                           <tr ng-repeat="row in firmwareFiles">
+	                              <td>{{row.fileName}}</td>
+	                              <td>{{row.lastModifiedFormatted}}</td>
+	                              <td>
+	                                 <button type="button" ng-click="delete(row)"
+	                                    class="btn btn-sm btn-danger" title="Delete">	
+	                                 <i class="glyphicon glyphicon-remove-circle"></i>
+	                                 </button>
+	                              </td>
+	                           </tr>
+	                        </tbody>
+	                     </table>
+	                  </div>
+	                  <div class="row">
+	                    <form name="firmwareUpgradeForm" role="form">
+		                     <div class="row form-group">
+		                        <label for="invokeClassName" class="col-md-3">Invoke Custom Class<span style="color: red"> *</span></label>		
+		                        <input type="text" class="col-md-6" name="invokeClassName"
+		                           ng-model="customCode.firmwareUpgrade.invokeClassName" ng-required="required"
+		                           required="required"
+		                           placeholder="Enter Firmware upgrade class name"></input>
+		                     </div>
+		                     <div class="row form-group">
+		                        <label for="invokeMethodName" class="col-md-3">Invoke Custom Method<span style="color: red"> *</span></label>		
+		                        <input type="text" class="col-md-6" name="invokeMethodName"
+		                           ng-model="customCode.firmwareUpgrade.invokeMethodName" ng-required="required"
+		                           required="required"
+		                           placeholder="Enter Firmware upgrade method name"></input>         	
+		                     </div>
+	                     </form>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	      </div>
+	   </accordion-group>
+	</accordion>
+   <div style="float: right; right: 20px; bottom: 540px;">
+      <button class="btn btn-primary" ng-click="save()">Save</button>
+   </div>
+</div>
+

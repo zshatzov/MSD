@@ -1,0 +1,132 @@
+<div class="container" ng-if="!data.inAddMode" style="padding-left: 40px;">
+	<label class="row" style="font-size: 17px; margin-bottom: 1.5em;">Supported Models Configuration</label>
+
+	<div class="row" style="margin-bottom: 1.5em;">
+		<input type="button" class="btn btn-primary" ng-click="add()"
+			value="Add"></input>
+	</div>
+	<div class="row">
+		<div class="col-md-10">
+			<table class="table table-striped" st-table="modelConfiguration" 
+						 st-safe-src="rowCollection">
+				<thead>
+					<tr>
+						<th st-sort="uniqueId" class="cursorPointer">Model</th>
+						<th st-sort="classification" class="cursorPointer">classification</th>
+						<th st-sort="scope" class="cursorPointer">Scope</th> 
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in modelsConfiguration">
+						<td>{{row.uniqueId}}</td>
+						<td>{{row.classification}}</td>
+						<td>{{row.scope}}</td>
+						<td>
+							<button type="button" ng-click="delete(row)"
+								class="btn btn-sm btn-danger" title="Delete">	
+								<i class="glyphicon glyphicon-remove-circle"></i>
+							</button>
+							<button type="button" ng-click="edit(row)"
+								class="btn btn-sm btn-primary" title="Edit">
+								<i class="glyphicon glyphicon-edit"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3" class="text-center">
+							<div st-pagination=""
+							 	 st-items-by-page="itemsPerPage"
+							 	st-displayed-pages="pages"></div>
+						</td>
+					</tr>	
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="container" ng-if="data.inAddMode">
+	<form name="NewModelConfigurationForm">
+		<label class="row" style="font-size: 17px; margin-bottom: 1.5em;">Add
+			Supported Model</label>
+		<div class="row form-group">
+			<label for="uniqueId" class="col-md-3 control-label">Model Unique Id
+			 	<span style="color: red"> *</span></label>				 	
+			<input type="text" name="uniqueId" class="col-md-6" name="uniqueId"
+				ng-model="modelConfiguration.uniqueId" required
+				ng-required="true" ng-click="openNmmApiType()"></input>
+		</div>
+		<div class="row form-group">
+			<label for="classifciation" class="col-md-3 control-label">Classification
+				Type <span style="color: red">*</span></label>
+			<select	 ng-model="modelConfiguration.classification" name="classifciation"
+					 ng-required="true"
+					 required="required">
+			     <option value="MeteredPowerConnection">MeteredPowerConnection</option>
+			     <option value="MonitoredPowerConnection">MonitoredPowerConnection</option>	 
+			     <option value="Unit">Unit</option>	 	 
+		    </select> 
+		</div>
+		<div class="row form-group">
+			<label for="scope" class="col-md-3 control-label">Scope <span style="color: red"> *</span></label>
+			<select	 ng-model="modelConfiguration.scope" name="scope"
+					 ng-required="true"
+					 required="required">
+				 <option value="Global">Global</option>
+			     <option value="Local">Local</option>	 
+			     <option value="System">System</option>	 	
+			</select>	 
+ 		</div>	 
+		<div class="row form-group">
+			<label for="displayString" class="col-md-3 control-label">Display
+				String <span style="color: red"> *</span></label>
+			<input type="text" name="displayString" ng-required="true" ng-readonly="true"
+				class="col-md-6" ng-model="modelConfiguration.displayString" required="required"
+				ng-click="open()"></input>
+		</div>	 
+		<div class="row form-group" ng-if="imageGroupExists">
+			<label for="imageGroup" class="col-md-3 control-label">Image Group <span style="color: red"> *</span></label>
+			<select	 ng-model="modelConfiguration.imagesGroupingName" name="imageGroup"
+					 ng-required="true"  ng-options="imageGroupOption for imageGroupOption in imageGroupOptions"
+					 required="required">				
+			</select>	 
+ 		</div>	 			
+		<div class="row form-group">
+			<label for="capabilities" class="col-md-3 control-label">Capabilities <span style="color: red"> *</span></label>				
+			<div ng-dropdown-multiselect="" options="capabilitiesOptions" ng-required="true" name="capabilities"
+						 selected-model="selectedCapabilities"
+						 checkboxes="true" extra-settings="capabilitiesCustomSettings"></div>	 
+ 		</div>
+		<div class="row form-group">
+			<label for="rights" class="col-md-3 control-label">configurable Rights <span style="color: red"> *</span></label>				
+			<div ng-dropdown-multiselect="" options="rightsOptions" ng-required="true" name="rights"
+						 selected-model="selectedRights"
+						  checkboxes="true" extra-settings="rightsCustomSettings"></div>	 
+ 		</div>	 		 			 	
+ 		<div class="row form-group">
+			<label for="cascadedType" class="col-md-3 control-label">Cascaded Type <span style="color: red"> *</span></label>
+			<input type="text" name="cascadedType" ng-required="true" class="col-md-6" 
+					ng-model="modelConfiguration.cascadedType" required="required"></input>
+		</div>	 	
+		<div class="row form-group" ng-if="firmwareFileConfigurationExists">
+			<label for="firmwareFileType" class="col-md-3 control-label">Firmware File type</label>
+			<select ng-model="modelConfiguration.supportedFirmwareFile" 
+				 ng-options="firmwareOption for firmwareOption in firmwareFilesTypeOptions"
+			   	 name="firmwareFileType"></select>
+		</div>
+		<div class="row form-group" ng-if="templateFileConfigurationExists">
+			<label for="templateFileType" class="col-md-3 control-label">Template File type</label>
+			<select ng-model="modelConfiguration.supportedTemplateFile"  
+				ng-options="templateOption for templateOption in templateFilesTypeOptions"
+			    name="templateFileType"></select>
+		</div>			
+		<div class="row">
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+			<button class="btn btn-primary" type="button" 
+				ng-disabled="NewModelConfigurationForm.$invalid || NewModelConfigurationForm.$pristine"
+				ng-click="ok()">OK</button>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,68 @@
+ <div class="container" ng-if="!data.inAddMode" style="padding-left: 40px;">
+    <label class="row" style="font-size: 17px; margin-bottom: 1.5em;">Event	Entries</label>
+    <div class="row" style="margin-bottom: 1.5em;">
+       <input type="button" class="btn btn-primary" ng-click="add()"
+          value="Add"></input>
+    </div>
+    <div class="row">
+       <div class="col-md-10">
+          <table class="table table-striped" st-table="eventEntries"  st-safe-src="rowCollection">
+             <thead>
+                <tr>
+                   <th st-sort="id" class="cursorPointer">ID</th>
+                   <th st-sort="nameResourceBundleKey" class="cursorPointer">Name</th>
+                   <th st-sort="elementScope" class="cursorPointer">Scope</th>
+                   <th st-sort="elementSeverity" class="cursorPointer">Severity</th>
+                   <th>Actions</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr ng-repeat="row in eventEntries">
+                   <td>{{row.id}}</td>
+                   <td>{{row.nameResourceBundleKey}}</td>
+                   <td>{{row.elementScope}}</td>
+                   <td>{{row.elementSeverity}}</td>
+                   <td>
+                      <button type="button" ng-click="delete(row)"
+                         class="btn btn-sm btn-danger" title="Delete">	
+                      <i class="glyphicon glyphicon-remove-circle"></i>
+                      </button>
+                      <button type="button" ng-click="edit(row)"
+                         class="btn btn-sm btn-primary" title="Edit">
+                      <i class="glyphicon glyphicon-edit"></i>
+                      </button>
+                   </td>
+                </tr>
+             </tbody>
+             <tfoot>
+                <tr>
+                   <td colspan="5" class="text-center">
+                      <div st-pagination=""
+                         st-items-by-page="itemsPerPage"
+                         st-displayed-pages="pages"></div>
+                   </td>
+                </tr>
+             </tfoot>
+          </table>
+       </div>
+    </div>
+ </div>
+ <div ng-if="data.inAddMode">
+    <label style="font-size: 17px; margin-bottom: 1.5em;">Add Event Entry</label>
+    <form name="NewEventEntryForm">       
+       <accordion close-others="true" class="panel-primary">
+	<accordion-group heading="Event" class="panel-default" is-open="true">
+		<div ng-include="'traps/event.html'"></div>
+	</accordion-group>
+    <accordion-group heading="Resource Bundle" class="panel-default">
+		<div ng-include="'traps/resourceBundle.html'"></div>
+	</accordion-group>
+ </accordion>
+       <div style="margin-top: 10px; padding-top: 10px;">
+          <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+          <button class="btn btn-primary" type="button" 
+             ng-disabled="NewEventEntryForm.$invalid"
+             ng-click="ok()">OK</button>
+       </div>
+    </form>
+ </div>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.emerson.com/CPGMIBMappingCommonTypes"
+	xmlns:cmn="http://www.emerson.com/CPGMIBMappingCommonTypes"
+	elementFormDefault="qualified">
+
+	<complexType name="OBWIConfigurationType">
+		<sequence>
+			<element name="URLConfiguration" type="string" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SNMPConfigurationType">
+		<sequence>
+			<element name="IsSNMPv1Supported" type="boolean" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="IsSNMPv3Supported" type="boolean" maxOccurs="1"
+				minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="NMMXMLInformationType">
+		<sequence>
+			<element name="IdentitySection" type="cmn:IdentitySectionType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="MinimumDSViewVersion" type="string" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="HelpSection" type="cmn:HelpSectionType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="OperationInterfaceSection" type="cmn:OperationInterfaceSectionType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="ConfigManagementInterfaceSection" type="cmn:ConfigManagementInterfaceSectionType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="FaultManagementInterfaceSection" type="cmn:FaultManagementInterfaceSectionType"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="ToolSetupTimeout" type="int" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="SupportedModelsConfigurationSection" type="cmn:SupportedModelsConfigurationSectionType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="SupportedFilesConfigurationSection" type="cmn:SupportedFilesConfigurationSectionType"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="Images" type="cmn:ImagesType" maxOccurs="1"
+				minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="IdentitySectionType">
+		<sequence>
+			<element name="NMMId" type="string" maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="Domain" type="string" maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="LicenseId" type="int" maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="VendorName" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="PluginName" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="PluginDescription" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="PluginVersion" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="ImplementationClass" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="Locales" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="HelpSectionType">
+		<sequence>
+			<element name="Key" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="Description" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="Label" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="Index" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="Version" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="OperationInterfaceSectionType">
+		<sequence>
+			<element name="PerformOperationTimeout" type="int" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="PerformOperationTimeoutWithStatus" type="int"
+				maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConfigManagementInterfaceSectionType">
+		<sequence>
+			<element name="EnrollTimeout" type="int" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="DeenrollTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="DiscoveryTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="DiscoveryByRangeTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="PushNamesTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="PullFileTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="PushFileTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="GetDataTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="GetExtendedDataTimeout" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="FaultManagementInterfaceSectionType">
+		<sequence>
+			<element name="GetStatusInformationTimeout" type="int"
+				maxOccurs="1" minOccurs="0"></element>
+			<element name="GetSessionInformationTimeout" type="int"
+				maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="DisconnectSessionTimeout" type="int"
+				maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SupportedModelsConfigurationSectionType">
+		<sequence>
+			<element name="ModelConfiguration" type="cmn:ModelConfigurationType"
+				maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ModelConfigurationType">
+		<sequence>
+			<element name="UniqueId" type="string"></element>
+			<element name="CascadedType" type="string"></element>
+			<element name="Classification">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="Unit"></enumeration>
+						<enumeration value="MeteredPowerConnection"></enumeration>
+						<enumeration value="MonitoredPowerConnection"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="Scope">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="Global"></enumeration>
+						<enumeration value="Local"></enumeration>
+						<enumeration value="System"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="DisplayString" type="string"></element>
+			<element name="ImagesGroupingName" type="string"></element>
+			<element name="Capabilities" type="cmn:CapabilitiesType"></element>
+			<element name="SupportedFirmwareFile" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="SupportedTemplateFile" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="ConfigurableRights" type="cmn:ConfigurableRightsType"></element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="CapabilitiesListType">
+		<restriction base="string">
+			<enumeration value="PowerOn"></enumeration>
+			<enumeration value="PowerOff"></enumeration>
+			<enumeration value="PowerCycle"></enumeration>
+			<enumeration value="Reboot"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="CapabilitiesType">
+		<list itemType="cmn:CapabilitiesListType"></list>
+	</simpleType>	
+	
+
+	<simpleType name="ConfigurableRightsListType">
+		<restriction base="string">
+			<enumeration value="View"></enumeration>
+			<enumeration value="Configure"></enumeration>
+			<enumeration value="ControlTargetDevicePower"></enumeration>
+			<enumeration value="Reboot"></enumeration>
+			<enumeration value="Flash"></enumeration>
+			<enumeration value="AdministerLocalAccounts"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ConfigurableRightsType">
+		<list itemType="cmn:ConfigurableRightsListType"></list>
+	</simpleType>
+
+	<complexType name="SupportedFilesConfigurationSectionType">
+		<sequence>
+			<element name="FileConfiguration" type="cmn:FileConfigurationType"
+				maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="FileConfigurationType">
+		<sequence>
+			<element name="UniqueId" type="string"></element>			
+			<element name="DisplayString" type="string"></element>			
+			<element name="Category" type="cmn:CategoryType"></element>			
+			<element name="FamilyCode" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="OemCode" type="string" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	
+	<simpleType name="CategoryType">
+		<restriction base="string">			
+			<enumeration value="Firmware"></enumeration>
+			<enumeration value="ConfigTemplate"></enumeration>		
+		</restriction>
+	</simpleType>
+
+    <complexType name="ImagesType">
+    <sequence>
+    		<element name="ImagesGrouping" type="cmn:ImagesGroupingType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ImageType">
+    	<sequence>
+    		<element name="Name" type="string"></element>
+    		<element name="KeyType">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="launchStandard"></enumeration>
+    					<enumeration value="listStandard"></enumeration>
+    					<enumeration value="toolStandard"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ImagesGroupingType">
+    	<sequence>
+    		<element name="Name" type="string"></element>
+    		<element name="Image" type="cmn:ImageType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="CustomCodeInformationType">
+		<sequence>
+			<element name="FirmwareUpgrade" type="cmn:FirmwareUpgradeType" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	<complexType name="FirmwareUpgradeType">
+    	<sequence>
+    		<element name="invokeClassName" type="string"></element>
+    		<element name="invokeMethodName" type="string"></element>    		
+    	</sequence>
+    </complexType>
+    
+    	<complexType name="TrapsInformationType">
+		<sequence>
+			<element name="PluginName" type="string"></element>
+			<element name="EnterpriseOID" type="string"></element>
+			<element name="TrapMIBBase" type="string"></element>
+			<element name="EventEntries" type="cmn:EventEntriesType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="EventEntriesType">
+		<sequence>
+			<element name="EventEntry" type="cmn:EventEntryType"
+				maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="EventEntryType">
+		<sequence>
+			<element name="Id" type="string" maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="NameResourceBundleKey" type="string"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="ShortDescriptionResourceBundleKey" type="string"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="LongDescriptionResourceBundleKey" type="string"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="EventArguments" type="cmn:EventArgumentsType">
+			</element>
+			<element name="ElementScope" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="Domain"></enumeration>
+						<enumeration value="Local"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ElementSeverity" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="Information"></enumeration>
+						<enumeration value="Monitor"></enumeration>
+						<enumeration value="OK"></enumeration>
+						<enumeration value="NonCritical"></enumeration>
+						<enumeration value="Critical"></enumeration>
+						<enumeration value="NonRecoverable"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="EventArgumentsType">
+		<sequence>
+			<element name="Argument" type="cmn:ArgumentType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ArgumentType">
+		<sequence>
+			<element name="ArgumentName" type="string" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="IsSymbol" type="boolean" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+</schema>

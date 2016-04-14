@@ -1,0 +1,149 @@
+<form name="ExpressionBuilderForm" novalidate>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+			   <div class="form-group">
+					<input type="text" ng-model="displayValue"
+						 ng-model-options="{updateOn: 'default blur'}"
+						 size="32" ng-required="true" 
+						 style="font-weight: bold; font-size: 1.1em">
+				</div>	 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			 <div class="form-group">
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('+')">&#43;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('*')">&#42;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('/')">&#47;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('-')">&minus;</button>
+			 </div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">				
+					<button class="btn fixed_width_60" type="button"
+						ng-click="buildExpression('1')">1</button>
+					<button class="btn fixed_width_60" type="button"
+						ng-click="buildExpression('2')">2</button>
+					<button class="btn fixed_width_60" type="button"
+						ng-click="buildExpression('3')">3</button>
+					<button class="btn fixed_width_60" type="button"
+						ng-click="buildExpression('4')">4</button>
+				</div>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">				
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('5')">5</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('6')">6</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('7')">7</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('8')">8</button>					
+			  </div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('9')">9</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('0')">0</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('[')">&#91;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(']')">&#93;</button>							
+			  </div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('=')">&#61;</button>				
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('(')">&#40;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(')')">&#41;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('%')">&#37;</button>					
+			  </div>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">	
+			 	<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('>')">&gt;</button>						
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('<')">&lt;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('{')">&#123;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('}')">&#125;</button>				
+			  </div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('gt')">gt</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('lt')">lt</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('&')">&amp;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('|')">&#124;</button>											
+			  </div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">			
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(34)">&quot;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(39)">&#39;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('.')">&#46;</button>	 	
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(';')">&#59;</button>							
+			  </div>		
+			</div>
+		</div>
+		<div class="row">		
+			<div class="col-md-3">
+			  <div class="form-group">				  	
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression(',')">&#44;</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('true')">true</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="buildExpression('false')">false</button>
+				<button class="btn fixed_width_60" type="button"
+					ng-click="backSpace()">&larr;</button>				
+			  </div>			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+			  <div class="form-group">			
+				  <button ng-click="ok(displayValue)" class="btn btn-success" 
+						ng-disabled="!displayValue || ExpressionBuilderForm.$invalid">Ok</button>
+				  <button ng-click="reset()" class="btn btn-warning">Reset</button>
+			  </div>	
+			</div>
+		</div>
+	</div> 
+</form>

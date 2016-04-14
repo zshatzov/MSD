@@ -1,0 +1,22 @@
+
+<div class="modal-header">
+	<h4 style="color: white">Validation results for {{panelLabel}}</h4>
+</div>
+<div class="modal-body">	  
+	<div ng-if="errorsExist()"> 
+		 <div ng-repeat="error in errors track by $index">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-danger">{{error}}</li>
+			</ul>
+		</div>
+	</div>
+	<div ng-if="!errorsExist()">
+		<ul class="list-group">
+		 	<li class="list-group-item list-group-item-success">No validation errors</li>
+		 </ul>	
+	</div>
+	<!-- End Images -->
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-warning" ng-click="close()">Close</button>
+</div>

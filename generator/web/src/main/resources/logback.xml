@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%date{ISO8601} [%thread] %-3level %logger{48}: %msg %n</Pattern>
+		</encoder>		
+	</appender>
+ 
+  	<appender name="APPLICATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${user.home}/Avocent/artifacts/logs/plugins_generator.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <!-- daily rollover -->
+			<FileNamePattern>plugins_generator.%d{yyyy-MM-dd}.log</FileNamePattern> 
+			<!-- keep 7 days' worth of history -->
+			<maxHistory>7</maxHistory>			
+		</rollingPolicy> 
+		<encoder>
+			<Pattern>%date{ISO8601} [%thread] %-3level %logger{48}: %msg %n</Pattern>
+		</encoder>	
+  	</appender>
+  	
+   	<appender name="TOMCAT" class="ch.qos.logback.core.FileAppender">
+		<File>${user.home}/Avocent/artifacts/logs/tomcat.log</File>  
+		<append>false</append>
+		<encoder>
+			<Pattern>%date{ISO8601} [%thread] %-3level %logger{48}: %msg %n</Pattern>
+		</encoder>
+  	</appender>
+  	
+   	<appender name="SPRING" class="ch.qos.logback.core.FileAppender">
+		<File>${user.home}/Avocent/artifacts/logs/spring.log</File>
+		<append>false</append>
+		<encoder>
+			<Pattern>%date{ISO8601} [%thread] %-3level %logger{48}: %msg %n</Pattern>
+		</encoder>
+  	</appender>
+  	
+	<logger name="com.avocent.plugins.generator" additivity="false">
+	    <level value="INFO" />
+		<appender-ref ref="APPLICATION" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.springframework.web" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="SPRING"/>
+	</logger>
+	
+	<logger name="org.springframework.boot.context.embedded.tomcat" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="TOMCAT"/>
+	</logger>
+	
+	<logger name="org.apache.catalina" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="TOMCAT"/>
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.apache.tomcat" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="TOMCAT"/>
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.apache.coyote" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="TOMCAT"/>
+		<appender-ref ref="CONSOLE" />
+	</logger>
+		
+	<root>	
+		<level value="WARN" />
+		<appender-ref ref="CONSOLE" />		
+	</root>
+</configuration>

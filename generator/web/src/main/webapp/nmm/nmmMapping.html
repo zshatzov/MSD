@@ -1,0 +1,39 @@
+<div ng-controller="NMMMappingCtrl">
+	<accordion close-others="true" class="panel-primary">
+		<accordion-group heading="Identity" class="panel-primary" is-open="true">
+			<div ng-include="'nmm/identitySection.html'"></div>
+		</accordion-group>
+		<accordion-group heading="DSView Version" class="panel-primary">
+			<div ng-include="'nmm/dsviewVersion.html'"></div>
+		</accordion-group>
+		<accordion-group heading="Help Information" class="panel-primary">
+			<div ng-include="'nmm/helpSection.html'"></div>
+		</accordion-group>
+		<accordion-group heading="Operation Interface" class="panel-primary">
+			<div ng-include="'nmm/operationInterface.html'"></div>
+		</accordion-group>
+		<accordion-group heading="Configuration Management Interface" class="panel-primary">
+			<div ng-include="'nmm/configurationManagementInterface.html'"></div>
+		</accordion-group>
+		 <accordion-group heading="Fault Management Interface" class="panel-primary">
+			<div ng-include="'nmm/faultManagementInterface.html'"></div>
+		</accordion-group> <accordion-group heading="Tool Interface" class="panel-primary">
+			<div ng-include="'nmm/toolInterface.html'"></div>
+		</accordion-group>
+		<accordion-group heading="Upload Images" class="panel-primary">
+			<div ng-include="'nmm/uploadImages.html'" 
+					ng-controller="UploadImageCtrl"></div>
+		</accordion-group>
+		<accordion-group heading="Supported Models" class="panel-primary">
+			<div ng-include="'nmm/supportedModels.html'" 
+					ng-controller="ModelConfigurationCtrl"></div>
+		</accordion-group>
+		<accordion-group heading="Supported Files" class="panel-primary">
+			<div ng-include="'nmm/supportedFiles.html'" 
+					ng-controller="FileConfigurationCtrl"></div>
+		</accordion-group>
+	</accordion>
+	<div style="float: right; right: 20px; bottom: 540px;">
+    	<button class="btn btn-primary" ng-click="save()">Save</button>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="modal-header">
+   <h4 style="color: white" class="text-center ">Expression Builder</h4>
+</div>
+<div class="modal-body" ng-cloak>
+   <div class="container-fluid">
+      <div class="row" ng-if="multipleMibs()">
+         <form name="mibFileNamesForm">            
+            <label for="repeatSelect">Select MIB: </label>
+            <select name="selectMibFile" ng-model="selectedMibFileName"
+               ng-change="selectMibTree(selectedMibFileName)"
+               ng-options="option.mibFileName for option in mibFiles">
+            </select>          
+         </form>
+      </div>
+      <div class="row">
+         <div class="col-md-5 tree_scroll_div">
+            <treecontrol class="tree-dark" tree-model="mibTree" 
+               selected-node="selectedNode" expanded-nodes="expandedNodes"
+               filter-expression="filterCriteria" filter-comparator="false"
+               on-selection="showMibNodeDetails(node)" options="treeOptions">
+               {{node.text}}
+            </treecontrol>
+         </div>
+         <div class="col-md-1" style="width: 2%"></div>
+         <div class="col-md-3" ng-show="!mibNodeDetails"></div>
+         <div class="col-md-3" style="background-color: #2e2e1e" ng-show="mibNodeDetails">
+            <div ng-repeat="(key,val) in mibNodeDetails"  class="form-group"> 
+               <label style="color: #F2F2F2;">{{key}}</label>
+               <input ng-if="key !== 'description' && key !== 'syntax'"
+                  class="form-control" type="text" value="{{val}}" 
+                  readonly="readonly" contenteditable="false"></input>
+               <textarea ng-if="key === 'description' || key === 'syntax'"
+                  class="form-control"  rows="5" ng-trim="false" 
+                  readonly="readonly" contenteditable="false" 
+                  draggable="auto">{{val}}</textarea>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div ng-include="'expressionBuilder/calculatorPanel.html'"></div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="form-group">
+            <label for="treeFilter">Filter Expression:</label>
+            <input name="treeFilter" type="text" ng-model="filterCriteria" />
+         </div>
+      </div>
+   </div>
+</div>
+<div class="modal-footer">
+   <button type="button" class="btn btn-warning" ng-click="cancel()">Close</button>
+</div>

@@ -1,0 +1,35 @@
+<header id="apg-header-pane" ng-controller="ActionsCtrl">
+   <nav id="apg-navbar" class="navbar navbar-inverse navbar-static-top">
+      <label class="badge navbar-text"> <img class="icon-bar"
+         alt="Avocent Custom Plugin Generator"
+         src="/resources/images/favicon-32x32.png" />
+         	<span style="color: white; font-weight: bold;">Avocent Custom Plugin Generator</span></label>
+      <br/>   	
+      <!-- Configuration menu -->
+      <div style="float: right; margin-right: 2.5cm; margin-top: -4px;">
+         <div id="apg-edit-page-menu" class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle"
+               ng-hide= "!activeProjectName" data-toggle="dropdown">Actions</button>
+            <ul class="dropdown-menu" role="menu">
+               <li><a data-toggle="modal" ng-click="manageMIB()">Manage MIB Files</a></li>
+               <li><a data-toggle="modal" ng-click="manageNMMXML()">Manage NMM XML  Files</a></li>
+               <li><a data-toggle="modal" ng-click="uploadHelpFile()">Upload Help File</a></li>
+               <li><a data-toggle="modal" ng-click="uploadResourceBundle()">Upload Resource Bundle</a></li>
+               <li><a data-toggle="modal" ng-click="showResources()">Show Resources</a></li>
+               <li><a ng-href='#home'>Exit</a></li>
+            </ul>           
+         </div>
+         <div id="apg-home-page-menu" class="btn-group">
+            <button  ng-show="!activeProjectName" type="button" class="btn btn-primary dropdown-toggle"
+               		data-toggle="dropdown">
+               <div>Actions</div>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+               <li><a href="#new">New Project</a></li>
+               <li><a href="#fromMapping">New Project From File</a></li>
+               <li><a data-toggle="modal" ng-click="uploadSeedPlugin()">Upload Seed Plugin</a></li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+</header>

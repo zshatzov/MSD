@@ -1,0 +1,40 @@
+<div class="modal-header">
+	<h4 style="color: white" class="text-center">Resource Bundle</h4>
+</div>
+<div class="modal-body">
+	<table st-table="bundle" st-safe-src="rowCollection"
+		class="table table-condensed">
+		<thead>
+			<tr>
+				<th colspan="1">
+					<label for="keySearch">Search: </label>
+					<input name="keySearch" st-search="" 
+						placeholder="global search ..." type="text" /></th>
+			</tr>
+			<tr>
+				<th st-sort="key" class="cursorPointer">Key</th>
+				<th st-sort="value" class="cursorPointer">Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr st-select-row="row"  st-select-mode="single" 
+				   ng-repeat="row in bundle">
+				<td>{{row.key}}</td>
+				<td>{{row.value}}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2" class="text-center">
+					<div st-pagination="" st-items-by-page="15"
+						st-displayed-pages="pages"></div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" 
+		ng-click="ok()" ng-disabled="!getSelected()">OK</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

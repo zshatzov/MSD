@@ -1,0 +1,71 @@
+  <div class="modal-header" style="text-align: center;">
+      <h4 style="color:white">Uploaded Project Resources</h4>
+  </div>
+  <div class="modal-body">
+     <div class="container">
+        <div class="row">
+           <div class="col-md-6">                    
+                 <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                       <th>Help File Name</th>
+                       <th>Uploaded Date </th>
+                    </tr>
+                    <tr ng-repeat="help in  helpFiles">
+                       <td>
+                          {{help.fileName}}
+                       </td>
+                       <td>
+                          {{help.uploadedDateFormatted |date: 'medium'}}
+                       </td>
+                    </tr>
+                 </table>
+                 <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                       <th>Image Name</th>
+                       <th>Uploaded Date</th>
+                    </tr>
+                    <tr ng-repeat="image in  images">
+                       <td>
+                          {{image.fileName}}
+                       </td>
+                       <td>
+                          {{image.uploadedDateFormatted |date: 'medium'}}
+                       </td>
+                    </tr>
+                 </table>
+                 <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                       <th>Resource Bundle Name</th>
+                       <th>Uploaded Date </th>
+                    </tr>
+                    <tr ng-repeat="bundle in  bundles">
+                       <td>
+                          {{bundle.fileName}}
+                       </td>
+                       <td>
+                          {{bundle.uploadedDateFormatted |date: 'medium'}}
+                       </td>
+                    </tr>
+                 </table>
+            	    <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                       <th>Custom Code Firmware File</th>
+                       <th>Uploaded Date </th>
+                    </tr>
+                    <tr ng-repeat="code in  customCode">
+                       <td>
+                          {{code.fileName}}
+                       </td>
+                       <td>
+                          {{code.uploadedDateFormatted |date: 'medium'}}
+                       </td>
+                    </tr>
+                 </table>    
+           </div>
+        </div>
+     </div>
+  </div>
+  <br>
+  <div class="modal-footer">
+     <button type="button" class="btn btn-warning" ng-click="cancel()">Close</button>
+  </div> 

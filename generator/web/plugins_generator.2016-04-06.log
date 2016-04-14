@@ -1,0 +1,2 @@
+2016-04-06 14:54:30,618 [http-nio-8080-exec-10] INFO c.a.plugins.generator.web.aop.SaveMappingAspect: Generated XML File mapping for project (One) 
+2016-04-06 15:40:11,959 [http-nio-8080-exec-4] INFO c.a.plugins.generator.web.aop.SaveMappingAspect: Generated XML File mapping for project (Two) 

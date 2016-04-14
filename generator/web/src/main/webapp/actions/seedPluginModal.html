@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<h4 style="color:white" class="text-center">Upload Seed Plugin File</h4>
+</div>
+<div class="modal-body">	
+ 	<form name="UploadSeedPluginForm" ng-submit="upload(seedPlugin)" novalidate>
+ 		<div class="form-group">
+        	 <input type="file" name="file" ngf-select ng-model="seedPlugin"
+             		ng-required="true" ngf-validate-fn="validate($file)">
+        </div>     		
+        <button type="submit" class="btn btn-primary" 
+        		ng-disabled="!seedPlugin || UploadSeedPluginForm.$invalid">Upload</button> 
+   		</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-warning" ng-click="cancel()">Close</button>
+</div>

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-4 text-left">
+        {{item.name}}
+    </div>	
+	<div class="col-md-2 text-center">
+        <img ng-src="{{binaryImageFile(item)}}" 
+          ng-if="isLeaf(item)">
+    </div>	
+    <div class="col-md-2 text-left">
+      <span ng-show="isLeaf(item)">{{item.keyType}}</span>
+    </div>	
+	<div class="col-md-2 text-center">
+      <a href="" ng-click="open(item)" ng-show="!isLeaf(item)">
+        <li class=" glyphicon glyphicon-upload" title="Upload Image"></li>
+      </a>
+    </div>
+	
+	<div class="col-md-2 text-center">
+      <a href="" class=" text-danger" ng-click="removeImage(item)" 
+      		ng-if="isLeaf(item)" title="Delete Image">
+       <li class=" text-danger glyphicon glyphicon-remove-circle"></li>
+      </a>
+    </div>    
+   	<div class="col-md-2 text-center">
+      <a href="" class="text-danger" ng-click="removeImageGrouping(item)"
+      		 ng-if="!isLeaf(item)" title="Delete Image Group">
+       <li class=" glyphicon glyphicon-remove-circle"></li>
+      </a>
+    </div>
+</div>
+

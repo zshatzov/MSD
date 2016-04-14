@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings schemaLocation="./UPSMibMapping.xsd"
+	 version="2.0" 
+	 xmlns="http://java.sun.com/xml/ns/jaxb" 
+	 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+	 
+	 
+	 <globalBindings
+	 	fixedAttributeAsConstantProperty="true"
+        collectionType="java.util.ArrayList"
+        choiceContentProperty="false"
+        typesafeEnumMemberName="generateName"
+        enableFailFastCheck="false"   
+        generateIsSetMethod="false"
+        underscoreBinding="asCharInWord"
+        typesafeEnumBase="xs:string">    
+     </globalBindings>   
+	 
+	 <schemaBindings>
+	 	<package name="com.avocent.plugins.generator.model.ups"/>	 
+	 </schemaBindings>	 
+	 
+	 <bindings node="//xs:complexType[@name='MIBMappingInformationType']">
+    	 <class name="MIBMappingInformation" />	 
+     </bindings>
+	 <bindings node="//xs:complexType[@name='DiscoveryFeatureInformationType']">
+    	 <class name="DiscoveryFeatureInformation" />	 
+     </bindings>
+	 <bindings node="//xs:complexType[@name='PowerCollectionInformationType']"> 	 
+		 <class name="PowerCollectionInformation"/>
+	 </bindings>
+     <bindings node="//xs:complexType[@name='AppliancePropertiesInformationType']">	
+		 <class name="AppliancePropertiesInformation"/>
+	 </bindings>
+ 	 <bindings node="//xs:complexType[@name='UPSInformationType']">	  					
+		 <class name="UPSInformation" />		
+	 </bindings>	
+ 	 <bindings node="//xs:complexType[@name='UPSOperationsInformationType']">	 	 
+		 <class name="UPSOperationsInformation" />
+	 </bindings>		
+	 <bindings node="//xs:complexType[@name='PropertyInformationType']"> 	 
+		 <class name="PropertyInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='EnvironmentInformationType']"> 	 
+		 <class name="EnvironmentInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='UPSBatteryInformationType']"> 	 
+		 <class name="UPSBatteryInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='UPSInputInformationType']"> 	 
+		 <class name="UPSInputInformation"/>
+	 </bindings>		 	 
+	 <bindings node="//xs:complexType[@name='UPSOutputInformationType']"> 	 
+		 <class name="UPSOutputInformation"/>
+	 </bindings>	 
+	 <bindings node="//xs:complexType[@name='UPSBypassInformationType']"> 	 
+		 <class name="UPSBypassInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='UPSControlInformationType']"> 	 
+		 <class name="UPSControlInformation"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='RFC1628Type']"> 	 
+		 <class name="RFC1628Information"/>
+	 </bindings>
+	 <bindings node="//xs:complexType[@name='UPSIdentType']"> 	 
+		 <class name="UPSIdent"/>
+	 </bindings>	
+</bindings>

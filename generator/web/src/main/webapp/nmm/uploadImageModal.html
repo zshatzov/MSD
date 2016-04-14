@@ -1,0 +1,33 @@
+
+<div class="modal-header">
+	<h4 style="color: white">Upload Image</h4>
+</div>
+<div class="modal-body">
+  	<div class="panel panel-default">
+	    <div class="panel panel-header">
+			<h4 class="text text-info" style="text-align: center;">Uploading to Image Group: {{imageGroup.name}}</h4>	
+		</div>
+		<div class="panel panel-body">	
+			<form name="UploadImageFileForm" ng-submit="upload(imageFile, keyTypeOption)" novalidate>
+				<div class="form-group">		
+					<label for="keyTypeOption">Select Key Type: </label> 
+					<select name="keyTypeOption" ng-model="keyTypeOption" ng-required="true">
+					 	<option ng-repeat="option in KEY_TYPE_OPTIONS" 
+					 		value="{{option.value}}" 
+					 		ng-selected="$first? 'selected': ''">{{option.label}}</option>
+					</select>
+				</div>
+		  		<div class="form-group">
+		           	<input type="file" ngf-select ng-model="imageFile"
+		                 name="file" ng-required="true"  ngf-accept="'image/*'" >
+		       	</div>        
+		       	<button type="submit" class="btn btn-primary"       		 
+		    			 ng-disabled="!imageFile || UploadImageFileForm.$invalid">Upload</button>
+		    </form>		
+	    </div>
+ 	 </div>    
+</div>
+<!-- End Images -->
+<div class="modal-footer">
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

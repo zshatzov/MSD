@@ -1,0 +1,53 @@
+<div ng-include="'/template/header.html'"></div>
+<div class="page-header">
+   <h3 class="text-center">Project {{activeProjectName}}</h3>
+</div>
+<div class="container" ng-cloak>
+    <div class="row">
+       <div class="col-md-12">
+          <tabset>
+             <tab ng-repeat="datapoint in datapoints" active="$first">
+                <tab-heading class="cpgTabHeading" ng-right-click="validateContent(datapoint.label, true)" 
+                		 ng-attr-title="{{VALIDATION_TITLE}}">
+                		 {{datapoint.label}}
+                </tab-heading>  
+               	<datapoint-view datapoint="datapoint" active-project-name="activeProjectName"></datapoint-view>
+               	<div style="float: right; right: 20px; bottom: 540px;">
+					<button class="btn btn-primary" ng-click="save()">Save</button>
+				</div>               
+             </tab>
+             <tab>
+                <tab-heading  class="cpgTabHeading" ng-right-click="validateContent('Traps', false)" 
+                		 ng-attr-title="{{VALIDATION_TITLE}}">Traps
+                </tab-heading>
+                <div ng-include="'traps/trapsMapping.html'"></div>
+             </tab>
+             <tab>
+                <tab-heading class="cpgTabHeading" ng-attr-title="{{VALIDATION_TITLE}}"
+                	ng-right-click="validateContent('OBWI', false)">OBWI                    
+                </tab-heading>
+                <div ng-include="'obwi/obwiMapping.html'"></div>
+             </tab>
+             <tab>
+                <tab-heading class="cpgTabHeading"  
+                	ng-attr-title="{{VALIDATION_TITLE}}"
+                	ng-right-click="validateContent('SNMP', false)">SNMP
+                </tab-heading>
+                <div ng-include="'snmp/snmpMapping.html'"></div>
+             </tab>
+             <tab>
+                <tab-heading class="cpgTabHeading" ng-attr-title="{{VALIDATION_TITLE}}" 
+                	ng-right-click="validateContent('NMM', false)">NMM
+                </tab-heading>
+                <div ng-include="'nmm/nmmMapping.html'" class="toolbar"></div>
+             </tab>
+             <tab>
+                <tab-heading class="cpgTabHeading" ng-attr-title="{{VALIDATION_TITLE}}" 
+                	ng-right-click="validateContent('Custom Code', false)">Custom Code
+                </tab-heading>
+                <div ng-include="'customCode/customCodeMapping.html'" class="toolbar"></div>
+             </tab>
+          </tabset>     
+       </div>
+    </div>
+</div>

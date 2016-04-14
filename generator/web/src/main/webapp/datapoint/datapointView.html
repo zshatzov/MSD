@@ -1,0 +1,23 @@
+<accordion close-others="true">
+   <accordion-group  heading="{{group.label}}" class="panel-primary" 
+      ng-repeat="group in datapoint.groups" is-open="$first">
+      <form name="{{group.group}}Form">
+         <div class="panel">
+            <div class="row" style="padding:10px;" ng-repeat="element in group.elements">
+               <label class="col-md-3" for="{{element.name}}"
+                  ng-class="{'required' : element.metadata.required == true}">{{element.label}}</label> 
+               <input type="text" ng-if="!isEnumeratedValue(element)" 
+               		class="col-md-6" name="{{element.name}}" ng-click="expressionBuilder(element, false)"
+                    ng-model="element.value" ng-required="true"
+                    ng-readonly="true" ng-class="{'errorField': {{group.group}}Form.input.$invalid && userErrors}"></input>
+               <select ng-model="element.value" ng-if="isEnumeratedValue(element)"
+               	 	name="{{element.name}}" ng-required="true" required="required">
+               	  <option value="">--Options--</option>
+                  <option ng-repeat="option in element.metadata.enumeration">{{option}}</option>      
+               </select>
+            </div>
+         </div>
+      </form>
+   </accordion-group>
+</accordion>
+

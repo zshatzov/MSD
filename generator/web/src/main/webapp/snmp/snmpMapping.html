@@ -1,0 +1,28 @@
+<div ng-controller="SNMPCtrl">
+	<accordion close-others="true">
+	   <accordion-group class="panel-primary" heading="SNMP Details" is-open="true">
+	      <form name="SNMPForm">
+	         <div class="container">
+	            <div class="row">
+	               <label class="required col-md-3" style="padding-top: 10px;margin-left:10px;">SNMP Version Supported</label>          
+	               <div class="checkbox col-md-3">
+	                  <div class="row">
+	                    <label for="snmpv1" class="col-md-4">SNMP v1</label>
+	                  	<input name="snmpv1" type="checkbox" class="col-md-2" 
+	                  		ng-model="snmpMapping.isSNMPv1Supported">                
+	                  </div> 
+	                  <div class="row">
+	                    <label for="snmpv3" class="col-md-4">SNMP v3</label>
+	                  	<input name="snmpv3" type="checkbox" class="col-md-2" 
+	                  		ng-model="snmpMapping.isSNMPv3Supported">                
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	      </form>
+	   </accordion-group>
+	</accordion>
+  <div style="float: right; right: 20px; bottom: 540px;">
+      <button class="btn btn-primary" ng-click="save()">Save</button>
+   </div>
+</div>

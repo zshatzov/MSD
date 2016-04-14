@@ -1,0 +1,25 @@
+<div ng-include="'/template/header.html'"></div>
+<div class="page-header">
+   <h3 class="text text-center">Project Dashboard</h3>
+</div>
+<tabset active="activeJustified" justified="true">
+ 	<tab>
+ 		<tab-heading class="cpgTabHeading">
+ 			In Progress
+ 		</tab-heading>
+   		<div ng-include="'project/inProgressTab.html'"></div>
+ 	</tab>
+ 	<tab>
+ 		<tab-heading class="cpgTabHeading">
+ 			Completed
+ 		</tab-heading>
+   		<div ng-include="'project/completedTab.html'"></div>
+ 	</tab>
+ 	<tab>
+ 		<tab-heading class="cpgTabHeading">
+ 			Generated
+ 		</tab-heading>
+   		<div ng-include="'project/generatedTab.html'"></div>
+ 	</tab>
+</tabset>
+

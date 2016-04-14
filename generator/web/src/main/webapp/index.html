@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="cpgApp">
+  <head>
+    <title>Custom Plugin Generator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/resources/images/favicon-96x96.png">
+    <link rel="stylesheet" href="/resources/styles/tree-control.css">    
+    <link rel="stylesheet" href="/resources/styles/adapt-strap.min.css"/>
+    <link rel="stylesheet" href="/resources/styles/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/resources/styles/bootstrap-multiselect.css"></link>
+    <link rel="stylesheet" href="/resources/styles/loading-bar.min.css"></link>    	      
+	<link rel="stylesheet" href="/resources/styles/custom.css">
+  </head>
+  
+  <body>
+	<div class="container-fluid">
+		<main class="panel panel-body">
+			<div ng-view="ng-view"></div>
+		</main>
+	 	<div ng-include="'/template/footer.html'"></div>
+	</div>
+	<script src="/resources/script/jquery.min.js"></script>   
+    <script src="/resources/script/angular.min.js"></script>
+    <script src="/resources/script/angular-resource.min.js"></script>
+    <script src="/resources/script/angular-route.min.js"></script>
+    <script src="/resources/script/angular-local-storage.min.js"></script>    
+    <script src="/resources/script/ng-file-upload-shim.min.js"></script>
+    <script src="/resources/script/ng-file-upload.min.js"></script>
+    <script src="/resources/script/ng-context-menu.min.js"></script>
+    <script src="/resources/script/angular-tree-control.js"></script> 
+	<script src="/resources/script/angular-datatables.min.js"></script>
+	<script src="/resources/script/smart-table.min.js"></script> 
+	<script src="/resources/script/angular-sanitize.min.js"></script>
+	<script src="/resources/script/adapt-strap.min.js"></script>
+	<script src="/resources/script/adapt-strap.tpl.min.js"></script> 
+    <script src="/resources/script/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/script/lodash-4.0.0.min.js"></script>
+    <script type="text/javascript" src="/resources/script/angularjs-dropdown-multiselect.min.js"></script>
+    <script src="/resources/script/underscore-min.js"></script>
+    <script src="/resources/script/underscore-contrib.min.js"></script>	  	    
+    <script src="/resources/script/ui-bootstrap-tpls-0.10.0.min.js"></script>
+    <script src="/resources/script/loading-bar.min.js"></script>
+    <script src="/resources/script/cpgApp.js"></script>
+	<script src="/resources/script/controllers/BaseController.js"></script>
+	<script src="/project/ProjectController.js"></script>
+	<script src="/project/InProgressProjectController.js"></script>
+	<script src="/project/CompletedProjectController.js"></script>
+	<script src="/project/GeneratedProjectController.js"></script>
+	<script src="/project/ActiveProjectController.js"></script>	
+	<script src="/actions/ActionsController.js"></script>
+	<script src="/nmm/NMMMappingController.js"></script>
+	<script src="/nmm/FileConfigurationController.js"></script>
+	<script src="/nmm/ModelConfigurationController.js"></script>
+	<script src="/nmm/UploadImageController.js"></script>
+	<script src="/nmm/UploadImageInstanceController.js"></script>		
+	<script src="/customCode/CustomCodeController.js"></script>
+	<script src="/resources/script/controllers/ResourceBundleInstanceController.js"></script>
+	<script src="/nmm/ApiTypeInstanceController.js"></script>
+	<script src="/traps/TrapsController.js"></script>	
+	<script src="/datapoint/DatapointViewController.js"></script>
+	<script src="/obwi/OBWIController.js"></script>
+	<script src="/snmp/SNMPController.js"></script>
+	<script src="/serverValidation/ServerValidationInstanceController.js"></script>
+	<script src="/mibTree/MibTreeMappingController.js"></script>
+	<script src="/expressionBuilder/ExpressionBuilderInstanceController.js"></script>
+	<script src="/actions/ShowResourcesInstanceController.js"></script>
+	<script src="/actions/ManageMIBInstanceController.js"></script>
+	<script src="/actions/UploadResourceBundleInstanceController.js"></script>
+	<script src="/actions/UploadHelpFileInstanceController.js"></script>
+	<script src="/actions/ManageNMMXMLInstanceController.js"></script>
+	<script src="/actions/UploadSeedPluginInstanceController.js"></script>
+	<script src="/project/DownloadPluginInstanceController.js"></script>
+	<script src="/project/PreviewProjectInstanceController.js"></script>
+	<script src="/project/ProjectService.js"></script>
+	<script src="/nmm/NMMService.js"></script>
+	<script src="/nmm/NMMModel.js"></script>
+	<script src="/resources/script/services/ResourceBundleService.js"></script>
+	<script src="/nmm/ApiTypeService.js"></script>
+	<script src="/customCode/CustomCodeService.js"></script>
+	<script src="/mibTree/MibService.js"></script>  
+	<script src="/traps/TrapsService.js"></script>   
+	<script src="/datapoint/DatapointService.js"></script>	 
+	<script src="/obwi/OBWIService.js"></script>
+	<script src="/snmp/SNMPService.js"></script>
+	<script src="/datapoint/DatapointViewDirective.js"></script>
+	<script src="/project/RightClickDirective.js"></script>
+	<script src="/resources/script/services/ProjectLinksService.js"></script>
+	<script src="/serverValidation/ServerValidationService.js"></script>
+  </body>
+</html>

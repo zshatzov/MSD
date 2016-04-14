@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<h4 style="color: white" class="text-center">Model Unique Id</h4>
+</div>
+<div class="modal-body">
+	<table st-table="apiTypeModels" st-safe-src="rowCollection"
+		class="table table-condensed" style="width: 60%">
+		<thead>			
+			<tr>
+				<th st-sort=nmmApiType class="cursorPointer">Model Type</th>
+				<th st-sort="fileName" class="cursorPointer">File Name</th>
+				<th st-sort="uploadedDateFormatted" class="cursorPointer">Date Uploaded</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr st-select-row="row" st-select-mode="single"
+				ng-repeat="row in apiTypeModels">
+				<td>{{row.nmmApiType}}</td>
+				<td>{{row.fileName}}</td>
+				<td>{{row.uploadedDateFormatted}}</td>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,13 @@
+<div ng-controller="TrapsCtrl">
+	<accordion close-others="true" class="panel-primary">
+		<accordion-group heading="Trap MIB Base" class="panel-primary" is-open="true">
+			<div ng-include="'traps/trapsMIBBase.html'"></div>
+		</accordion-group>
+		<accordion-group heading="Event Entry Table" class="panel-primary">
+			<div ng-include="'traps/eventEntries.html'"></div>
+		</accordion-group>
+	</accordion>
+    <div style="float: right; right: 20px; bottom: 540px;">
+   		<button class="btn btn-primary" ng-click="save()">Save</button>
+	</div>
+</div>

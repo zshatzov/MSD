@@ -1,0 +1,22 @@
+#
+# Spring-Boot tries to autoconfigure Groovy Templates, so disable
+# this feature. We are not using any groovy templates engines! 
+#
+spring.groovy.template.check-template-location: false
+
+#
+# MongoDB configuration
+#
+spring.data.mongodb.uri: mongodb://localhost:27017/plugins
+
+#
+# Tomcat Configuration
+#
+tomcat.version: 8.0.32
+
+#
+# Multipart File Upload Configuration
+#
+multipart.maxFileSize: 80MB
+multipart.maxRequestSize: 40MB
+multipart.fileSizeThreshold : 512KB
