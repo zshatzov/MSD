@@ -1,7 +1,0 @@
-2016-04-07 15:44:05,815 [Test worker] INFO c.a.p.g.web.controller.ProjectRestControllerTest: Starting ProjectRestControllerTest on sun-dev-12 with PID 27060 (/home/zshatzov/generator/web/build/classes/test started by zshatzov in /home/zshatzov/generator/web) 
-2016-04-07 15:44:09,212 [Test worker] INFO c.a.p.g.web.controller.ProjectRestControllerTest: Started ProjectRestControllerTest in 3.603 seconds (JVM running for 4.946) 
-2016-04-07 15:44:09,946 [main] INFO c.a.p.generator.PluginsGeneratorApplication: Starting plugins generator application... 
-2016-04-07 15:44:10,182 [main] INFO c.a.p.generator.PluginsGeneratorApplication: Starting PluginsGeneratorApplication on sun-dev-12 with PID 27097 (/home/zshatzov/generator/web/build/classes/main started by zshatzov in /home/zshatzov/generator/web) 
-2016-04-07 15:44:14,568 [main] INFO c.a.p.generator.PluginsGeneratorApplication: Initialize the views collection if needed 
-2016-04-07 15:44:14,598 [main] INFO c.a.p.generator.PluginsGeneratorApplication: Started PluginsGeneratorApplication in 4.649 seconds (JVM running for 5.042) 
-2016-04-07 15:44:44,950 [http-nio-8080-exec-8] INFO c.a.p.g.service.ProjectFromMappingsPopulater: Processing mapping file (mibMapping5305799040667810301xml) 

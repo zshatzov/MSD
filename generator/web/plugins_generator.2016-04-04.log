@@ -1,2 +1,0 @@
-2016-04-04 09:23:13,578 [http-nio-8080-exec-8] INFO c.a.plugins.generator.web.aop.SaveMappingAspect: Project (PM5000) is incomplete skipping XML file generation 
-2016-04-04 09:23:23,276 [http-nio-8080-exec-10] INFO c.a.plugins.generator.web.aop.SaveMappingAspect: Project (PM5000) is incomplete skipping XML file generation 
