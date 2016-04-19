@@ -30,11 +30,11 @@ public final class SnmpVariableBinding implements Serializable{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SnmpVariableBinding{");
+        final StringBuilder sb = new StringBuilder("SnmpVariableBinding(");
         sb.append("oid='").append(oid).append('\'');
         sb.append(", value='").append(value).append('\'');
         sb.append(", type='").append(variableType).append('\'');
-        sb.append('}');
+        sb.append(')');
         return sb.toString();
     }
 }
