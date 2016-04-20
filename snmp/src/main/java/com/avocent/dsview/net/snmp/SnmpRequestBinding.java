@@ -3,6 +3,13 @@ package com.avocent.dsview.net.snmp;
 import java.io.Serializable;
 
 /**
+ * <p>
+ * An object that encapsulates all the necessary info to configure the payload
+ * of either a SNMPv1 or SNMPv3 request.
+ * </p>
+ *
+ *
+ *
  * Created by zshatzov on 4/19/2016.
  */
 public final class SnmpRequestBinding implements Serializable{
@@ -14,6 +21,9 @@ public final class SnmpRequestBinding implements Serializable{
     private final String oid;
     private final String communityString;
 
+    /**
+     * The following properties can be configured to handle the USM data required for a SNMPv3 request
+     */
     private SecurityLevel securityLevel;
     private String securityName;
     private String authenticationPassphrase;
@@ -92,7 +102,7 @@ public final class SnmpRequestBinding implements Serializable{
 
     /**
      * <p>
-     * The authentication protcol ID to be associated with this user. If set to null, this user only supports unauthenticated messages.
+     * The authentication protocol ID to be associated with this user. If set to null, this user only supports unauthenticated messages.
      * </p>
      * @return
      */
