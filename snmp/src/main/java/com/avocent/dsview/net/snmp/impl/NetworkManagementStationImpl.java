@@ -27,9 +27,9 @@ import java.util.stream.Stream;
  *
  *
  * <p>
- *     An implementation of a <code>SNMP Network Management Station component</code>.
+ *     An implementation of a <code>SNMP Network Management Station</code>.
  *     This implementation uses an open source library <em>SNMP4J</em> to perform
- *     GET/SET request on SNMP agents.
+ *     GET/SET request on a SNMP agent.
  * </p>
  */
 public class NetworkManagementStationImpl implements NetworkManagementStation{
@@ -193,11 +193,11 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
+    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener, final Stream<SnmpRequestBinding> bindings) {
 
         LOGGER.finest("Process async SNMPv1 requests");
 
-        final List<SnmpResponse> responses = new ArrayList<>();
+        final List<SnmpV1Response> responses = new ArrayList<>();
         bindings.forEach(binding -> {
                 CompletableFuture<SnmpV1Response> completableFuture =
                      CompletableFuture.supplyAsync(() -> {return getSnmpV1(binding);});
@@ -220,10 +220,10 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
+    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener, final Stream<SnmpRequestBinding> bindings) {
         LOGGER.finest("Process async SNMPv3 requests");
 
-        final List<SnmpResponse> responses = new ArrayList<>();
+        final List<SnmpV3Response> responses = new ArrayList<>();
         bindings.forEach(binding -> {
             CompletableFuture<SnmpV3Response> completableFuture =
                     CompletableFuture.supplyAsync(() -> {return getSnmpV3(binding);});
