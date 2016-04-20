@@ -181,6 +181,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
      * @param bindings One or more SNMPv1 request to be processed
      */
+    @Override
     public void getSnmpV1Async(SnmpGetEventListener listener, Stream<SnmpRequestBinding> bindings) {
         final List<SnmpResponse> responses = new ArrayList<>();
         bindings.forEach(binding -> {
@@ -189,10 +190,36 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
 
                 try {
                      responses.add(completableFuture.get());
-                }catch (InterruptedException | ExecutionException IGNORE){
+                }catch (InterruptedException | ExecutionException e){
+                    LOGGER.log(Level.SEVERE,
+                            "Failed to retrieve async result for SNMPv1 GET request", e);
                 }
         });
 
-        listener.processResults(responses.stream());
+        listener.handleResult(responses.stream());
+    }
+
+    /**
+     * <p>A method that processes multiple asynchronous SNMPv3 GET requests</p>
+     *
+     * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
+     * @param bindings One or more SNMPv1 request to be processed
+     */
+    @Override
+    public void getSnmpV3Async(SnmpGetEventListener listener, Stream<SnmpRequestBinding> bindings) {
+        final List<SnmpResponse> responses = new ArrayList<>();
+        bindings.forEach(binding -> {
+            CompletableFuture<SnmpV1Response> completableFuture =
+                    CompletableFuture.supplyAsync(() -> {return getSnmpV3(binding);});
+
+            try {
+                responses.add(completableFuture.get());
+            }catch (InterruptedException | ExecutionException e){
+                LOGGER.log(Level.SEVERE,
+                        "Failed to retrieve async result for SNMPv3 GET request", e);
+            }
+        });
+
+        listener.handleResult(responses.stream());
     }
 }
