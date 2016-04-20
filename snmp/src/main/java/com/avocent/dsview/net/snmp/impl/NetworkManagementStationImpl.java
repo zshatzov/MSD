@@ -178,6 +178,9 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV1Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
+
+        LOGGER.finest("Process async SNMPv1 requests");
+
         final List<SnmpResponse> responses = new ArrayList<>();
         bindings.forEach(binding -> {
                 CompletableFuture<SnmpV1Response> completableFuture =
@@ -202,6 +205,8 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV3Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
+        LOGGER.finest("Process async SNMPv3 requests");
+
         final List<SnmpResponse> responses = new ArrayList<>();
         bindings.forEach(binding -> {
             CompletableFuture<SnmpV3Response> completableFuture =
