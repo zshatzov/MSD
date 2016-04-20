@@ -9,12 +9,14 @@ import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.SecurityModels;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
+import org.snmp4j.security.UsmUser;
 import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -144,6 +146,20 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             pdu = new ScopedPDU();
             pdu.setType(PDU.GET);
             pdu.add(new VariableBinding(new OID(binding.getOid())));
+
+            if(Objects.nonNull(binding.getUserSecurityModel())) {
+                LOGGER.finest("Setup USM user credetinals to establish secure communications");
+                snmp.getUSM().addUser(
+                        new OctetString(binding.getUserSecurityModel().getSecurityName()),
+                        new UsmUser(
+                                new OctetString(binding.getUserSecurityModel().getSecurityName()),
+                                new OID(binding.getUserSecurityModel().getAuthenticationProtocol()),
+                                new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()),
+                                new OID(binding.getUserSecurityModel().getPrivacyProtocol()),
+                                new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase())
+                        )
+                );
+            }
 
             ResponseEvent event = snmp.send(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();

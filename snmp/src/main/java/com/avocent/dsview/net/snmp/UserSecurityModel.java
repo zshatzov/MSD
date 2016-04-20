@@ -20,12 +20,36 @@ public class UserSecurityModel implements Serializable{
     }
 
     private SecurityLevel securityLevel;
+    private String userName;
     private String securityName;
     private String authenticationPassphrase;
     private String privacyPassphrase;
     private String authenticationProtocol;
     private String privacyProtocol;
-    private String localizationEngineID;
+
+    /**
+     * A convenience builder method that can be chained with another method.
+     * Note - If <em>userName</em> is given as null this method will setup it's value to
+     * be that of <em>securityName</em>
+     *
+     * @param userName
+     * @param securityName
+     * @return
+     */
+    public UserSecurityModel addUserInfo(String userName, String securityName){
+        if(Objects.nonNull(securityName)){
+            setSecurityName(securityName);
+        }
+
+        if(Objects.nonNull(userName)){
+            setUserName(userName);
+        }else{
+            setUserName(securityName);
+        }
+
+        return this;
+    }
+
 
     /**
      * A convenience builder method that can be chained with another method
@@ -93,14 +117,6 @@ public class UserSecurityModel implements Serializable{
         this.authenticationProtocol = authenticationProtocol;
     }
 
-    public String getLocalizationEngineID() {
-        return localizationEngineID;
-    }
-
-    public void setLocalizationEngineID(String localizationEngineID) {
-        this.localizationEngineID = localizationEngineID;
-    }
-
     public String getPrivacyPassphrase() {
         return privacyPassphrase;
     }
@@ -146,8 +162,24 @@ public class UserSecurityModel implements Serializable{
         return securityName;
     }
 
+    /**
+     *
+     * @param securityName The security name of the user (typically the user name)
+     */
     public void setSecurityName(String securityName) {
         this.securityName = securityName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     *
+     * @param userName A user name
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -159,7 +191,6 @@ public class UserSecurityModel implements Serializable{
         sb.append(", privacyPassphrase='").append(privacyPassphrase).append('\'');
         sb.append(", authenticationProtocol='").append(authenticationProtocol).append('\'');
         sb.append(", privacyProtocol='").append(privacyProtocol).append('\'');
-        sb.append(", localizationEngineID='").append(localizationEngineID).append('\'');
         sb.append(')');
         return sb.toString();
     }
