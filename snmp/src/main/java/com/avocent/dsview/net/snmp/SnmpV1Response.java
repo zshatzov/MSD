@@ -1,6 +1,8 @@
 package com.avocent.dsview.net.snmp;
 
 /**
+ * <p>A SNMPv1 implementation of the base class {@link SnmpResponse}</p>
+ *
  * Created by zshatzov on 4/19/2016.
  */
 public class SnmpV1Response extends SnmpResponse{

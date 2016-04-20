@@ -13,16 +13,40 @@ import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  * Created by zshatzov on 4/19/2016.
+ *
+ *
+ * <p>
+ *     An implementation of a <code>SNMP Network Management Station component</code>.
+ *     This implementation uses an open source library <em>SNMP4J</em> to perform
+ *     GET/SET request on SNMP agents.
+ * </p>
  */
 public class NetworkManagementStationImpl implements NetworkManagementStation{
+
+    private static final Logger LOGGER = Logger.getLogger(NetworkManagementStationImpl.class.getName());
+
+    /**
+     * <p>A synchronous SNMPv1 get request</p>
+     *
+     * @param binding An object that encapsulates the variable binding and agent info
+     * @return SnmpV1Response
+     */
     @Override
-    public SnmpV1Response getSnmpV1(final SnmpRequestBinding binding)
-            throws SnmpGetException {
+    public SnmpV1Response getSnmpV1(final SnmpRequestBinding binding){
+
+        LOGGER.finest("Process Get SNMPv1 request");
 
         if (null == binding.getHost() || binding.getHost().isEmpty()) {
+            LOGGER.severe("Host is null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
@@ -33,6 +57,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             snmp = new Snmp(transport);
             transport.listen();
         }catch (IOException e){
+            LOGGER.log(Level.SEVERE, "GET SNMPv1 transport configuration failed", e);
             throw new SnmpGetException("Failed to configure UDP transport", e);
         }
 
@@ -60,9 +85,13 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
                 String type = vb.getVariable().getSyntaxString();
                 response.addVariableBinding(oid, value, type);
             }
+
+            LOGGER.finest("Successfully processed SNMPv1 get request");
+
             return response;
         } catch (IOException e) {
-            throw new SnmpGetException("SnmpV1 get request failed", e);
+            LOGGER.log(Level.SEVERE, "SNMPv1 get request failed", e);
+            throw new SnmpGetException("SNMPv1 get request failed", e);
         }finally {
             if(null != snmp){
                 try {
@@ -73,9 +102,14 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
         }
     }
 
+    /**
+     * <p>A synchronous SNMPv3 get request</p>
+     *
+     * @param binding An object that encapsulates the variable binding and agent info
+     * @return SnmpV3Response
+     */
     @Override
-    public SnmpV3Response getSnmpV3(final SnmpRequestBinding binding)
-            throws SnmpGetException {
+    public SnmpV3Response getSnmpV3(final SnmpRequestBinding binding){
 
         if (null == binding.getHost() || binding.getHost().isEmpty()) {
             throw new SnmpGetException("Host is missing");
@@ -109,7 +143,12 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
 
             pdu = new ScopedPDU();
             pdu.setType(PDU.GET);
-            pdu.add(new VariableBinding(new OID(binding.getOid())));
+            pdu.add(new VariableBinding(new OID(binding   /**
+     * <p>A synchronous SNMPv1 get request</p>
+     *
+     * @param binding An object that encapsulates the variable binding and agent info
+     * @return SnmpV1Response
+     */.getOid())));
 
             ResponseEvent event = snmp.send(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
@@ -134,5 +173,26 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
                 }
             }
         }
+    }
+
+    /**
+     * <p>A method that processes multiple asynchronous SNMPv1 GET requests</p>
+     *
+     * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
+     * @param bindings One or more SNMPv1 request to be processed
+     */
+    public void getSnmpV1Async(SnmpGetEventListener listener, Stream<SnmpRequestBinding> bindings) {
+        final List<SnmpResponse> responses = new ArrayList<>();
+        bindings.forEach(binding -> {
+                CompletableFuture<SnmpV1Response> completableFuture =
+                     CompletableFuture.supplyAsync(() -> {return getSnmpV1(binding);});
+
+                try {
+                     responses.add(completableFuture.get());
+                }catch (InterruptedException | ExecutionException IGNORE){
+                }
+        });
+
+        listener.processResults(responses.stream());
     }
 }
