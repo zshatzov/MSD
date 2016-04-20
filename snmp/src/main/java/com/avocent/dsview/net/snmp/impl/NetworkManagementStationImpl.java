@@ -9,12 +9,14 @@ import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.SecurityModels;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
+import org.snmp4j.security.UsmUser;
 import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +27,9 @@ import java.util.stream.Stream;
  *
  *
  * <p>
- *     An implementation of a <code>SNMP Network Management Station component</code>.
+ *     An implementation of a <code>SNMP Network Management Station</code>.
  *     This implementation uses an open source library <em>SNMP4J</em> to perform
- *     GET/SET request on SNMP agents.
+ *     GET/SET request on a SNMP agent.
  * </p>
  */
 public class NetworkManagementStationImpl implements NetworkManagementStation{
@@ -145,6 +147,20 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             pdu.setType(PDU.GET);
             pdu.add(new VariableBinding(new OID(binding.getOid())));
 
+            if(Objects.nonNull(binding.getUserSecurityModel())) {
+                LOGGER.finest("Setup USM user credetinals to establish secure communications");
+                snmp.getUSM().addUser(
+                        new OctetString(binding.getUserSecurityModel().getSecurityName()),
+                        new UsmUser(
+                                new OctetString(binding.getUserSecurityModel().getSecurityName()),
+                                new OID(binding.getUserSecurityModel().getAuthenticationProtocol()),
+                                new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()),
+                                new OID(binding.getUserSecurityModel().getPrivacyProtocol()),
+                                new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase())
+                        )
+                );
+            }
+
             ResponseEvent event = snmp.send(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
             int errorStatusCode = event.getResponse().getErrorStatus();
@@ -177,8 +193,11 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
-        final List<SnmpResponse> responses = new ArrayList<>();
+    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener, final Stream<SnmpRequestBinding> bindings) {
+
+        LOGGER.finest("Process async SNMPv1 requests");
+
+        final List<SnmpV1Response> responses = new ArrayList<>();
         bindings.forEach(binding -> {
                 CompletableFuture<SnmpV1Response> completableFuture =
                      CompletableFuture.supplyAsync(() -> {return getSnmpV1(binding);});
@@ -201,8 +220,10 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
-        final List<SnmpResponse> responses = new ArrayList<>();
+    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener, final Stream<SnmpRequestBinding> bindings) {
+        LOGGER.finest("Process async SNMPv3 requests");
+
+        final List<SnmpV3Response> responses = new ArrayList<>();
         bindings.forEach(binding -> {
             CompletableFuture<SnmpV3Response> completableFuture =
                     CompletableFuture.supplyAsync(() -> {return getSnmpV3(binding);});
