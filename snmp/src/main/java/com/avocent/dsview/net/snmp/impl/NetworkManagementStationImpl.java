@@ -143,12 +143,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
 
             pdu = new ScopedPDU();
             pdu.setType(PDU.GET);
-            pdu.add(new VariableBinding(new OID(binding   /**
-     * <p>A synchronous SNMPv1 get request</p>
-     *
-     * @param binding An object that encapsulates the variable binding and agent info
-     * @return SnmpV1Response
-     */.getOid())));
+            pdu.add(new VariableBinding(new OID(binding.getOid())));
 
             ResponseEvent event = snmp.send(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
@@ -181,7 +176,8 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
      * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
      * @param bindings One or more SNMPv1 request to be processed
      */
-    public void getSnmpV1Async(SnmpGetEventListener listener, Stream<SnmpRequestBinding> bindings) {
+    @Override
+    public void getSnmpV1Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
         final List<SnmpResponse> responses = new ArrayList<>();
         bindings.forEach(binding -> {
                 CompletableFuture<SnmpV1Response> completableFuture =
@@ -189,10 +185,36 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
 
                 try {
                      responses.add(completableFuture.get());
-                }catch (InterruptedException | ExecutionException IGNORE){
+                }catch (InterruptedException | ExecutionException e){
+                    LOGGER.log(Level.SEVERE,
+                            "Failed to retrieve async result for SNMPv1 GET request", e);
                 }
         });
 
-        listener.processResults(responses.stream());
+        listener.handleResult(responses.stream());
+    }
+
+    /**
+     * <p>A method that processes multiple asynchronous SNMPv3 GET requests</p>
+     *
+     * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
+     * @param bindings One or more SNMPv1 request to be processed
+     */
+    @Override
+    public void getSnmpV3Async(final SnmpGetEventListener listener, final Stream<SnmpRequestBinding> bindings) {
+        final List<SnmpResponse> responses = new ArrayList<>();
+        bindings.forEach(binding -> {
+            CompletableFuture<SnmpV3Response> completableFuture =
+                    CompletableFuture.supplyAsync(() -> {return getSnmpV3(binding);});
+
+            try {
+                responses.add(completableFuture.get());
+            }catch (InterruptedException | ExecutionException e){
+                LOGGER.log(Level.SEVERE,
+                        "Failed to retrieve async result for SNMPv3 GET request", e);
+            }
+        });
+
+        listener.handleResult(responses.stream());
     }
 }

@@ -8,5 +8,12 @@ import java.util.stream.Stream;
  */
 @FunctionalInterface
 public interface SnmpGetEventListener {
-    void processResults(Stream<SnmpResponse> results);
+    /**
+     * <p>A <em>Single Abstract Method Interface</em> that provides the result of a single or multiple
+     * <em>SNMP GET</em> request(s) to a registered client listener</p>
+     *
+     *
+     * @param results A {@link java.util.stream.Stream} of {@link SnmpResponse}
+     */
+    void handleResult(Stream<SnmpResponse> results);
 }
