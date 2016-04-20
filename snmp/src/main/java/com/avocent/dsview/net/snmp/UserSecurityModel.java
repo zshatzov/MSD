@@ -29,22 +29,22 @@ public class UserSecurityModel implements Serializable{
 
     /**
      * A convenience builder method that can be chained with another method.
-     * Note - If <em>userName</em> is given as null this method will setup it's value to
-     * be that of <em>securityName</em>
      *
-     * @param userName
-     * @param securityName
+     * @param userName The user name
+     * @param securityName The security name (typically same as the user name). If null default to userName
+     * @param securityLevel An enum that defines authentication and privacy. If null default to SecurityLevel.undefined.
+     *
      * @return
      */
     public UserSecurityModel addUserInfo(String userName, String securityName, SecurityLevel securityLevel){
-        if(Objects.nonNull(securityName)){
-            setSecurityName(securityName);
-        }
-
         if(Objects.nonNull(userName)){
             setUserName(userName);
+        }
+
+        if(Objects.nonNull(securityName)){
+            setSecurityName(securityName);
         }else{
-            setUserName(securityName);
+            setSecurityName(userName);
         }
 
         if(Objects.nonNull(securityLevel)){
@@ -60,8 +60,9 @@ public class UserSecurityModel implements Serializable{
     /**
      * A convenience builder method that can be chained with another method
      *
-     * @param authenticationProtocol
-     * @param authenticationPassphrase
+     * @param authenticationProtocol  The authentication protocol ID to be associated with this user. If set to null, this user only supports unauthenticated messages.
+     * @param authenticationPassphrase The authentication passphrase. If not null, authenticationProtocol must also be not null.
+     *
      * @return
      */
     public UserSecurityModel addAuthenticationInfo(String authenticationProtocol, String authenticationPassphrase){
@@ -79,11 +80,13 @@ public class UserSecurityModel implements Serializable{
     /**
      * A convenience builder method that can be chained with another method
      *
-     * @param privacyProtocol
-     * @param privacyPassphrase
+     * @param privacyProtocol  The privacy protocol ID to be associated with this user. If set to null, this user only supports unencrypted messages.
+     * @param privacyPassphrase The privacy passphrase. If not null, privacyProtocol must also be not null
+     *
      * @return
      */
     public UserSecurityModel addPrivacyInfo(String privacyProtocol, String privacyPassphrase){
+
         if(Objects.nonNull(privacyProtocol)) {
             setAuthenticationProtocol(authenticationProtocol);
         }
