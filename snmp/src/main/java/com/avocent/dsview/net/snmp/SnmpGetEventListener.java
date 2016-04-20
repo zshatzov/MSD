@@ -15,5 +15,5 @@ public interface SnmpGetEventListener <T extends SnmpResponse> {
      *
      * @param results A {@link java.util.stream.Stream} of {@link SnmpResponse}
      */
-    void handleResult(Stream<T> results);
+    void process(Stream<T> results);
 }

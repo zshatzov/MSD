@@ -142,6 +142,10 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             target.setTimeout(1000);
             target.setVersion(SnmpConstants.version3);
             target.setSecurityModel(MessageProcessingModel.MPv3);
+            if(Objects.nonNull(binding.getUserSecurityModel()) &&
+               Objects.nonNull(binding.getUserSecurityModel().getSecurityLevel())){
+                target.setSecurityLevel(binding.getUserSecurityModel().getSecurityLevel().ordinal());
+            }
 
             pdu = new ScopedPDU();
             pdu.setType(PDU.GET);
@@ -210,7 +214,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
                 }
         });
 
-        listener.handleResult(responses.stream());
+        listener.process(responses.stream());
     }
 
     /**
@@ -236,6 +240,6 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             }
         });
 
-        listener.handleResult(responses.stream());
+        listener.process(responses.stream());
     }
 }

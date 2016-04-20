@@ -36,7 +36,7 @@ public class UserSecurityModel implements Serializable{
      * @param securityName
      * @return
      */
-    public UserSecurityModel addUserInfo(String userName, String securityName){
+    public UserSecurityModel addUserInfo(String userName, String securityName, SecurityLevel securityLevel){
         if(Objects.nonNull(securityName)){
             setSecurityName(securityName);
         }
@@ -45,6 +45,12 @@ public class UserSecurityModel implements Serializable{
             setUserName(userName);
         }else{
             setUserName(securityName);
+        }
+
+        if(Objects.nonNull(securityLevel)){
+            setSecurityLevel(securityLevel);
+        }else{
+            setSecurityLevel(SecurityLevel.undefined);
         }
 
         return this;
@@ -105,7 +111,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param authenticationPassphrase  The authentication passphrase.
      */
-    public void setAuthenticationPassphrase(String authenticationPassphrase) {
+    private void setAuthenticationPassphrase(String authenticationPassphrase) {
         this.authenticationPassphrase = authenticationPassphrase;
     }
 
@@ -113,7 +119,7 @@ public class UserSecurityModel implements Serializable{
         return authenticationProtocol;
     }
 
-    public void setAuthenticationProtocol(String authenticationProtocol) {
+    private void setAuthenticationProtocol(String authenticationProtocol) {
         this.authenticationProtocol = authenticationProtocol;
     }
 
@@ -133,7 +139,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param privacyPassphrase  The privacy passphrase
      */
-    public void setPrivacyPassphrase(String privacyPassphrase) {
+    private void setPrivacyPassphrase(String privacyPassphrase) {
         this.privacyPassphrase = privacyPassphrase;
     }
 
@@ -146,7 +152,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param privacyProtocol The privacy protocol ID to be associated with this user
      */
-    public void setPrivacyProtocol(String privacyProtocol) {
+    private void setPrivacyProtocol(String privacyProtocol) {
         this.privacyProtocol = privacyProtocol;
     }
 
@@ -154,7 +160,7 @@ public class UserSecurityModel implements Serializable{
         return securityLevel;
     }
 
-    public void setSecurityLevel(SecurityLevel securityLevel) {
+    private void setSecurityLevel(SecurityLevel securityLevel) {
         this.securityLevel = securityLevel;
     }
 
@@ -166,7 +172,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param securityName The security name of the user (typically the user name)
      */
-    public void setSecurityName(String securityName) {
+    private void setSecurityName(String securityName) {
         this.securityName = securityName;
     }
 
@@ -178,7 +184,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param userName A user name
      */
-    public void setUserName(String userName) {
+    private void setUserName(String userName) {
         this.userName = userName;
     }
 
