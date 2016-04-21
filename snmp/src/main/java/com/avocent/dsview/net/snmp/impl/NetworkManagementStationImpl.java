@@ -39,7 +39,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
     private static final Logger LOGGER = Logger.getLogger(NetworkManagementStationImpl.class.getName());
 
     /**
-     * <p>A synchronous SNMPv1 get request</p>
+     * <p>Perform a synchronous SNMPv1 GET request</p>
      *
      * @param binding An object that encapsulates the variable binding and agent info
      * @return SnmpV1Response
@@ -107,7 +107,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
     }
 
     /**
-     * <p>A synchronous SNMPv3 get request</p>
+     * <p>Perform a synchronous SNMPv3 GET request</p>
      *
      * @param binding An object that encapsulates the variable binding and agent info
      * @return SnmpV3Response

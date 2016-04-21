@@ -1,7 +1,7 @@
 package com.avocent.dsview.net.snmp;
 
 /**
- * * <p>A SNMPv3 implementation of the base class {@link SnmpResponse}</p>
+ * <p>A SNMPv3 implementation of the base class {@link SnmpResponse}</p>
  *
  * Created by zshatzov on 4/19/2016.
  */
