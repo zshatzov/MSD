@@ -1,7 +1,7 @@
 package com.avocent.dsview.net.snmp;
 
 import java.io.Serializable;
-import java.util.Objects;
+import static java.util.Objects.*;
 
 /**
  * <p>
@@ -12,11 +12,13 @@ import java.util.Objects;
  *
  * Created by zshatzov on 4/20/16.
  */
-public class UserSecurityModel implements Serializable{
+public final class UserSecurityModel implements Serializable{
 
     public enum SecurityLevel{undefined, noAuthNoPriv, authNoPriv, authPriv}
+    public enum AuthProtocol{MD5, SHA, SHA224,SHA256, SHA384, SHA512}
+    public enum PrivProtocol{DES, AES, AES128, AES192, AES256}
 
-    public UserSecurityModel() {
+    private UserSecurityModel() {
     }
 
     private SecurityLevel securityLevel;
@@ -24,76 +26,14 @@ public class UserSecurityModel implements Serializable{
     private String securityName;
     private String authenticationPassphrase;
     private String privacyPassphrase;
-    private String authenticationProtocol;
-    private String privacyProtocol;
+    private AuthProtocol authenticationProtocol;
+    private PrivProtocol privacyProtocol;
 
-    /**
-     * A convenience builder method that can be chained with another method.
-     * Note - If <em>userName</em> is given as null this method will setup it's value to
-     * be that of <em>securityName</em>
-     *
-     * @param userName
-     * @param securityName
-     * @return
-     */
-    public UserSecurityModel addUserInfo(String userName, String securityName, SecurityLevel securityLevel){
-        if(Objects.nonNull(securityName)){
-            setSecurityName(securityName);
-        }
 
-        if(Objects.nonNull(userName)){
-            setUserName(userName);
-        }else{
-            setUserName(securityName);
-        }
-
-        if(Objects.nonNull(securityLevel)){
-            setSecurityLevel(securityLevel);
-        }else{
-            setSecurityLevel(SecurityLevel.undefined);
-        }
-
-        return this;
+    public static Builder builder(){
+        return new Builder();
     }
 
-
-    /**
-     * A convenience builder method that can be chained with another method
-     *
-     * @param authenticationProtocol
-     * @param authenticationPassphrase
-     * @return
-     */
-    public UserSecurityModel addAuthenticationInfo(String authenticationProtocol, String authenticationPassphrase){
-        if(Objects.nonNull(authenticationProtocol)) {
-            setAuthenticationProtocol(authenticationProtocol);
-        }
-
-        if(Objects.nonNull(authenticationPassphrase)) {
-            setAuthenticationPassphrase(authenticationPassphrase);
-        }
-
-        return this;
-    }
-
-    /**
-     * A convenience builder method that can be chained with another method
-     *
-     * @param privacyProtocol
-     * @param privacyPassphrase
-     * @return
-     */
-    public UserSecurityModel addPrivacyInfo(String privacyProtocol, String privacyPassphrase){
-        if(Objects.nonNull(privacyProtocol)) {
-            setAuthenticationProtocol(authenticationProtocol);
-        }
-
-        if(Objects.nonNull(privacyPassphrase)) {
-            setAuthenticationPassphrase(authenticationPassphrase);
-        }
-
-        return this;
-    }
 
     public String getAuthenticationPassphrase() {
         return authenticationPassphrase;
@@ -115,11 +55,11 @@ public class UserSecurityModel implements Serializable{
         this.authenticationPassphrase = authenticationPassphrase;
     }
 
-    public String getAuthenticationProtocol() {
+    public AuthProtocol getAuthenticationProtocol() {
         return authenticationProtocol;
     }
 
-    private void setAuthenticationProtocol(String authenticationProtocol) {
+    private void setAuthenticationProtocol(AuthProtocol authenticationProtocol) {
         this.authenticationProtocol = authenticationProtocol;
     }
 
@@ -143,7 +83,7 @@ public class UserSecurityModel implements Serializable{
         this.privacyPassphrase = privacyPassphrase;
     }
 
-    public String getPrivacyProtocol() {
+    public PrivProtocol getPrivacyProtocol() {
         return privacyProtocol;
     }
 
@@ -152,7 +92,7 @@ public class UserSecurityModel implements Serializable{
      *
      * @param privacyProtocol The privacy protocol ID to be associated with this user
      */
-    private void setPrivacyProtocol(String privacyProtocol) {
+    private void setPrivacyProtocol(PrivProtocol privacyProtocol) {
         this.privacyProtocol = privacyProtocol;
     }
 
@@ -199,5 +139,96 @@ public class UserSecurityModel implements Serializable{
         sb.append(", privacyProtocol='").append(privacyProtocol).append('\'');
         sb.append(')');
         return sb.toString();
+    }
+
+    /**
+     * An implementation of a builder helper class to allow
+     * user a seamless construction of the {@link UserSecurityModel} instances.
+     *
+     * @author zshatzov
+     */
+    private static final class Builder{
+
+        private UserSecurityModel usm;
+
+        public Builder(){
+            usm = new UserSecurityModel();
+        }
+
+
+        public UserSecurityModel build(){
+            return usm;
+        }
+
+        /**
+         * A convenience builder method that can be chained with another method.
+         *
+         * @param userName The user name
+         * @param securityName The security name (typically same as the user name). If null default to userName
+         * @param securityLevel An enum that defines authentication and privacy. If null default to SecurityLevel.undefined.
+         *
+         * @return
+         */
+        public Builder addUserInfo(String userName, String securityName, SecurityLevel securityLevel){
+            if(nonNull(userName)){
+                usm.setUserName(userName);
+            }
+
+            if(nonNull(securityName)){
+                usm.setSecurityName(securityName);
+            }else{
+                usm.setSecurityName(userName);
+            }
+
+            if(nonNull(securityLevel)){
+                usm.setSecurityLevel(securityLevel);
+            }else{
+                usm.setSecurityLevel(SecurityLevel.undefined);
+            }
+
+            return this;
+        }
+
+
+        /**
+         * A convenience builder method that can be chained with another method
+         *
+         * @param authenticationProtocol  The authentication protocol ID to be associated with this user. If set to null, this user only supports unauthenticated messages.
+         * @param authenticationPassphrase The authentication passphrase. If not null, authenticationProtocol must also be not null.
+         *
+         * @return
+         */
+        public Builder addAuthenticationInfo(AuthProtocol authenticationProtocol, String authenticationPassphrase){
+            if(nonNull(authenticationProtocol)) {
+                usm.setAuthenticationProtocol(authenticationProtocol);
+            }
+
+            if(nonNull(authenticationPassphrase)) {
+                usm.setAuthenticationPassphrase(authenticationPassphrase);
+            }
+
+            return this;
+        }
+
+        /**
+         * A convenience builder method that can be chained with another method
+         *
+         * @param privacyProtocol  The privacy protocol ID to be associated with this user. If set to null, this user only supports unencrypted messages.
+         * @param privacyPassphrase The privacy passphrase. If not null, privacyProtocol must also be not null
+         *
+         * @return
+         */
+        public Builder addPrivacyInfo(PrivProtocol privacyProtocol, String privacyPassphrase){
+
+            if(nonNull(privacyProtocol)) {
+                usm.setPrivacyProtocol(privacyProtocol);
+            }
+
+            if(nonNull(privacyPassphrase)) {
+                usm.setPrivacyPassphrase(privacyPassphrase);
+            }
+
+            return this;
+        }
     }
 }
