@@ -147,7 +147,7 @@ public final class UserSecurityModel implements Serializable{
      *
      * @author zshatzov
      */
-    private static final class Builder{
+    public static final class Builder{
 
         private UserSecurityModel usm;
 

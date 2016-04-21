@@ -1,5 +1,7 @@
 package com.avocent.dsview.net.snmp.impl;
 
+import static java.util.Objects.*;
+
 import com.avocent.dsview.net.snmp.*;
 import org.snmp4j.*;
 import org.snmp4j.event.ResponseEvent;
@@ -16,7 +18,6 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -148,7 +149,7 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
             pdu.setType(PDU.GET);
             pdu.add(new VariableBinding(new OID(binding.getOid())));
 
-            if(Objects.nonNull(binding.getUserSecurityModel())) {
+            if(nonNull(binding.getUserSecurityModel())) {
                 LOGGER.finest("Setup USM user credetinals to establish secure communications");
                 snmp.getUSM().addUser(
                         new OctetString(binding.getUserSecurityModel().getSecurityName()),

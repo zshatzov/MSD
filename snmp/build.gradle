@@ -1,10 +1,14 @@
+apply plugin: 'java'
+
+
 group 'com.avocent.dsview.protocols'
 version '1.0.0'
 
-apply plugin: 'java'
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+archivesBaseName = 'avctSnmpLib'
+
 
 repositories {
     maven{
@@ -17,4 +21,6 @@ repositories {
 dependencies {
     compile 'org.snmp4j:snmp4j:2.4.3'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.6'
+    testCompile 'org.mockito:mockito-all:1.9.5'
 }
