@@ -23,10 +23,10 @@ public class UserSecurityModelTest {
 
     @Test
     public void addPrivacyInfo() throws Exception{
-        UserSecurityModel usm = builder.addPrivacyInfo(UserSecurityModel.PrivProtocol.AES,
+        UserSecurityModel usm = builder.addPrivacyInfo(UserSecurityModel.PrivProtocol.DES,
                 "helloworld").build();
 
-        assertEquals(usm.getPrivacyProtocol(), UserSecurityModel.PrivProtocol.AES);
+        assertEquals(usm.getPrivacyProtocol(), UserSecurityModel.PrivProtocol.DES);
         assertEquals(usm.getPrivacyPassphrase(), "helloworld");
     }
 
@@ -52,13 +52,13 @@ public class UserSecurityModelTest {
     public void addAll() throws Exception{
         UserSecurityModel usm =
                 builder.addUserInfo("admin", "adminsafe", UserSecurityModel.SecurityLevel.authPriv)
-                       .addPrivacyInfo(UserSecurityModel.PrivProtocol.AES, "helloworld")
+                       .addPrivacyInfo(UserSecurityModel.PrivProtocol.DES, "helloworld")
                        .addAuthenticationInfo(UserSecurityModel.AuthProtocol.MD5, "bighead")
                        .build();
         assertEquals(usm.getUserName(), "admin");
         assertEquals(usm.getSecurityName(), "adminsafe");
         assertEquals(usm.getSecurityLevel(), UserSecurityModel.SecurityLevel.authPriv);
-        assertEquals(usm.getPrivacyProtocol(), UserSecurityModel.PrivProtocol.AES);
+        assertEquals(usm.getPrivacyProtocol(), UserSecurityModel.PrivProtocol.DES);
         assertEquals(usm.getPrivacyPassphrase(), "helloworld");
         assertEquals(usm.getAuthenticationProtocol(), UserSecurityModel.AuthProtocol.MD5);
         assertEquals(usm.getAuthenticationPassphrase(), "bighead");
