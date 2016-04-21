@@ -1,6 +1,8 @@
 package com.avocent.dsview.net.snmp;
 
 import java.io.Serializable;
+import java.util.*;
+
 import static java.util.Objects.*;
 
 /**
@@ -15,8 +17,91 @@ import static java.util.Objects.*;
 public final class UserSecurityModel implements Serializable{
 
     public enum SecurityLevel{undefined, noAuthNoPriv, authNoPriv, authPriv}
-    public enum AuthProtocol{MD5, SHA, SHA224,SHA256, SHA384, SHA512}
-    public enum PrivProtocol{DES, AES, AES128, AES192, AES256}
+
+    public enum AuthProtocol{
+
+        MD5("MD5", "1.3.6.1.6.3.10.1.1.2"),
+        SHA("SHA", "1.3.6.1.6.3.10.1.1.3");
+
+        private String value;
+        private String ID;
+
+        private AuthProtocol(String value, String ID){
+            this.value = value;
+            this.ID = ID;
+        }
+
+        public String getValue(){
+            return this.value;
+        }
+
+        public String getID(){
+            return this.ID;
+        }
+
+        public List<Entry> entries(){
+            final List<Entry> entries = new ArrayList<>();
+            for(AuthProtocol protocol: values()){
+                    Entry entry = new Entry(protocol.getValue(), protocol.ID);
+                    entries.add(entry);
+            }
+
+            return entries;
+        }
+
+        public static class Entry{
+            private final String key;
+            private final String value;
+
+            public Entry(String key, String value) {
+                this.key = key;
+                this.value = value;
+            }
+
+            public String getKey(){
+                return key;
+            }
+
+            public String getValue(){
+                return value;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Entry entry = (Entry) o;
+                return Objects.equals(key, entry.key) &&
+                        Objects.equals(value, entry.value);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(key, value);
+            }
+        }
+    }
+
+    public enum PrivProtocol{
+
+        DES("DES", "1.3.6.1.6.3.10.1.2.2");
+
+        private String value;
+        private String ID;
+
+        private PrivProtocol(String value, String ID){
+            this.value = value;
+            this.ID = ID;
+        }
+
+        public String getValue(){
+            return this.value;
+        }
+
+        public String getID(){
+            return this.ID;
+        }
+    }
 
     private UserSecurityModel() {
     }

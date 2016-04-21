@@ -155,9 +155,9 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
                         new OctetString(binding.getUserSecurityModel().getSecurityName()),
                         new UsmUser(
                                 new OctetString(binding.getUserSecurityModel().getSecurityName()),
-                                new OID(binding.getUserSecurityModel().getAuthenticationProtocol().toString()),
+                                new OID(binding.getUserSecurityModel().getAuthenticationProtocol().getID()),
                                 new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()),
-                                new OID(binding.getUserSecurityModel().getPrivacyProtocol().toString()),
+                                new OID(binding.getUserSecurityModel().getPrivacyProtocol().getID()),
                                 new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase())
                         )
                 );
