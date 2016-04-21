@@ -34,9 +34,9 @@ import java.util.stream.Stream;
  *     GET/SET request on a SNMP agent.
  * </p>
  */
-public class NetworkManagementStationImpl implements NetworkManagementStation{
+public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
-    private static final Logger LOGGER = Logger.getLogger(NetworkManagementStationImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Snmp4JNetworkManagementStation.class.getName());
 
     /**
      * <p>Perform a synchronous SNMPv1 GET request</p>
