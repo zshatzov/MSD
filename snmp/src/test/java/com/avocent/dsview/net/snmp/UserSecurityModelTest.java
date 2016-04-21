@@ -40,7 +40,7 @@ public class UserSecurityModelTest {
 
     @Test
     public void addUserInfo() throws Exception{
-        UserSecurityModel usm = builder.addUserInfo("admin", "adminsafe", UserSecurityModel.SecurityLevel.authPriv).build();
+        UserSecurityModel usm = builder.addGeneralSecurityInfo("admin", "adminsafe", UserSecurityModel.SecurityLevel.authPriv).build();
 
         assertEquals(usm.getUserName(), "admin");
         assertEquals(usm.getSecurityName(), "adminsafe");
@@ -51,7 +51,7 @@ public class UserSecurityModelTest {
     @Test
     public void addAll() throws Exception{
         UserSecurityModel usm =
-                builder.addUserInfo("admin", "adminsafe", UserSecurityModel.SecurityLevel.authPriv)
+                builder.addGeneralSecurityInfo("admin", "adminsafe", UserSecurityModel.SecurityLevel.authPriv)
                        .addPrivacyInfo(UserSecurityModel.PrivProtocol.DES, "helloworld")
                        .addAuthenticationInfo(UserSecurityModel.AuthProtocol.MD5, "bighead")
                        .build();

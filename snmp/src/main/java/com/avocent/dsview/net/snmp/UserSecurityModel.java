@@ -200,7 +200,7 @@ public final class UserSecurityModel implements Serializable{
          *
          * @return
          */
-        public Builder addUserInfo(String userName, String securityName, SecurityLevel securityLevel){
+        public Builder addGeneralSecurityInfo(String userName, String securityName, SecurityLevel securityLevel){
             if(nonNull(userName)){
                 usm.setUserName(userName);
             }
