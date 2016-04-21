@@ -140,34 +140,25 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
         try{
             target = new UserTarget();
             target.setAddress(GenericAddress.parse(address));
-            target.setRetries(2);
-            target.setTimeout(1000);
+            target.setRetries(3);
+            target.setTimeout(1500);
             target.setVersion(SnmpConstants.version3);
             target.setSecurityModel(MessageProcessingModel.MPv3);
-            target.setSecurityLevel(binding.getUserSecurityModel().getSecurityLevel().ordinal());
+            if(nonNull(binding.getUserSecurityModel()) &&
+                    nonNull(binding.getUserSecurityModel().getSecurityLevel())) {
+                target.setSecurityLevel(
+                        binding.getUserSecurityModel().getSecurityLevel().ordinal());
+            }
 
             pdu = new ScopedPDU();
             pdu.setType(PDU.GET);
             pdu.add(new VariableBinding(new OID(binding.getOid())));
 
             if(nonNull(binding.getUserSecurityModel())) {
-                LOGGER.finest("Setup USM user credetinals to establish secure communications");
+               final UsmUser usmUser = createUsmUser(binding.getUserSecurityModel());
                 final OctetString userName = nonNull(binding.getUserSecurityModel().getUserName())?
                         new OctetString(binding.getUserSecurityModel().getUserName()): null;
-                final OctetString securityName = nonNull(binding.getUserSecurityModel().getSecurityName())?
-                        new OctetString(binding.getUserSecurityModel().getSecurityName()): null;
-                final OID authProtocol = nonNull(binding.getUserSecurityModel().getAuthenticationProtocol())?
-                        new OID(binding.getUserSecurityModel().getAuthenticationProtocol().getID()): null;
-                final OctetString authPassphrase = nonNull(binding.getUserSecurityModel().getAuthenticationPassphrase())?
-                        new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()): null;
-                final OID privProtocol = nonNull(binding.getUserSecurityModel().getPrivacyProtocol())?
-                        new OID(binding.getUserSecurityModel().getPrivacyProtocol().getID()): null;
-                final OctetString privPassphrase = nonNull(binding.getUserSecurityModel().getPrivacyPassphrase())?
-                        new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase()): null;
-
-                snmp.getUSM().addUser(userName,
-                        new UsmUser(securityName, authProtocol, authPassphrase, privProtocol,privPassphrase)
-                );
+                snmp.getUSM().addUser(userName, usmUser);
             }
 
             ResponseEvent event = snmp.send(pdu, target);
@@ -262,5 +253,26 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
         });
 
         listener.process(responses.stream());
+    }
+
+
+    private UsmUser createUsmUser(final UserSecurityModel usm){
+        LOGGER.finest("Setup USM user credetinals to establish secure communications");
+
+        final OctetString userName = nonNull(usm.getUserName())?
+                new OctetString(usm.getUserName()): null;
+        final OctetString securityName = nonNull(usm.getSecurityName())?
+                new OctetString(usm.getSecurityName()): null;
+        final OID authProtocol = nonNull(usm.getAuthenticationProtocol())?
+                new OID(usm.getAuthenticationProtocol().getID()): null;
+        final OctetString authPassphrase = nonNull(usm.getAuthenticationPassphrase())?
+                new OctetString(usm.getAuthenticationPassphrase()): null;
+        final OID privProtocol = nonNull(usm.getPrivacyProtocol())?
+                new OID(usm.getPrivacyProtocol().getID()): null;
+        final OctetString privPassphrase = nonNull(usm.getPrivacyPassphrase())?
+                new OctetString(usm.getPrivacyPassphrase()): null;
+
+        return new UsmUser(securityName, authProtocol, authPassphrase,
+                privProtocol,privPassphrase);
     }
 }
