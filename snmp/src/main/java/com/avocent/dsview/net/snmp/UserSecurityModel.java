@@ -173,8 +173,8 @@ public final class UserSecurityModel implements Serializable{
     }
 
     /**
-     * An implementation of a builder helper class to allow
-     * user a seamless construction of the {@link UserSecurityModel} instances.
+     * An implementation of a builder helper class that allows
+     * seamless construction of instances of type {@link UserSecurityModel}.
      *
      * @author zshatzov
      */
