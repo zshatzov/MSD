@@ -125,8 +125,14 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
         try {
             transport = new DefaultUdpTransportMapping();
             snmp = new Snmp(transport);
-            usm = new USM(SecurityProtocols.getInstance(),
-                    new OctetString(MPv3.createLocalEngineID()), 0);
+            if(nonNull(binding.getEngineID())){
+                usm = new USM(SecurityProtocols.getInstance(),
+                        new OctetString(binding.getEngineID()), 0);
+            }else {
+                LOGGER.finest("Create USM with default local engine ID");
+                usm = new USM(SecurityProtocols.getInstance(),
+                        new OctetString(MPv3.createLocalEngineID()), 0);
+            }
             SecurityModels.getInstance().addSecurityModel(usm);
             transport.listen();
         }catch (IOException e){

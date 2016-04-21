@@ -17,6 +17,7 @@ public final class SnmpRequestBinding implements Serializable{
     private final String oid;
     private final String communityString;
 
+    private String engineID;
     private UserSecurityModel userSecurityModel;
 
     /**
@@ -77,6 +78,17 @@ public final class SnmpRequestBinding implements Serializable{
      */
     public void setUserSecurityModel(UserSecurityModel userSecurityModel) {
         this.userSecurityModel = userSecurityModel;
+    }
+
+    public String getEngineID() {
+        return engineID;
+    }
+    /**
+     *
+     * @param engineID The engine ID for which the user has been localized
+     */
+    public void setEngineID(String engineID) {
+        this.engineID = engineID;
     }
 
     @Override
