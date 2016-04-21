@@ -1,5 +1,6 @@
 package com.avocent.dsview.net.snmp.impl;
 
+import static org.snmp4j.mp.SnmpConstants.*;
 import static java.util.Objects.*;
 
 import com.avocent.dsview.net.snmp.*;
@@ -151,29 +152,51 @@ public class NetworkManagementStationImpl implements NetworkManagementStation{
 
             if(nonNull(binding.getUserSecurityModel())) {
                 LOGGER.finest("Setup USM user credetinals to establish secure communications");
-                snmp.getUSM().addUser(
-                        new OctetString(binding.getUserSecurityModel().getSecurityName()),
-                        new UsmUser(
-                                new OctetString(binding.getUserSecurityModel().getSecurityName()),
-                                new OID(binding.getUserSecurityModel().getAuthenticationProtocol().getID()),
-                                new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()),
-                                new OID(binding.getUserSecurityModel().getPrivacyProtocol().getID()),
-                                new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase())
-                        )
+                final OctetString userName = nonNull(binding.getUserSecurityModel().getUserName())?
+                        new OctetString(binding.getUserSecurityModel().getUserName()): null;
+                final OctetString securityName = nonNull(binding.getUserSecurityModel().getSecurityName())?
+                        new OctetString(binding.getUserSecurityModel().getSecurityName()): null;
+                final OID authProtocol = nonNull(binding.getUserSecurityModel().getAuthenticationProtocol())?
+                        new OID(binding.getUserSecurityModel().getAuthenticationProtocol().getID()): null;
+                final OctetString authPassphrase = nonNull(binding.getUserSecurityModel().getAuthenticationPassphrase())?
+                        new OctetString(binding.getUserSecurityModel().getAuthenticationPassphrase()): null;
+                final OID privProtocol = nonNull(binding.getUserSecurityModel().getPrivacyProtocol())?
+                        new OID(binding.getUserSecurityModel().getPrivacyProtocol().getID()): null;
+                final OctetString privPassphrase = nonNull(binding.getUserSecurityModel().getPrivacyPassphrase())?
+                        new OctetString(binding.getUserSecurityModel().getPrivacyPassphrase()): null;
+
+                snmp.getUSM().addUser(userName,
+                        new UsmUser(securityName, authProtocol, authPassphrase, privProtocol,privPassphrase)
                 );
             }
 
             ResponseEvent event = snmp.send(pdu, target);
-            String requestId = event.getResponse().getRequestID().toString();
-            int errorStatusCode = event.getResponse().getErrorStatus();
-            String errorStatusMessage = event.getResponse().getErrorStatusText();
+            final String requestId;
+            final int errorStatusCode;
+            final String errorStatusMessage;
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                requestId = nonNull(event.getResponse().getRequestID()) ?
+                        event.getResponse().getRequestID().toString() : null;
+                errorStatusCode = event.getResponse().getErrorStatus();
+                errorStatusMessage = event.getResponse().getErrorStatusText();
+            }else{
+                requestId = null;
+                errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
+                errorStatusMessage = String.format(
+                     "Failed to retrieve variable binding for host (%s) and OID (%s)",
+                        binding.getHost(), binding.getOid());
+            }
+
             SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
                   binding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
-            for(VariableBinding vb: event.getResponse().getVariableBindings()){
-                String oid  = vb.getOid().toString();
-                String value = vb.toValueString();
-                String type = vb.getVariable().getSyntaxString();
-                response.addVariableBinding(oid, value, type);
+
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                for (VariableBinding vb : event.getResponse().getVariableBindings()) {
+                    String oid = vb.getOid().toString();
+                    String value = vb.toValueString();
+                    String type = vb.getVariable().getSyntaxString();
+                    response.addVariableBinding(oid, value, type);
+                }
             }
             return response;
         }catch(IOException e){
