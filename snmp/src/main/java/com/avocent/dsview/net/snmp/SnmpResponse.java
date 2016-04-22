@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class SnmpResponse implements Serializable {
     protected final Integer clientId;
-    protected final List<SnmpVariableBinding> variableBindings;
+    protected final List<SnmpGetVariableBinding> variableBindings;
     protected final String requestId;
     protected final String errorStatusMessage;
     protected final int errorStatusCode;
@@ -38,7 +38,7 @@ public abstract class SnmpResponse implements Serializable {
     }
 
     public void addVariableBinding(String oid, String value, String variableTpe){
-        variableBindings.add(new SnmpVariableBinding(oid, value, variableTpe));
+        variableBindings.add(new SnmpGetVariableBinding(oid, value, variableTpe));
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class SnmpResponse implements Serializable {
         return requestId;
     }
 
-    public List<SnmpVariableBinding> getVariableBinding(){
+    public List<SnmpGetVariableBinding> getVariableBinding(){
         return unmodifiableList(variableBindings);
     }
 

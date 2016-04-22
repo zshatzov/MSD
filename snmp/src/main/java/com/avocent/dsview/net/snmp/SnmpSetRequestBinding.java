@@ -5,20 +5,23 @@ import java.io.Serializable;
 /**
  * <p>
  * An object that encapsulates all the necessary info to configure the payload
- * of either a SNMPv1 or SNMPv3 GET request.
+ * of either a SNMPv1 or SNMPv3 SET request.
  * </p>
  *
  * Created by zshatzov on 4/19/2016.
  */
-public final class SnmpGetRequestBinding implements Serializable{
+public final class SnmpSetRequestBinding implements Serializable{
 
     private final Integer clientId;
     private final String host;
     private final String oid;
     private final String communityString;
+    private final SnmpGetVariableBinding variableBinding;
+
 
     private String engineID;
     private UserSecurityModel userSecurityModel;
+
 
     /**
      *
@@ -26,14 +29,16 @@ public final class SnmpGetRequestBinding implements Serializable{
      * @param host
      * @param oid
      * @param communityString
+     * @param variableBinding
      */
 
-    public SnmpGetRequestBinding(Integer clientId, String host, String oid,
-                                 String communityString) {
+    public SnmpSetRequestBinding(Integer clientId, String host, String oid,
+                                 String communityString, SnmpGetVariableBinding variableBinding) {
         this.clientId = clientId;
         this.host = host;
         this.oid = oid;
         this.communityString = communityString;
+        this.variableBinding = variableBinding;
     }
 
     /**
@@ -83,6 +88,15 @@ public final class SnmpGetRequestBinding implements Serializable{
     public String getEngineID() {
         return engineID;
     }
+
+    /**
+     *
+     * @return The new variable binding for a MIB variable
+     */
+    public SnmpGetVariableBinding getVariableBinding() {
+        return variableBinding;
+    }
+
     /**
      *
      * @param engineID The engine ID for which the user has been localized

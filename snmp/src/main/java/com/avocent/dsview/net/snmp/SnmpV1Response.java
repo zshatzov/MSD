@@ -13,11 +13,11 @@ public class SnmpV1Response extends SnmpResponse{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SnmpV1Response{");
+        final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
         sb.append("requestID: " + requestId + ", ");
         sb.append("errorStatusMessage: " + errorStatusMessage + ", ");
         sb.append("errorStatusCode: " + errorStatusCode);
-        sb.append('}');
+        sb.append(')');
         return sb.toString();
     }
 }

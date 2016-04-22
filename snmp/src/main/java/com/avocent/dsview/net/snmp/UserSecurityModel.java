@@ -161,7 +161,7 @@ public final class UserSecurityModel implements Serializable{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserSecurityModel(");
+        final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
         sb.append("authenticationPassphrase='").append(authenticationPassphrase).append('\'');
         sb.append(", securityLevel=").append(securityLevel);
         sb.append(", securityName='").append(securityName).append('\'');
