@@ -1,6 +1,7 @@
 package com.avocent.dsview.net.snmp;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <p>
@@ -14,9 +15,7 @@ public final class SnmpSetRequestBinding implements Serializable{
 
     private final Integer clientId;
     private final String host;
-    private final String oid;
-    private final String communityString;
-    private final SnmpGetVariableBinding variableBinding;
+    private final SnmpSetVariableBinding variableBinding;
 
 
     private String engineID;
@@ -27,17 +26,12 @@ public final class SnmpSetRequestBinding implements Serializable{
      *
      * @param clientId
      * @param host
-     * @param oid
-     * @param communityString
      * @param variableBinding
      */
 
-    public SnmpSetRequestBinding(Integer clientId, String host, String oid,
-                                 String communityString, SnmpGetVariableBinding variableBinding) {
+    public SnmpSetRequestBinding(Integer clientId, String host, SnmpSetVariableBinding variableBinding) {
         this.clientId = clientId;
         this.host = host;
-        this.oid = oid;
-        this.communityString = communityString;
         this.variableBinding = variableBinding;
     }
 
@@ -55,22 +49,6 @@ public final class SnmpSetRequestBinding implements Serializable{
      */
     public String getHost() {
         return host;
-    }
-
-    /**
-     *
-     * @return The OID of a variable binding
-     */
-    public String getOid() {
-        return oid;
-    }
-
-    /**
-     *
-     * @return The community string associated with the variable binding.
-     */
-    public String getCommunityString() {
-        return communityString;
     }
 
     public UserSecurityModel getUserSecurityModel() {
@@ -91,9 +69,9 @@ public final class SnmpSetRequestBinding implements Serializable{
 
     /**
      *
-     * @return The new variable binding for a MIB variable
+     * @return The new value for a MIB variable
      */
-    public SnmpGetVariableBinding getVariableBinding() {
+    public SnmpSetVariableBinding getVariableBinding() {
         return variableBinding;
     }
 
@@ -109,8 +87,9 @@ public final class SnmpSetRequestBinding implements Serializable{
     public String toString() {
         final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
         sb.append("host='").append(host).append('\'');
-        sb.append(", oid='").append(oid).append('\'');
-        sb.append(", communityString='").append(communityString).append('\'');
+        sb.append("oid='").append(variableBinding.getOid()).append('\'');
+        sb.append("value='").append(variableBinding.getValue()).append('\'');
+        sb.append("type='").append(variableBinding.getVariableType()).append('\'');
         sb.append(", clientId=").append(clientId);
         sb.append(')');
         return sb.toString();
