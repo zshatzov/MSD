@@ -155,7 +155,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             if(nonNull(binding.getUserSecurityModel()) &&
                     nonNull(binding.getUserSecurityModel().getSecurityLevel())) {
                 target.setSecurityLevel(
-                        binding.getUserSecurityModel().getSecurityLevel().ordinal());
+                      1);
             }
 
             pdu = new ScopedPDU();
@@ -246,6 +246,16 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                         .collect(Collectors.toList());
 
         listener.process(responses.stream());
+    }
+
+    @Override
+    public SnmpV1Response setSnmpV1(SnmpSetRequestBinding binding) {
+        throw new UnsupportedOperationException("Code not implemented yet");
+    }
+
+    @Override
+    public SnmpV3Response setSnmpV3(SnmpSetRequestBinding binding) {
+        throw new UnsupportedOperationException("Code not implemented yet");
     }
 
     private <T extends SnmpResponse> T getAsyncResponse(CompletableFuture<T> future){

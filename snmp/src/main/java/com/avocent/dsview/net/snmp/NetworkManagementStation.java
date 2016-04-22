@@ -18,4 +18,8 @@ public interface NetworkManagementStation {
     void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> listener, Stream<SnmpGetRequestBinding> bindings);
 
     void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> listener, Stream<SnmpGetRequestBinding> bindings);
+
+    SnmpV1Response setSnmpV1(SnmpSetRequestBinding binding);
+
+    SnmpV3Response setSnmpV3(SnmpSetRequestBinding binding);
 }
