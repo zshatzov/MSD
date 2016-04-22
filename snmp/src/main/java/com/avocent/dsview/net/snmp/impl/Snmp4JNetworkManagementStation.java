@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
 
@@ -51,7 +52,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         LOGGER.finest("Process Get SNMPv1 request");
 
-        if (null == binding.getHost() || binding.getHost().isEmpty()) {
+        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
             LOGGER.severe("Host is null or empty");
             throw new SnmpGetException("Host is missing");
         }
@@ -98,7 +99,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             LOGGER.log(Level.SEVERE, "SNMPv1 get request failed", e);
             throw new SnmpGetException("SNMPv1 get request failed", e);
         }finally {
-            if(null != snmp){
+            if(nonNull(snmp)){
                 try {
                     snmp.close();
                 } catch (IOException IGNORE) {
@@ -116,7 +117,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     @Override
     public SnmpV3Response getSnmpV3(final SnmpGetRequestBinding binding){
 
-        if (null == binding.getHost() || binding.getHost().isEmpty()) {
+        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
             throw new SnmpGetException("Host is missing");
         }
 
@@ -199,7 +200,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }catch(IOException e){
             throw new SnmpGetException("SnmpV3 get request failed", e);
         }finally {
-            if(null != snmp){
+            if(nonNull(snmp)){
                 try {
                     snmp.close();
                 } catch (IOException IGNORE) {
