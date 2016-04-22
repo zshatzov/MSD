@@ -154,8 +154,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             target.setSecurityModel(MessageProcessingModel.MPv3);
             if(nonNull(binding.getUserSecurityModel()) &&
                     nonNull(binding.getUserSecurityModel().getSecurityLevel())) {
-                target.setSecurityLevel(
-                      1);
+                target.setSecurityLevel(binding.getUserSecurityModel().getSecurityLevel().ordinal());
             }
 
             pdu = new ScopedPDU();
