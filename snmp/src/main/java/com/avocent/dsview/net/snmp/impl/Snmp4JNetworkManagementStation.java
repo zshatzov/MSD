@@ -1,8 +1,5 @@
 package com.avocent.dsview.net.snmp.impl;
 
-import static org.snmp4j.mp.SnmpConstants.*;
-import static java.util.Objects.*;
-
 import com.avocent.dsview.net.snmp.*;
 import org.snmp4j.*;
 import org.snmp4j.event.ResponseEvent;
@@ -17,12 +14,17 @@ import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.Objects.nonNull;
+import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
 
 /**
  * Created by zshatzov on 4/19/2016.
@@ -215,22 +217,15 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener, final Stream<SnmpRequestBinding> bindings) {
+    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener,
+                               final Stream<SnmpRequestBinding> bindings) {
 
         LOGGER.finest("Process async SNMPv1 requests");
 
-        final List<SnmpV1Response> responses = new ArrayList<>();
-        bindings.forEach(binding -> {
-                CompletableFuture<SnmpV1Response> completableFuture =
-                     CompletableFuture.supplyAsync(() -> {return getSnmpV1(binding);});
-
-                try {
-                     responses.add(completableFuture.get());
-                }catch (InterruptedException | ExecutionException e){
-                    LOGGER.log(Level.SEVERE,
-                            "Failed to retrieve async result for SNMPv1 GET request", e);
-                }
-        });
+        List<SnmpV1Response> responses =
+                bindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV1))
+                        .map(this::getAsyncResponse)
+                        .collect(Collectors.toList());
 
         listener.process(responses.stream());
     }
@@ -242,25 +237,33 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param bindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener, final Stream<SnmpRequestBinding> bindings) {
+    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener,
+                               final Stream<SnmpRequestBinding> bindings) {
         LOGGER.finest("Process async SNMPv3 requests");
 
-        final List<SnmpV3Response> responses = new ArrayList<>();
-        bindings.forEach(binding -> {
-            CompletableFuture<SnmpV3Response> completableFuture =
-                    CompletableFuture.supplyAsync(() -> {return getSnmpV3(binding);});
-
-            try {
-                responses.add(completableFuture.get());
-            }catch (InterruptedException | ExecutionException e){
-                LOGGER.log(Level.SEVERE,
-                        "Failed to retrieve async result for SNMPv3 GET request", e);
-            }
-        });
+        List<SnmpV3Response> responses =
+                bindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV3))
+                        .map(this::getAsyncResponse)
+                        .collect(Collectors.toList());
 
         listener.process(responses.stream());
     }
 
+    private <T extends SnmpResponse> T getAsyncResponse(CompletableFuture<T> future){
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new SnmpGetException("Failed to retrieve async SNMPv3 response", e);
+        }
+    }
+
+    private <T extends SnmpResponse> CompletableFuture<T> prepareAsyncCall(SnmpRequestBinding binding,
+        Function<SnmpRequestBinding, T> handler){
+        CompletableFuture<T> completableFuture =
+                CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
+
+        return completableFuture;
+    }
 
     private UsmUser createUsmUser(final UserSecurityModel usm){
         LOGGER.finest("Setup USM user credetinals to establish secure communications");
