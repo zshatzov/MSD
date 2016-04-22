@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * Created by zshatzov on 4/19/2016.
  */
-public final class SnmpRequestBinding implements Serializable{
+public final class SnmpGetRequestBinding implements Serializable{
 
     private final Integer clientId;
     private final String host;
@@ -28,8 +28,8 @@ public final class SnmpRequestBinding implements Serializable{
      * @param communityString
      */
 
-    public SnmpRequestBinding(Integer clientId, String host, String oid,
-                              String communityString) {
+    public SnmpGetRequestBinding(Integer clientId, String host, String oid,
+                                 String communityString) {
         this.clientId = clientId;
         this.host = host;
         this.oid = oid;
@@ -93,7 +93,7 @@ public final class SnmpRequestBinding implements Serializable{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SnmpRequestBinding(");
+        final StringBuilder sb = new StringBuilder("SnmpGetRequestBinding(");
         sb.append("host='").append(host).append('\'');
         sb.append(", oid='").append(oid).append('\'');
         sb.append(", communityString='").append(communityString).append('\'');

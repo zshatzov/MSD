@@ -47,7 +47,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @return SnmpV1Response
      */
     @Override
-    public SnmpV1Response getSnmpV1(final SnmpRequestBinding binding){
+    public SnmpV1Response getSnmpV1(final SnmpGetRequestBinding binding){
 
         LOGGER.finest("Process Get SNMPv1 request");
 
@@ -114,7 +114,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @return SnmpV3Response
      */
     @Override
-    public SnmpV3Response getSnmpV3(final SnmpRequestBinding binding){
+    public SnmpV3Response getSnmpV3(final SnmpGetRequestBinding binding){
 
         if (null == binding.getHost() || binding.getHost().isEmpty()) {
             throw new SnmpGetException("Host is missing");
@@ -216,7 +216,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener,
-                               final Stream<SnmpRequestBinding> bindings) {
+                               final Stream<SnmpGetRequestBinding> bindings) {
 
         LOGGER.finest("Process async SNMPv1 requests");
 
@@ -236,7 +236,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener,
-                               final Stream<SnmpRequestBinding> bindings) {
+                               final Stream<SnmpGetRequestBinding> bindings) {
         LOGGER.finest("Process async SNMPv3 requests");
 
         List<SnmpV3Response> responses =
@@ -255,8 +255,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
-    private <T extends SnmpResponse> CompletableFuture<T> prepareAsyncCall(SnmpRequestBinding binding,
-        Function<SnmpRequestBinding, T> handler){
+    private <T extends SnmpResponse> CompletableFuture<T> prepareAsyncCall(SnmpGetRequestBinding binding,
+        Function<SnmpGetRequestBinding, T> handler){
         CompletableFuture<T> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 

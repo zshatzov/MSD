@@ -1,6 +1,5 @@
 package com.avocent.dsview.net.snmp;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -12,11 +11,11 @@ import java.util.stream.Stream;
  */
 public interface NetworkManagementStation {
 
-    SnmpV1Response getSnmpV1(SnmpRequestBinding binding);
+    SnmpV1Response getSnmpV1(SnmpGetRequestBinding binding);
 
-    SnmpV3Response getSnmpV3(SnmpRequestBinding binding);
+    SnmpV3Response getSnmpV3(SnmpGetRequestBinding binding);
 
-    void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> listener, Stream<SnmpRequestBinding> bindings);
+    void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> listener, Stream<SnmpGetRequestBinding> bindings);
 
-    void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> listener, Stream<SnmpRequestBinding> bindings);
+    void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> listener, Stream<SnmpGetRequestBinding> bindings);
 }
