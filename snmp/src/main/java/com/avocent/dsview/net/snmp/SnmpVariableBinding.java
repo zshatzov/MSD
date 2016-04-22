@@ -6,6 +6,20 @@ import java.io.Serializable;
  * Created by zshatzov on 4/19/2016.
  */
 public final class SnmpVariableBinding implements Serializable{
+
+    public enum  VariableType{
+        Counter("Counter"),
+        ObjectIdentifier("OBJECT IDENTIFIER"),
+        OctetString("OCTET STRING"),
+        TimeTicks("TimeTicks");
+
+        private final String name;
+
+        private VariableType(String name){
+            this.name = name;
+        }
+    }
+
     private final String oid;
     private final String value;
     private final String variableType;

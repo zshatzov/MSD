@@ -76,10 +76,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(binding.getOid())));
-        pdu.setType(PDU.GET);
 
         try {
-            ResponseEvent event = snmp.send(pdu, target);
+            ResponseEvent event = snmp.get(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
             int errorStatusCode = event.getResponse().getErrorStatus();
             String errorStatusMessage = event.getResponse().getErrorStatusText();
@@ -159,7 +158,6 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             pdu = new ScopedPDU();
-            pdu.setType(PDU.GET);
             pdu.add(new VariableBinding(new OID(binding.getOid())));
 
             if(nonNull(binding.getUserSecurityModel())) {
@@ -169,7 +167,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 snmp.getUSM().addUser(userName, usmUser);
             }
 
-            ResponseEvent event = snmp.send(pdu, target);
+            ResponseEvent event = snmp.get(pdu, target);
             final String requestId;
             final int errorStatusCode;
             final String errorStatusMessage;
