@@ -253,7 +253,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new SnmpGetException("Failed to retrieve async SNMPv3 response", e);
+            throw new SnmpGetException("Failed to retrieve async GET response", e);
         }
     }
 
