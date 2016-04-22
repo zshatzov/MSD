@@ -231,8 +231,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>A method that processes multiple asynchronous SNMPv3 GET requests</p>
      *
-     * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
-     * @param bindings One or more SNMPv1 request to be processed
+     * @param listener A callback component that will be invoked once the asynchronous SNMPv3 GET request are processed
+     * @param bindings One or more SNMPv3 GET request to be processed
      */
     @Override
     public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener,
