@@ -20,7 +20,7 @@ public final class UserSecurityModel implements Serializable{
 
     public enum AuthProtocol{MD5, SHA}
 
-    public enum PrivProtocol{AES128,AES192, AES256, DES}
+    public enum PrivProtocol{AES128, AES192, AES256, DES}
 
     private UserSecurityModel() {
     }
