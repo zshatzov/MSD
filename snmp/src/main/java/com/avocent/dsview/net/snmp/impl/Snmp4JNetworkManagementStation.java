@@ -45,7 +45,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @return SnmpV1Response
      */
     @Override
-    public SnmpV1Response getSnmpV1(final SnmpGetRequestBinding binding){
+    public SnmpV1Response getSnmpV1(final SnmpGetV1RequestBinding binding){
 
         LOGGER.finest("Process Get SNMPv1 request");
 
@@ -108,7 +108,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @return SnmpV3Response
      */
     @Override
-    public SnmpV3Response getSnmpV3(final SnmpGetRequestBinding binding){
+    public SnmpV3Response getSnmpV3(final SnmpGetV3RequestBinding binding){
 
         if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
             throw new SnmpGetException("Host is missing");
@@ -200,7 +200,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener,
-                               final Stream<SnmpGetRequestBinding> bindings) {
+                               final Stream<SnmpGetV1RequestBinding> bindings) {
 
         LOGGER.finest("Process async SNMPv1 requests");
 
@@ -220,7 +220,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      */
     @Override
     public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener,
-                               final Stream<SnmpGetRequestBinding> bindings) {
+                               final Stream<SnmpGetV3RequestBinding> bindings) {
         LOGGER.finest("Process async SNMPv3 requests");
 
         List<SnmpV3Response> responses =
@@ -249,8 +249,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
-    private <T extends SnmpResponse> CompletableFuture<T> prepareAsyncCall(SnmpGetRequestBinding binding,
-        Function<SnmpGetRequestBinding, T> handler){
+    private <T extends SnmpResponse, U extends SnmpGetRequestBinding>
+            CompletableFuture<T> prepareAsyncCall(U binding, Function<U, T> handler){
         CompletableFuture<T> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 
