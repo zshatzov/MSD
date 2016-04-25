@@ -283,7 +283,15 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
         final OctetString authPassphrase = nonNull(usm.getAuthenticationPassphrase())?
                 new OctetString(usm.getAuthenticationPassphrase()): null;
-        final OID privProtocol = nonNull(usm.getPrivacyProtocol())? PrivDES.ID: null;
+        OID privProtocol = null;
+        if(nonNull(usm.getPrivacyProtocol())) {
+            switch (usm.getPrivacyProtocol()){
+                case AES128: privProtocol = PrivAES128.ID; break;
+                case AES192: privProtocol = PrivAES192.ID; break;
+                case AES256: privProtocol = PrivAES256.ID; break;
+                case DES: privProtocol = PrivDES.ID; break;
+            }
+        }
         final OctetString privPassphrase = nonNull(usm.getPrivacyPassphrase())?
                 new OctetString(usm.getPrivacyPassphrase()): null;
 
