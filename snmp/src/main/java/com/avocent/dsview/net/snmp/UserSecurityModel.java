@@ -18,36 +18,9 @@ public final class UserSecurityModel implements Serializable{
 
     public enum SecurityLevel{undefined, noAuthNoPriv, authNoPriv, authPriv}
 
-    public enum AuthProtocol{
+    public enum AuthProtocol{MD5, SHA}
 
-        MD5("1.3.6.1.6.3.10.1.1.2"),
-        SHA("1.3.6.1.6.3.10.1.1.3");
-
-        private final String ID;
-
-        private AuthProtocol(String ID){
-            this.ID = ID;
-        }
-
-        public String getID(){
-            return this.ID;
-        }
-    }
-
-    public enum PrivProtocol{
-
-        DES("1.3.6.1.6.3.10.1.2.2");
-
-        private final String ID;
-
-        private PrivProtocol(String ID){
-            this.ID = ID;
-        }
-
-        public String getID(){
-            return this.ID;
-        }
-    }
+    public enum PrivProtocol{DES}
 
     private UserSecurityModel() {
     }

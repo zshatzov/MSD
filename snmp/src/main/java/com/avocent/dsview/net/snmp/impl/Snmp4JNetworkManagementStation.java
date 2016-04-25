@@ -6,10 +6,7 @@ import org.snmp4j.event.ResponseEvent;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.MessageProcessingModel;
 import org.snmp4j.mp.SnmpConstants;
-import org.snmp4j.security.SecurityModels;
-import org.snmp4j.security.SecurityProtocols;
-import org.snmp4j.security.USM;
-import org.snmp4j.security.UsmUser;
+import org.snmp4j.security.*;
 import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
@@ -277,12 +274,16 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         LOGGER.finest("Setup USM user credetinals to establish secure communications");
         final OctetString securityName = nonNull(usm.getSecurityName())?
                 new OctetString(usm.getSecurityName()): null;
-        final OID authProtocol = nonNull(usm.getAuthenticationProtocol())?
-                new OID(usm.getAuthenticationProtocol().getID()): null;
+        OID authProtocol =  null;
+        if(nonNull(usm.getAuthenticationProtocol())) {
+            switch(usm.getAuthenticationProtocol()){
+                case MD5: authProtocol = AuthMD5.ID; break;
+                case SHA: authProtocol = AuthSHA.ID; break;
+            }
+        }
         final OctetString authPassphrase = nonNull(usm.getAuthenticationPassphrase())?
                 new OctetString(usm.getAuthenticationPassphrase()): null;
-        final OID privProtocol = nonNull(usm.getPrivacyProtocol())?
-                new OID(usm.getPrivacyProtocol().getID()): null;
+        final OID privProtocol = nonNull(usm.getPrivacyProtocol())? PrivDES.ID: null;
         final OctetString privPassphrase = nonNull(usm.getPrivacyPassphrase())?
                 new OctetString(usm.getPrivacyPassphrase()): null;
 
