@@ -155,10 +155,9 @@ public final class UserSecurityModel implements Serializable{
 
         private final UserSecurityModel usm;
 
-        public Builder(){
+        private Builder(){
             usm = new UserSecurityModel();
         }
-
 
         public UserSecurityModel build(){
             return usm;
