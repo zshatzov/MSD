@@ -161,7 +161,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             pdu.add(new VariableBinding(new OID(binding.getOid())));
 
             if(nonNull(binding.getUserSecurityModel())) {
-               final UsmUser usmUser = createUsmUser(binding.getUserSecurityModel());
+                final UsmUser usmUser = createUsmUser(binding.getUserSecurityModel());
                 final OctetString userName = nonNull(binding.getUserSecurityModel().getUserName())?
                         new OctetString(binding.getUserSecurityModel().getUserName()): null;
                 snmp.getUSM().addUser(userName, usmUser);
@@ -275,9 +275,6 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
     private UsmUser createUsmUser(final UserSecurityModel usm){
         LOGGER.finest("Setup USM user credetinals to establish secure communications");
-
-        final OctetString userName = nonNull(usm.getUserName())?
-                new OctetString(usm.getUserName()): null;
         final OctetString securityName = nonNull(usm.getSecurityName())?
                 new OctetString(usm.getSecurityName()): null;
         final OID authProtocol = nonNull(usm.getAuthenticationProtocol())?
