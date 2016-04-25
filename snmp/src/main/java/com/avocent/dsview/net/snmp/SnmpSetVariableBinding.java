@@ -6,8 +6,8 @@ package com.avocent.dsview.net.snmp;
 public class SnmpSetVariableBinding {
 
     public enum  VariableType{
-        Address, BitString, Counter32, Counter64, Gauge32, Integer32, Null, OctetString, OID, Opaque,
-        TimeTicks, TsmSecurityParameters, UnsignedInteger32
+        Counter32, Counter64, Gauge32, Integer32, IpAddress, OctetString, OID, Opaque,
+        SshAddress, TcpAddress, TimeTicks, TlsAddress, UdpAddress, UnsignedInteger32
     }
 
     private final String oid;
@@ -31,52 +31,6 @@ public class SnmpSetVariableBinding {
     public VariableType getVariableType() {
         return variableType;
     }
-
-    public boolean canBeCastToInteger(){
-        switch (variableType){
-            case Counter32:
-            case Gauge32:
-            case Integer32:
-            case TimeTicks:
-            case UnsignedInteger32:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public boolean canBeCastToLong(){
-        switch (variableType){
-            case Counter64:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public boolean canBeCastToString(){
-        switch (variableType){
-            case Address:
-            case BitString:
-            case OctetString:
-            case OID:
-            case Opaque:
-            case TimeTicks:
-            case TsmSecurityParameters:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public boolean isNull(){
-        return variableType == VariableType.Null;
-    }
-
-    public boolean isTimeTicks(){
-        return variableType == VariableType.TimeTicks;
-    }
-
 
     @Override
     public String toString() {

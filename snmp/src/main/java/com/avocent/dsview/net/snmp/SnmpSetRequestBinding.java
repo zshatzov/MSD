@@ -1,7 +1,6 @@
 package com.avocent.dsview.net.snmp;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * <p>
@@ -11,17 +10,11 @@ import java.util.Objects;
  *
  * Created by zshatzov on 4/19/2016.
  */
-public final class SnmpSetRequestBinding implements Serializable{
+public abstract class SnmpSetRequestBinding implements Serializable{
 
     private final Integer clientId;
     private final String host;
     private final SnmpSetVariableBinding variableBinding;
-
-
-    private String engineID;
-    private UserSecurityModel userSecurityModel;
-
-
     /**
      *
      * @param clientId
@@ -51,36 +44,12 @@ public final class SnmpSetRequestBinding implements Serializable{
         return host;
     }
 
-    public UserSecurityModel getUserSecurityModel() {
-        return userSecurityModel;
-    }
-
-    /**
-     *
-     * @param userSecurityModel USM user providing information to secure SNMPv3 message exchange
-     */
-    public void setUserSecurityModel(UserSecurityModel userSecurityModel) {
-        this.userSecurityModel = userSecurityModel;
-    }
-
-    public String getEngineID() {
-        return engineID;
-    }
-
     /**
      *
      * @return The new value for a MIB variable
      */
     public SnmpSetVariableBinding getVariableBinding() {
         return variableBinding;
-    }
-
-    /**
-     *
-     * @param engineID The engine ID for which the user has been localized
-     */
-    public void setEngineID(String engineID) {
-        this.engineID = engineID;
     }
 
     @Override

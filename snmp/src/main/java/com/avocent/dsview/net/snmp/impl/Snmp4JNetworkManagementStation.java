@@ -232,12 +232,65 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     }
 
     @Override
-    public SnmpV1Response setSnmpV1(SnmpSetRequestBinding binding) {
-        throw new UnsupportedOperationException("Code not implemented yet");
+    public SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding binding) {
+        LOGGER.finest("Process Get SNMPv1 request");
+
+        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
+            LOGGER.severe("Host is null or empty");
+            throw new SnmpGetException("Host is missing");
+        }
+
+        final TransportMapping<UdpAddress> transport;
+        final Snmp snmp;
+        try {
+            transport = new DefaultUdpTransportMapping();
+            snmp = new Snmp(transport);
+            transport.listen();
+        }catch (IOException e){
+            LOGGER.log(Level.SEVERE, "SET SNMPv1 transport configuration failed", e);
+            throw new SnmpSetException("Failed to configure UDP transport", e);
+        }
+
+        final String address = String.format("udp:%s/161", binding.getHost());
+        final CommunityTarget target = createCommunityTarget(address, binding.getCommunityString());
+
+        PDU pdu = new PDU();
+        VariableBinding setVB = new VariableBinding(new OID(binding.getVariableBinding().getOid()));
+        setVB.setVariable(translateVariable(binding.getVariableBinding()));
+        pdu.add(setVB);
+
+        try {
+            ResponseEvent event = snmp.set(pdu, target);
+            String requestId = event.getResponse().getRequestID().toString();
+            int errorStatusCode = event.getResponse().getErrorStatus();
+            String errorStatusMessage = event.getResponse().getErrorStatusText();
+            SnmpV1Response response = new SnmpV1Response(binding.getClientId(),
+                    requestId, errorStatusMessage, errorStatusCode);
+            for(VariableBinding vb: event.getResponse().getVariableBindings()){
+                String oid  = vb.getOid().toString();
+                String value = vb.toValueString();
+                String type = vb.getVariable().getSyntaxString();
+                response.addVariableBinding(oid, value, type);
+            }
+
+            LOGGER.finest("Successfully processed SNMPv1 SET request");
+
+            return response;
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "SNMPv1 get request failed", e);
+            throw new SnmpGetException("SNMPv1 get request failed", e);
+        }finally {
+            if(nonNull(snmp)){
+                try {
+                    snmp.close();
+                } catch (IOException IGNORE) {
+                }
+            }
+        }
     }
 
     @Override
-    public SnmpV3Response setSnmpV3(SnmpSetRequestBinding binding) {
+    public SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding binding) {
         throw new UnsupportedOperationException("Code not implemented yet");
     }
 
@@ -315,5 +368,25 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         return new UsmUser(securityName, authProtocol, authPassphrase,
                 privProtocol,privPassphrase);
+    }
+
+    private Variable translateVariable(SnmpSetVariableBinding binding){
+         switch (binding.getVariableType()){
+             case Counter32: return new Counter32(Integer.valueOf(binding.getValue()));
+             case Counter64: return new Counter64(Long.valueOf(binding.getValue()));
+             case Gauge32: return new Gauge32(Integer.valueOf(binding.getValue()));
+             case Integer32: return new Integer32(Integer.valueOf(binding.getValue()));
+             case IpAddress: return new IpAddress(binding.getValue());
+             case OctetString: return new OctetString(binding.getValue());
+             case OID: return new OID(binding.getValue());
+             case Opaque: return new Opaque(binding.getValue().getBytes());
+             case SshAddress: return new SshAddress(binding.getValue());
+             case TcpAddress: return new TcpAddress(binding.getValue());
+             case TimeTicks: return new TimeTicks(Long.valueOf(binding.getValue()));
+             case TlsAddress: return new TlsAddress(binding.getValue());
+             case UdpAddress: return new UdpAddress(binding.getValue());
+             case UnsignedInteger32: return new UnsignedInteger32(Math.abs(Integer.valueOf(binding.getValue())));
+             default: throw new SnmpSetException("Invalid variable type for SET request");
+         }
     }
 }
