@@ -66,11 +66,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
 
         final String address = String.format("udp:%s/161", binding.getHost());
-        CommunityTarget target = new CommunityTarget(GenericAddress.parse(address),
-                new OctetString(binding.getCommunityString()));
-        target.setRetries(2);
-        target.setTimeout(1000);
-        target.setVersion(SnmpConstants.version1);
+        final CommunityTarget target = createCommunityTarget(address, binding.getCommunityString());
 
         PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(binding.getOid())));
@@ -143,16 +139,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         final UserTarget target;
         final ScopedPDU pdu;
         try{
-            target = new UserTarget();
-            target.setAddress(GenericAddress.parse(address));
-            target.setRetries(3);
-            target.setTimeout(1500);
-            target.setVersion(SnmpConstants.version3);
-            target.setSecurityModel(MessageProcessingModel.MPv3);
-            if(nonNull(binding.getUserSecurityModel()) &&
-                    nonNull(binding.getUserSecurityModel().getSecurityLevel())) {
-                target.setSecurityLevel(binding.getUserSecurityModel().getSecurityLevel().ordinal());
-            }
+            target = createUserTarget(address, binding.getUserSecurityModel());
 
             pdu = new ScopedPDU();
             pdu.add(new VariableBinding(new OID(binding.getOid())));
@@ -268,6 +255,37 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 
         return completableFuture;
+    }
+
+    private CommunityTarget createCommunityTarget(String address, String communityString){
+        CommunityTarget target = new CommunityTarget(GenericAddress.parse(address),
+                new OctetString(communityString));
+        target.setRetries(2);
+        target.setTimeout(1000);
+        target.setVersion(SnmpConstants.version1);
+
+        return target;
+    }
+
+    private UserTarget createUserTarget(String address, UserSecurityModel usm){
+
+        final UserTarget target = new UserTarget();
+        target.setAddress(GenericAddress.parse(address));
+        target.setRetries(3);
+        target.setTimeout(1500);
+        target.setVersion(SnmpConstants.version3);
+        target.setSecurityModel(MessageProcessingModel.MPv3);
+
+        if(nonNull(usm) && nonNull(usm.getSecurityLevel())) {
+            target.setSecurityLevel(usm.getSecurityLevel().ordinal());
+        }
+
+        if(nonNull(usm) && nonNull(usm.getSecurityName())){
+            target.setSecurityName(
+                    new OctetString(usm.getSecurityName()));
+        }
+
+        return target;
     }
 
     private UsmUser createUsmUser(final UserSecurityModel usm){
