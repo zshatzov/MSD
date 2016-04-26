@@ -2,7 +2,7 @@ package com.avocent.dsview.net.snmp;
 
 /**
  * <p>
- * An implementation of a variable binding for both SNMPv1 and SNMPv3 SET variable binding
+ * An implementation of a variable binding for both SNMPv1 and SNMPv3 GET variable binding
  * request. The properties include the variable type as a textual String, the variable value
  * and the corresponding OID of the MIB variable.
  * </p>
