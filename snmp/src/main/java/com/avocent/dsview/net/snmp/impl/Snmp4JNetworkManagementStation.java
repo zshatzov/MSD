@@ -422,6 +422,12 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
+    /**
+     * <p>Processes an asynchronous SNMPv1 SET request bindings</p>
+     *
+     * @param callback A callback component that will be invoked once the asynchronous SNMPv1 SET request(s) are processed
+     * @param requestBindings One or more SNMPv1 SET request to be processed
+     */
     @Override
     public void setSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
                                Stream<SnmpSetV1RequestBinding> requestBindings) {
@@ -435,6 +441,12 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         callback.process(responses.stream());
     }
 
+    /**
+     * <p>Processes an asynchronous SNMPv3 SET request bindings</p>
+     *
+     * @param callback A callback component that will be invoked once the asynchronous SNMPv3 SET request(s) are processed
+     * @param requestBindings One or more SNMPv3 SET request to be processed
+     */
     @Override
     public void setSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
                                Stream<SnmpSetV3RequestBinding> requestBindings) {
