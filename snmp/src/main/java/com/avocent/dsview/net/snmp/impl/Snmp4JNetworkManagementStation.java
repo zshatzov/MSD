@@ -206,10 +206,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> callback,
                                final Stream<SnmpGetV1RequestBinding> requestBindings) {
 
-        LOGGER.finest("Process async SNMPv1 requests");
+        LOGGER.finest("Process async SNMPv1 GET requests");
 
         List<SnmpV1Response> responses =
-                requestBindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV1))
+                requestBindings.map(binding-> prepareAsyncGetCall(binding, this::getSnmpV1))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
 
@@ -225,10 +225,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     @Override
     public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> callback,
                                final Stream<SnmpGetV3RequestBinding> requestBindings) {
-        LOGGER.finest("Process async SNMPv3 requests");
+        LOGGER.finest("Process async SNMPv3 GET requests");
 
         List<SnmpV3Response> responses =
-                requestBindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV3))
+                requestBindings.map(binding-> prepareAsyncGetCall(binding, this::getSnmpV3))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
 
@@ -400,6 +400,32 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
+    @Override
+    public void setSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+                               Stream<SnmpSetV1RequestBinding> requestBindings) {
+        LOGGER.finest("Process async SNMPv1 SET requests");
+
+        List<SnmpV1Response> responses =
+                requestBindings.map(binding-> prepareAsyncSetCall(binding, this::setSnmpV1))
+                        .map(this::getAsyncResponse)
+                        .collect(Collectors.toList());
+
+        callback.process(responses.stream());
+    }
+
+    @Override
+    public void setSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+                               Stream<SnmpSetV3RequestBinding> requestBindings) {
+        LOGGER.finest("Process async SNMPv3 SET requests");
+
+        List<SnmpV3Response> responses =
+                requestBindings.map(binding-> prepareAsyncSetCall(binding, this::setSnmpV3))
+                        .map(this::getAsyncResponse)
+                        .collect(Collectors.toList());
+
+        callback.process(responses.stream());
+    }
+
     private <T extends SnmpResponse> T getAsyncResponse(CompletableFuture<T> future){
         try {
             return future.get();
@@ -409,7 +435,15 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     }
 
     private <T extends SnmpResponse, U extends SnmpGetRequestBinding>
-            CompletableFuture<T> prepareAsyncCall(U binding, Function<U, T> handler){
+            CompletableFuture<T> prepareAsyncGetCall(U binding, Function<U, T> handler){
+        CompletableFuture<T> completableFuture =
+                CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
+
+        return completableFuture;
+    }
+
+    private <T extends SnmpResponse, U extends SnmpSetRequestBinding>
+            CompletableFuture<T> prepareAsyncSetCall(U binding, Function<U, T> handler){
         CompletableFuture<T> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 

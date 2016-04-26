@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 /**
  * <p>An interface that represents a <em>SNMP Network Management Station</em>. This interface
- * provides both synchronous and asynchronous GET operations on a SNMP agent.</p>
+ * provides both synchronous and asynchronous SNMP GET/SET operations.</p>
  *
  *
  * Created by zshatzov on 4/19/2016.
@@ -24,4 +24,10 @@ public interface NetworkManagementStation {
     SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding requestBinding);
 
     SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding requestBinding);
+
+    void setSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+                        Stream<SnmpSetV1RequestBinding> requestBindings);
+
+    void setSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+                        Stream<SnmpSetV3RequestBinding> requestBindings);
 }
