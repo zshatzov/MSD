@@ -4,7 +4,7 @@ package com.avocent.dsview.net.snmp;
  * <p>
  * An object that encapsulates all the necessary info to configure the payload
  * of a SNMPv3 GET request. This class encapsulates the authentication and privacy
- * policies in the property {@link UserSecurityModel}. The engineID
+ * policies in the property {@link UserSecurityModel}.
  * </p>
  *
  * Created by zshatzov on 4/19/2016.
