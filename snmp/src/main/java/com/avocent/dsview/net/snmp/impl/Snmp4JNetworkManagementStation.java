@@ -380,7 +380,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 snmp.getUSM().addUser(userName, usmUser);
             }
 
-            ResponseEvent event = snmp.get(pdu, target);
+            ResponseEvent event = snmp.set(pdu, target);
             final String requestId;
             final int errorStatusCode;
             final String errorStatusMessage;
