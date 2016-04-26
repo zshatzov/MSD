@@ -54,7 +54,7 @@ public abstract class SnmpResponse implements Serializable {
 
     /**
      *
-     * @return A textual representation of an error message. For successful operations this field would the value <code>success</code>.
+     * @return A textual representation of an error message. For successful operations this field would be the value <em>success</em>
      */
     public String getErrorStatusMessage() {
         return errorStatusMessage;
