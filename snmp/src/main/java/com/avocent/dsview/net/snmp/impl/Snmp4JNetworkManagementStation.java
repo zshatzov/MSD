@@ -74,17 +74,30 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         try {
             ResponseEvent event = snmp.get(pdu, target);
-            String requestId = event.getResponse().getRequestID().toString();
-            int errorStatusCode = event.getResponse().getErrorStatus();
-            String errorStatusMessage = event.getResponse().getErrorStatusText();
-            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
-                    requestId, errorStatusMessage, errorStatusCode);
-            for(VariableBinding vb: event.getResponse().getVariableBindings()){
-                String oid  = vb.getOid().toString();
-                String value = vb.toValueString();
-                String type = vb.getVariable().getSyntaxString();
-                response.addVariableBinding(oid, value, type);
+            final int errorStatusCode;
+            final String errorStatusMessage;
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                errorStatusCode = event.getResponse().getErrorStatus();
+                errorStatusMessage = event.getResponse().getErrorStatusText();
+            }else{
+                errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
+                errorStatusMessage = String.format(
+                        "Failed to retrieve variable binding for host (%s) and OID (%s)",
+                        requestBinding.getHost(), requestBinding.getOid());
             }
+
+            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
+                    errorStatusMessage, errorStatusCode);
+
+            if(nonNull(event) && nonNull(event.getResponse())){
+                for(VariableBinding vb: event.getResponse().getVariableBindings()){
+                    String oid  = vb.getOid().toString();
+                    String value = vb.toValueString();
+                    String type = vb.getVariable().getSyntaxString();
+                    response.addVariableBinding(oid, value, type);
+                }
+            }
+
 
             LOGGER.finest("Successfully processed SNMPv1 GET request");
 
@@ -155,16 +168,12 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             ResponseEvent event = snmp.get(pdu, target);
-            final String requestId;
             final int errorStatusCode;
             final String errorStatusMessage;
             if(nonNull(event) && nonNull(event.getResponse())) {
-                requestId = nonNull(event.getResponse().getRequestID()) ?
-                        event.getResponse().getRequestID().toString() : null;
                 errorStatusCode = event.getResponse().getErrorStatus();
                 errorStatusMessage = event.getResponse().getErrorStatusText();
             }else{
-                requestId = null;
                 errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
                 errorStatusMessage = String.format(
                      "Failed to retrieve variable binding for host (%s) and OID (%s)",
@@ -172,7 +181,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
-                  requestBinding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
+                  requestBinding.getClientId(), errorStatusMessage, errorStatusCode);
 
             if(nonNull(event) && nonNull(event.getResponse())) {
                 for (VariableBinding vb : event.getResponse().getVariableBindings()) {
@@ -274,16 +283,29 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         try {
             ResponseEvent event = snmp.set(pdu, target);
-            String requestId = event.getResponse().getRequestID().toString();
-            int errorStatusCode = event.getResponse().getErrorStatus();
-            String errorStatusMessage = event.getResponse().getErrorStatusText();
+
+            final int errorStatusCode;
+            final String errorStatusMessage;
+            if( nonNull(event) && nonNull(event.getResponse())){
+                errorStatusCode = event.getResponse().getErrorStatus();
+                errorStatusMessage = event.getResponse().getErrorStatusText();
+            }else{
+                errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
+                errorStatusMessage = String.format(
+                        "Failed to retrieve variable binding for host (%s) and OID (%s)",
+                        requestBinding.getHost(), requestBinding.getVariableBinding().getOid());
+            }
+
             SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
-                    requestId, errorStatusMessage, errorStatusCode);
-            for(VariableBinding vb: event.getResponse().getVariableBindings()){
-                String oid  = vb.getOid().toString();
-                String value = vb.toValueString();
-                String type = vb.getVariable().getSyntaxString();
-                response.addVariableBinding(oid, value, type);
+                    errorStatusMessage, errorStatusCode);
+
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                for (VariableBinding vb : event.getResponse().getVariableBindings()) {
+                    String oid = vb.getOid().toString();
+                    String value = vb.toValueString();
+                    String type = vb.getVariable().getSyntaxString();
+                    response.addVariableBinding(oid, value, type);
+                }
             }
 
             LOGGER.finest("Successfully processed SNMPv1 SET request");
@@ -376,7 +398,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
-                    requestBinding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
+                    requestBinding.getClientId(), errorStatusMessage, errorStatusCode);
 
             if(nonNull(event) && nonNull(event.getResponse())) {
                 for (VariableBinding vb : event.getResponse().getVariableBindings()) {

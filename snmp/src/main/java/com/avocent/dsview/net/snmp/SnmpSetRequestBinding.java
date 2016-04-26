@@ -59,7 +59,7 @@ public abstract class SnmpSetRequestBinding implements Serializable{
         sb.append("oid='").append(variableBinding.getOid()).append('\'');
         sb.append("value='").append(variableBinding.getValue()).append('\'');
         sb.append("type='").append(variableBinding.getVariableType()).append('\'');
-        sb.append(", clientId=").append(clientId);
+        sb.append(", clientID=").append(clientId);
         sb.append(')');
         return sb.toString();
     }

@@ -53,7 +53,7 @@ public abstract class SnmpGetRequestBinding implements Serializable{
         final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
         sb.append("host='").append(host).append('\'');
         sb.append(", oid='").append(oid).append('\'');
-        sb.append(", clientId=").append(clientId);
+        sb.append(", clientID=").append(clientId);
         sb.append(')');
         return sb.toString();
     }

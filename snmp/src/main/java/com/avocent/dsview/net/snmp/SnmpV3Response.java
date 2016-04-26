@@ -9,11 +9,9 @@ public class SnmpV3Response extends SnmpV1Response {
 
     private final String contextEngineID;
 
-    public SnmpV3Response(String contextEngineID,
-                          Integer clientId, String requestId,
+    public SnmpV3Response(String contextEngineID, Integer clientID,
                           String errorStatusMessage, int errorStatusCode) {
-        super(clientId, requestId, errorStatusMessage,
-                errorStatusCode);
+        super(clientID, errorStatusMessage, errorStatusCode);
         this.contextEngineID = contextEngineID;
     }
 

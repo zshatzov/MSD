@@ -7,14 +7,16 @@ package com.avocent.dsview.net.snmp;
  */
 public class SnmpV1Response extends SnmpResponse{
 
-    public SnmpV1Response(Integer clientId, String requestId, String errorStatusMessage, int errorStatusCode) {
-        super(clientId, requestId, errorStatusMessage, errorStatusCode);
+    public SnmpV1Response(Integer clientID, String errorStatusMessage,
+                          int errorStatusCode) {
+        super(clientID, errorStatusMessage, errorStatusCode);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
-        sb.append("requestID: " + requestId + ", ");
+        final StringBuilder sb = new StringBuilder(
+                getClass().getSimpleName()).append("(");
+        sb.append("clientID: " + clientID + ", ");
         sb.append("errorStatusMessage: " + errorStatusMessage + ", ");
         sb.append("errorStatusCode: " + errorStatusCode);
         sb.append(')');
