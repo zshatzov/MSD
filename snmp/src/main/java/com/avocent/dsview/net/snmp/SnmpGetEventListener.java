@@ -5,10 +5,10 @@ import java.util.stream.Stream;
 
 /**
  * <p>
- * A callback that passes the results of an asynchronous GET SNMP operation
- * to the client. Since this interface is <em>ASM</em>, the client can pass
- * in a lambda expression which will be used to notify the user back once the
- * results are made available.
+ * A callback that passes the response(s) of an asynchronous GET/SET SNMP operation back
+ * to the client. Since this interface is an <em>Abstract Single Method</em>, the client
+ * can pass in a lambda expression which will be used as the implementation of this
+ * interface.
  * </p>
  *
  *
