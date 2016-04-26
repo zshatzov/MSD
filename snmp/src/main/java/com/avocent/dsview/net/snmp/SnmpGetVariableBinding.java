@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * This class represents the variable binding in response to both SNMPv1 and SNMPv3 GET/SET
- * requests. The properties encapsulates the variable type (as a textual string) as well as the
+ * This class represents the variable binding in response to both SNMPv1 and SNMPv3 GET variable binding
+ * request. The properties encapsulates the variable type (as a textual string) as well as the
  * value of that particular variable (designated by the MIB OID).
  * </p>
  *

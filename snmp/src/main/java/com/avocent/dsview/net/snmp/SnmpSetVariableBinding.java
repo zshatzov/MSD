@@ -1,6 +1,12 @@
 package com.avocent.dsview.net.snmp;
 
 /**
+ * <p>
+ * This class represents the variable binding in response to both SNMPv1 and SNMPv3 SET variable binding
+ * request. The properties encapsulates the variable type (as an Enum  {@link VariableType}) as well as the
+ * new value for the particular variable (designated by the MIB OID).
+ * </p>
+ *
  * Created by zshatzov on 4/22/16.
  */
 public class SnmpSetVariableBinding {
