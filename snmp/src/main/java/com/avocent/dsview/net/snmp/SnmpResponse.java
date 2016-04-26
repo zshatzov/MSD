@@ -14,10 +14,10 @@ import java.util.List;
  *
  * Created by zshatzov on 4/19/2016.
  */
-public abstract class SnmpResponse implements Serializable {
+public abstract class SnmpResponse<T extends SnmpVariableBinding> implements Serializable {
 
     protected final Integer clientID;
-    protected final List<SnmpGetVariableBinding> variableBindings;
+    protected final List<T> variableBindings;
     protected final String errorStatusMessage;
     protected final int errorStatusCode;
 
@@ -36,11 +36,11 @@ public abstract class SnmpResponse implements Serializable {
         return clientID;
     }
 
-    public void addVariableBinding(String oid, String value, String variableTpe){
-        variableBindings.add(new SnmpGetVariableBinding(oid, value, variableTpe));
+    public void addVariableBinding(T variableBinding){
+        variableBindings.add(variableBinding);
     }
 
-    public List<SnmpGetVariableBinding> getVariableBinding(){
+    public List<T> getVariableBinding(){
         return unmodifiableList(variableBindings);
     }
 

@@ -94,7 +94,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                     String oid  = vb.getOid().toString();
                     String value = vb.toValueString();
                     String type = vb.getVariable().getSyntaxString();
-                    response.addVariableBinding(oid, value, type);
+                    SnmpGetVariableBinding getVariableBinding =
+                            new SnmpGetVariableBinding(oid, value, type);
+                    response.addVariableBinding(getVariableBinding);
                 }
             }
 
@@ -188,7 +190,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                     String oid = vb.getOid().toString();
                     String value = vb.toValueString();
                     String type = vb.getVariable().getSyntaxString();
-                    response.addVariableBinding(oid, value, type);
+                    SnmpGetVariableBinding getVariableBinding = new
+                            SnmpGetVariableBinding(oid, value, type);
+                    response.addVariableBinding(getVariableBinding);
                 }
             }
             return response;
@@ -304,7 +308,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                     String oid = vb.getOid().toString();
                     String value = vb.toValueString();
                     String type = vb.getVariable().getSyntaxString();
-                    response.addVariableBinding(oid, value, type);
+                    SnmpGetVariableBinding getVariableBinding =
+                            new SnmpGetVariableBinding(oid, value, type);
+                    response.addVariableBinding(getVariableBinding);
                 }
             }
 
@@ -405,7 +411,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                     String oid = vb.getOid().toString();
                     String value = vb.toValueString();
                     String type = vb.getVariable().getSyntaxString();
-                    response.addVariableBinding(oid, value, type);
+                    SnmpGetVariableBinding getVariableBinding =
+                            new SnmpGetVariableBinding(oid, value, type);
+                    response.addVariableBinding(getVariableBinding);
                 }
             }
             return response;
