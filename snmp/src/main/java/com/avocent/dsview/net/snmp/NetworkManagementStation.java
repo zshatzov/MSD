@@ -11,15 +11,17 @@ import java.util.stream.Stream;
  */
 public interface NetworkManagementStation {
 
-    SnmpV1Response getSnmpV1(SnmpGetV1RequestBinding binding);
+    SnmpV1Response getSnmpV1(SnmpGetV1RequestBinding requestBinding);
 
-    SnmpV3Response getSnmpV3(SnmpGetV3RequestBinding binding);
+    SnmpV3Response getSnmpV3(SnmpGetV3RequestBinding requestBinding);
 
-    void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> listener, Stream<SnmpGetV1RequestBinding> bindings);
+    void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+                        Stream<SnmpGetV1RequestBinding> requestBindings);
 
-    void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> listener, Stream<SnmpGetV3RequestBinding> bindings);
+    void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+                        Stream<SnmpGetV3RequestBinding> requestBindings);
 
-    SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding binding);
+    SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding requestBinding);
 
-    SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding binding);
+    SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding requestBinding);
 }

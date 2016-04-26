@@ -41,15 +41,15 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>Perform a synchronous SNMPv1 GET request</p>
      *
-     * @param binding An object that encapsulates the variable binding and agent info
+     * @param requestBinding An object that encapsulates the variable binding and agent info
      * @return SnmpV1Response
      */
     @Override
-    public SnmpV1Response getSnmpV1(final SnmpGetV1RequestBinding binding){
+    public SnmpV1Response getSnmpV1(final SnmpGetV1RequestBinding requestBinding){
 
         LOGGER.finest("Process Get SNMPv1 request");
 
-        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
+        if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
             LOGGER.severe("Host is null or empty");
             throw new SnmpGetException("Host is missing");
         }
@@ -65,18 +65,18 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             throw new SnmpGetException("Failed to configure UDP transport", e);
         }
 
-        final String address = String.format("udp:%s/161", binding.getHost());
-        final CommunityTarget target = createCommunityTarget(address, binding.getCommunityString());
+        final String address = String.format("udp:%s/161", requestBinding.getHost());
+        final CommunityTarget target = createCommunityTarget(address, requestBinding.getCommunityString());
 
         PDU pdu = new PDU();
-        pdu.add(new VariableBinding(new OID(binding.getOid())));
+        pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
         try {
             ResponseEvent event = snmp.get(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
             int errorStatusCode = event.getResponse().getErrorStatus();
             String errorStatusMessage = event.getResponse().getErrorStatusText();
-            SnmpV1Response response = new SnmpV1Response(binding.getClientId(),
+            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
                     requestId, errorStatusMessage, errorStatusCode);
             for(VariableBinding vb: event.getResponse().getVariableBindings()){
                 String oid  = vb.getOid().toString();
@@ -104,13 +104,13 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>Perform a synchronous SNMPv3 GET request</p>
      *
-     * @param binding An object that encapsulates the variable binding and agent info
+     * @param requestBinding An object that encapsulates the variable binding and agent info
      * @return SnmpV3Response
      */
     @Override
-    public SnmpV3Response getSnmpV3(final SnmpGetV3RequestBinding binding){
+    public SnmpV3Response getSnmpV3(final SnmpGetV3RequestBinding requestBinding){
 
-        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
+        if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
             throw new SnmpGetException("Host is missing");
         }
 
@@ -120,9 +120,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         try {
             transport = new DefaultUdpTransportMapping();
             snmp = new Snmp(transport);
-            if(nonNull(binding.getEngineID())){
+            if(nonNull(requestBinding.getEngineID())){
                 usm = new USM(SecurityProtocols.getInstance(),
-                        new OctetString(binding.getEngineID()), 0);
+                        new OctetString(requestBinding.getEngineID()), 0);
             }else {
                 LOGGER.finest("Create USM with default local engine ID");
                 usm = new USM(SecurityProtocols.getInstance(),
@@ -134,20 +134,20 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             throw new SnmpGetException("Failed to configure UDP transport", e);
         }
 
-        final String address = String.format("udp:%s/161", binding.getHost());
+        final String address = String.format("udp:%s/161", requestBinding.getHost());
 
         final UserTarget target;
         final ScopedPDU pdu;
         try{
-            target = createUserTarget(address, binding.getUserSecurityModel());
+            target = createUserTarget(address, requestBinding.getUserSecurityModel());
 
             pdu = new ScopedPDU();
-            pdu.add(new VariableBinding(new OID(binding.getOid())));
+            pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
-            if(nonNull(binding.getUserSecurityModel())) {
-                final UsmUser usmUser = createUsmUser(binding.getUserSecurityModel());
-                final OctetString userName = nonNull(binding.getUserSecurityModel().getUserName())?
-                        new OctetString(binding.getUserSecurityModel().getUserName()): null;
+            if(nonNull(requestBinding.getUserSecurityModel())) {
+                final UsmUser usmUser = createUsmUser(requestBinding.getUserSecurityModel());
+                final OctetString userName = nonNull(requestBinding.getUserSecurityModel().getUserName())?
+                        new OctetString(requestBinding.getUserSecurityModel().getUserName()): null;
                 snmp.getUSM().addUser(userName, usmUser);
             }
 
@@ -165,11 +165,11 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
                 errorStatusMessage = String.format(
                      "Failed to retrieve variable binding for host (%s) and OID (%s)",
-                        binding.getHost(), binding.getOid());
+                        requestBinding.getHost(), requestBinding.getOid());
             }
 
             SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
-                  binding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
+                  requestBinding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
 
             if(nonNull(event) && nonNull(event.getResponse())) {
                 for (VariableBinding vb : event.getResponse().getVariableBindings()) {
@@ -195,47 +195,53 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>A method that processes multiple asynchronous SNMPv1 GET requests</p>
      *
-     * @param listener A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
-     * @param bindings One or more SNMPv1 request to be processed
+     * @param callback A callback component that will be invoked once the asynchronous SNMPv1 GET request are processed
+     * @param requestBindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> listener,
-                               final Stream<SnmpGetV1RequestBinding> bindings) {
+    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> callback,
+                               final Stream<SnmpGetV1RequestBinding> requestBindings) {
 
         LOGGER.finest("Process async SNMPv1 requests");
 
         List<SnmpV1Response> responses =
-                bindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV1))
+                requestBindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV1))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
 
-        listener.process(responses.stream());
+        callback.process(responses.stream());
     }
 
     /**
      * <p>A method that processes multiple asynchronous SNMPv3 GET requests</p>
      *
-     * @param listener A callback component that will be invoked once the asynchronous SNMPv3 GET request are processed
-     * @param bindings One or more SNMPv3 GET request to be processed
+     * @param callback A callback component that will be invoked once the asynchronous SNMPv3 GET request are processed
+     * @param requestBindings One or more SNMPv3 GET request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> listener,
-                               final Stream<SnmpGetV3RequestBinding> bindings) {
+    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> callback,
+                               final Stream<SnmpGetV3RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv3 requests");
 
         List<SnmpV3Response> responses =
-                bindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV3))
+                requestBindings.map(binding-> prepareAsyncCall(binding, this::getSnmpV3))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
 
-        listener.process(responses.stream());
+        callback.process(responses.stream());
     }
 
+    /**
+     *
+     * @param requestBinding An object that encapsulates the information needed to make a SNMPv1 SET request
+     * @return SnmpV1Response The response corresponding to the SNMPv1 SET request.
+     */
     @Override
-    public SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding binding) {
-        LOGGER.finest("Process Get SNMPv1 request");
+    public SnmpV1Response setSnmpV1(final SnmpSetV1RequestBinding requestBinding) {
 
-        if (isNull(binding.getHost()) || binding.getHost().isEmpty()) {
+        LOGGER.finest("Process SNMPv1 SET variable binding request");
+
+        if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
             LOGGER.severe("Host is null or empty");
             throw new SnmpGetException("Host is missing");
         }
@@ -251,20 +257,21 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             throw new SnmpSetException("Failed to configure UDP transport", e);
         }
 
-        final String address = String.format("udp:%s/161", binding.getHost());
-        final CommunityTarget target = createCommunityTarget(address, binding.getCommunityString());
+        final String address = String.format("udp:%s/161", requestBinding.getHost());
+        final CommunityTarget target = createCommunityTarget(address, requestBinding.getCommunityString());
 
         PDU pdu = new PDU();
-        VariableBinding setVB = new VariableBinding(new OID(binding.getVariableBinding().getOid()));
-        setVB.setVariable(convertVariableBinding(binding.getVariableBinding()));
-        pdu.add(setVB);
+        VariableBinding variableBinding = new VariableBinding(
+                new OID(requestBinding.getVariableBinding().getOid()));
+        variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
+        pdu.add(variableBinding);
 
         try {
             ResponseEvent event = snmp.set(pdu, target);
             String requestId = event.getResponse().getRequestID().toString();
             int errorStatusCode = event.getResponse().getErrorStatus();
             String errorStatusMessage = event.getResponse().getErrorStatusText();
-            SnmpV1Response response = new SnmpV1Response(binding.getClientId(),
+            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
                     requestId, errorStatusMessage, errorStatusCode);
             for(VariableBinding vb: event.getResponse().getVariableBindings()){
                 String oid  = vb.getOid().toString();
@@ -289,9 +296,99 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
+    /**
+     *
+     * @param requestBinding An object that encapsulates the information needed to make a SNMPv3 SET request
+     * @return SnmpV3Response The response corresponding to the SNMPv3 SET request
+     */
     @Override
-    public SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding binding) {
-        throw new UnsupportedOperationException("Code not implemented yet");
+    public SnmpV3Response setSnmpV3(final SnmpSetV3RequestBinding requestBinding) {
+
+        LOGGER.finest("Process SNMPv3 SET variable binding request");
+        if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
+            throw new SnmpGetException("Host is missing");
+        }
+
+        final TransportMapping<UdpAddress> transport;
+        final Snmp snmp;
+        final USM usm;
+        try {
+            transport = new DefaultUdpTransportMapping();
+            snmp = new Snmp(transport);
+            if(nonNull(requestBinding.getEngineID())){
+                usm = new USM(SecurityProtocols.getInstance(),
+                        new OctetString(requestBinding.getEngineID()), 0);
+            }else {
+                LOGGER.finest("Create USM with default local engine ID");
+                usm = new USM(SecurityProtocols.getInstance(),
+                        new OctetString(MPv3.createLocalEngineID()), 0);
+            }
+            SecurityModels.getInstance().addSecurityModel(usm);
+            transport.listen();
+        }catch (IOException e){
+            LOGGER.log(Level.SEVERE, "SET SNMPv3 transport configuration failed", e);
+            throw new SnmpSetException("Failed to configure UDP transport", e);
+        }
+
+        final String address = String.format("udp:%s/161", requestBinding.getHost());
+
+        final UserTarget target;
+        final ScopedPDU pdu;
+        try{
+            target = createUserTarget(address, requestBinding.getUserSecurityModel());
+
+            pdu = new ScopedPDU();
+            VariableBinding variableBinding = new VariableBinding(
+                    new OID(requestBinding.getVariableBinding().getOid()));
+            variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
+            pdu.add(variableBinding);
+
+            if(nonNull(requestBinding.getUserSecurityModel())) {
+                final UsmUser usmUser = createUsmUser(requestBinding.getUserSecurityModel());
+                final OctetString userName = nonNull(requestBinding.getUserSecurityModel().getUserName())?
+                        new OctetString(requestBinding.getUserSecurityModel().getUserName()): null;
+                snmp.getUSM().addUser(userName, usmUser);
+            }
+
+            ResponseEvent event = snmp.get(pdu, target);
+            final String requestId;
+            final int errorStatusCode;
+            final String errorStatusMessage;
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                requestId = nonNull(event.getResponse().getRequestID()) ?
+                        event.getResponse().getRequestID().toString() : null;
+                errorStatusCode = event.getResponse().getErrorStatus();
+                errorStatusMessage = event.getResponse().getErrorStatusText();
+            }else{
+                requestId = null;
+                errorStatusCode = SNMP_ERROR_GENERAL_ERROR;
+                errorStatusMessage = String.format(
+                        "Failed to retrieve variable binding for host (%s) and OID (%s)",
+                        requestBinding.getHost(), requestBinding.getVariableBinding().getOid());
+            }
+
+            SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
+                    requestBinding.getClientId(), requestId, errorStatusMessage, errorStatusCode);
+
+            if(nonNull(event) && nonNull(event.getResponse())) {
+                for (VariableBinding vb : event.getResponse().getVariableBindings()) {
+                    String oid = vb.getOid().toString();
+                    String value = vb.toValueString();
+                    String type = vb.getVariable().getSyntaxString();
+                    response.addVariableBinding(oid, value, type);
+                }
+            }
+            return response;
+        }catch(IOException e){
+            throw new SnmpSetException("SnmpV3 set request failed", e);
+        }finally {
+            if(nonNull(snmp)){
+                try {
+                    snmp.close();
+                } catch (IOException IGNORE) {
+                }
+            }
+        }
     }
 
     private <T extends SnmpResponse> T getAsyncResponse(CompletableFuture<T> future){
