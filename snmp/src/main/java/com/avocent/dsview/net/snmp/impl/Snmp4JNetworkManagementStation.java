@@ -256,7 +256,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         PDU pdu = new PDU();
         VariableBinding setVB = new VariableBinding(new OID(binding.getVariableBinding().getOid()));
-        setVB.setVariable(translateVariable(binding.getVariableBinding()));
+        setVB.setVariable(convertVariableBinding(binding.getVariableBinding()));
         pdu.add(setVB);
 
         try {
@@ -370,7 +370,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 privProtocol,privPassphrase);
     }
 
-    private Variable translateVariable(SnmpSetVariableBinding binding){
+    private Variable convertVariableBinding(SnmpSetVariableBinding binding){
          switch (binding.getVariableType()){
              case Counter32: return new Counter32(Integer.valueOf(binding.getValue()));
              case Counter64: return new Counter64(Long.valueOf(binding.getValue()));
