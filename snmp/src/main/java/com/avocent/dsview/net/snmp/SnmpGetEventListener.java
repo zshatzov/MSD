@@ -17,8 +17,10 @@ import java.util.stream.Stream;
 @FunctionalInterface
 public interface SnmpGetEventListener <T extends SnmpResponse> {
     /**
-     * <p>A <em>Single Abstract Method Interface</em> that provides the result of a
-     * <em>SNMP GET</em> request(s) to a registered client listener</p>
+     * <p>
+     * A callback method that passes the response(s) back to the client
+     * in an asynchronous way.
+     * </p>
      *
      *
      * @param results A {@link java.util.stream.Stream} of {@link SnmpResponse}
