@@ -41,8 +41,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>Perform a synchronous SNMPv1 GET request</p>
      *
-     * @param requestBinding An object that encapsulates the variable binding and agent info
-     * @return SnmpV1Response
+     * @param requestBinding An object that encapsulates SNMPv1 GET request parameters
+     * @return SnmpV1Response A response corresponding to the SNMPv1 GET request
      */
     @Override
     public SnmpV1Response getSnmpV1(final SnmpGetV1RequestBinding requestBinding){
@@ -50,7 +50,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         LOGGER.finest("Process Get SNMPv1 request");
 
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
-            LOGGER.severe("Host is null or empty");
+            LOGGER.severe("Host is either null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
@@ -61,12 +61,13 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             snmp = new Snmp(transport);
             transport.listen();
         }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "GET SNMPv1 transport configuration failed", e);
+            LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv1 GET request", e);
             throw new SnmpGetException("Failed to configure UDP transport", e);
         }
 
         final String address = String.format("udp:%s/161", requestBinding.getHost());
-        final CommunityTarget target = createCommunityTarget(address, requestBinding.getCommunityString());
+        final CommunityTarget target = createCommunityTarget(
+                    address, requestBinding.getCommunityString());
 
         PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
@@ -85,12 +86,12 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                 response.addVariableBinding(oid, value, type);
             }
 
-            LOGGER.finest("Successfully processed SNMPv1 get request");
+            LOGGER.finest("Successfully processed SNMPv1 GET request");
 
             return response;
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "SNMPv1 get request failed", e);
-            throw new SnmpGetException("SNMPv1 get request failed", e);
+            LOGGER.log(Level.SEVERE, "SNMPv1 GET request failed", e);
+            throw new SnmpGetException("SNMPv1 GET request failed", e);
         }finally {
             if(nonNull(snmp)){
                 try {
@@ -104,13 +105,14 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     /**
      * <p>Perform a synchronous SNMPv3 GET request</p>
      *
-     * @param requestBinding An object that encapsulates the variable binding and agent info
-     * @return SnmpV3Response
+     * @param requestBinding An object that encapsulates SNMPv3 GET request parameters
+     * @return SnmpV3Response A response object corresponding to the SNMPv3 GET request
      */
     @Override
     public SnmpV3Response getSnmpV3(final SnmpGetV3RequestBinding requestBinding){
 
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
+            LOGGER.severe("Host is either null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
@@ -131,6 +133,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             SecurityModels.getInstance().addSecurityModel(usm);
             transport.listen();
         }catch (IOException e){
+            LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv3 GET request", e);
             throw new SnmpGetException("Failed to configure UDP transport", e);
         }
 
@@ -181,7 +184,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
             return response;
         }catch(IOException e){
-            throw new SnmpGetException("SnmpV3 get request failed", e);
+            LOGGER.log(Level.SEVERE, "SNMPv3 GET request failed", e);
+            throw new SnmpGetException("SNMPv3 get request failed", e);
         }finally {
             if(nonNull(snmp)){
                 try {
@@ -232,9 +236,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     }
 
     /**
+     * <p>A synchronous SNMPv1 SET variable binding request</p>
      *
-     * @param requestBinding An object that encapsulates the information needed to make a SNMPv1 SET request
-     * @return SnmpV1Response The response corresponding to the SNMPv1 SET request.
+     * @param requestBinding An object that encapsulates SNMPv1 SET request parameters
+     * @return SnmpV1Response The response corresponding to the SNMPv1 SET request
      */
     @Override
     public SnmpV1Response setSnmpV1(final SnmpSetV1RequestBinding requestBinding) {
@@ -242,7 +247,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         LOGGER.finest("Process SNMPv1 SET variable binding request");
 
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
-            LOGGER.severe("Host is null or empty");
+            LOGGER.severe("Host is either null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
@@ -258,7 +263,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
 
         final String address = String.format("udp:%s/161", requestBinding.getHost());
-        final CommunityTarget target = createCommunityTarget(address, requestBinding.getCommunityString());
+        final CommunityTarget target = createCommunityTarget(
+                address, requestBinding.getCommunityString());
 
         PDU pdu = new PDU();
         VariableBinding variableBinding = new VariableBinding(
@@ -284,8 +290,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
             return response;
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "SNMPv1 get request failed", e);
-            throw new SnmpGetException("SNMPv1 get request failed", e);
+            LOGGER.log(Level.SEVERE, "SNMPv1 SET request failed", e);
+            throw new SnmpGetException("SNMPv1 SET request failed", e);
         }finally {
             if(nonNull(snmp)){
                 try {
@@ -297,8 +303,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
     }
 
     /**
+     * <p>A synchronous SNMPv3 SET variable binding request</p>
      *
-     * @param requestBinding An object that encapsulates the information needed to make a SNMPv3 SET request
+     * @param requestBinding An object that encapsulates SNMPv3 SET request parameters
      * @return SnmpV3Response The response corresponding to the SNMPv3 SET request
      */
     @Override
@@ -306,6 +313,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
         LOGGER.finest("Process SNMPv3 SET variable binding request");
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
+            LOGGER.severe("Host is either null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
@@ -380,7 +388,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
             return response;
         }catch(IOException e){
-            throw new SnmpSetException("SnmpV3 set request failed", e);
+            LOGGER.log(Level.SEVERE, "SNMPv3 SET request failed", e);
+            throw new SnmpSetException("SNMPv3 SET request failed", e);
         }finally {
             if(nonNull(snmp)){
                 try {
