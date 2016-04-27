@@ -18,6 +18,10 @@ import static java.util.Objects.nonNull;
 import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
 
 /**
+ * <p>
+ * An abstract class that encapsulates common operations.
+ * </p>
+ *
  * Created by zshatzov on 4/27/2016.
  */
 public abstract class BaseSnmpOperations {

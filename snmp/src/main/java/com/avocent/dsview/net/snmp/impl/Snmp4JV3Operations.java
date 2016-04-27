@@ -28,6 +28,12 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 /**
+ * <p>
+ * An implementation of {@link SnmpV3Operations} that uses the open source
+ * <em>SNMP4J</em> library to implement the GET/SET operations.
+ * </p>
+ *
+ *
  * Created by zshatzov on 4/27/2016.
  */
 public class Snmp4JV3Operations extends BaseSnmpOperations implements SnmpV3Operations{
