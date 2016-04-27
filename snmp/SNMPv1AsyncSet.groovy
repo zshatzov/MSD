@@ -2,7 +2,7 @@ import com.avocent.dsview.net.snmp.*
 import com.avocent.dsview.net.snmp.impl.*
 
 
-vb = new SnmpSetVariableBinding('1.3.6.1.2.1.1.9.1.3.1', 'Hello World', SnmpSetVariableBinding.VariableType.OctetString)
+vb = new SnmpInputVariableBinding('1.3.6.1.2.1.1.9.1.3.1', 'Hello World', SnmpInputVariableBinding.VariableType.OctetString)
 request = new SnmpSetV1RequestBinding(1, 'demo.snmplabs.com', vb, 'private')
 nms = new Snmp4JNetworkManagementStation()
 response = nms.setSnmpV1Async({it.forEach{response->
@@ -16,5 +16,5 @@ response = nms.setSnmpV1Async({it.forEach{response->
             println it.variableTypeTextual
         }
     }
-  }
+}
 }, [request].stream())
