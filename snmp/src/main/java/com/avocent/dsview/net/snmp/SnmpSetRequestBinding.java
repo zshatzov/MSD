@@ -13,11 +13,12 @@ import java.io.Serializable;
 public abstract class SnmpSetRequestBinding extends SnmpRequestBinding{
 
     private final SnmpSetVariableBinding variableBinding;
+
     /**
+     * @param clientID A custom ID to correlate requests to responses
+     * @param host A hostname or IP address
+     * @param variableBinding An object that encapsulates the new value and MIB OID of a variable binding
      *
-     * @param clientID
-     * @param host
-     * @param variableBinding
      */
 
     public SnmpSetRequestBinding(Integer clientID, String host, SnmpSetVariableBinding variableBinding) {

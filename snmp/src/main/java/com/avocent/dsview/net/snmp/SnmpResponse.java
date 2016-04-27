@@ -63,7 +63,7 @@ public class SnmpResponse<T extends SnmpVariableBinding> implements Serializable
 
     /**
      *
-     * @return The ID of the local engine
+     * @return The ID of the entity hosting the MIB info
      */
     public String getContextEngineID() {
         return contextEngineID;

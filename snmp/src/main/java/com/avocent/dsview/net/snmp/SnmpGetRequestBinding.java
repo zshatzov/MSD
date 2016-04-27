@@ -14,6 +14,12 @@ public abstract class SnmpGetRequestBinding extends SnmpRequestBinding{
 
     private final String oid;
 
+    /**
+     *
+     * @param clientID A custom ID to correlate requests to responses
+     * @param host A hostname or IP address
+     * @param oid The MIB OID of a variable binding
+     */
     public SnmpGetRequestBinding(Integer clientID, String host, String oid) {
         super(clientID, host);
         this.oid = oid;

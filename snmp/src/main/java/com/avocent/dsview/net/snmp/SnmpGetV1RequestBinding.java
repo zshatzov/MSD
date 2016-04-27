@@ -12,16 +12,17 @@ public final class SnmpGetV1RequestBinding extends SnmpGetRequestBinding {
 
     private final String communityString;
     /**
+     /**
      *
-     * @param clientId
-     * @param host
-     * @param oid
-     * @param communityString
+     * @param clientID A custom ID to correlate requests to responses
+     * @param host A hostname or IP address
+     * @param oid The MIB OID of a variable binding
+     * @param communityString Either <em>private</em> or <em>public</em>
      */
 
-    public SnmpGetV1RequestBinding(Integer clientId, String host, String oid,
+    public SnmpGetV1RequestBinding(Integer clientID, String host, String oid,
                                    String communityString) {
-        super(clientId, host, oid);
+        super(clientID, host, oid);
         this.communityString = communityString;
     }
 
