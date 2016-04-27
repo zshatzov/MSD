@@ -61,6 +61,10 @@ public class SnmpResponse<T extends SnmpVariableBinding> implements Serializable
         return errorStatusMessage;
     }
 
+    /**
+     *
+     * @return The ID of the local engine
+     */
     public String getContextEngineID() {
         return contextEngineID;
     }
