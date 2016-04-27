@@ -15,19 +15,19 @@ public interface NetworkManagementStation {
 
     SnmpResponse getSnmpV3(SnmpGetV3RequestBinding requestBinding);
 
-    void getSnmpV1Async(SnmpEventListener<SnmpResponse> callback,
+    void getSnmpV1Async(SnmpEventListener callback,
                         Stream<SnmpGetV1RequestBinding> requestBindings);
 
-    void getSnmpV3Async(SnmpEventListener<SnmpResponse> callback,
+    void getSnmpV3Async(SnmpEventListener callback,
                         Stream<SnmpGetV3RequestBinding> requestBindings);
 
     SnmpResponse setSnmpV1(SnmpSetV1RequestBinding requestBinding);
 
     SnmpResponse setSnmpV3(SnmpSetV3RequestBinding requestBinding);
 
-    void setSnmpV1Async(SnmpEventListener<SnmpResponse> callback,
+    void setSnmpV1Async(SnmpEventListener callback,
                         Stream<SnmpSetV1RequestBinding> requestBindings);
 
-    void setSnmpV3Async(SnmpEventListener<SnmpResponse> callback,
+    void setSnmpV3Async(SnmpEventListener callback,
                         Stream<SnmpSetV3RequestBinding> requestBindings);
 }

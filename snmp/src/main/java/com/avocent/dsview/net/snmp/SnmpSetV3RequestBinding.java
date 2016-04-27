@@ -14,7 +14,7 @@ public class SnmpSetV3RequestBinding extends SnmpSetRequestBinding{
      * @param host
      * @param variableBinding
      */
-    public SnmpSetV3RequestBinding(Integer clientId, String host, SnmpSetVariableBinding variableBinding) {
+    public SnmpSetV3RequestBinding(Integer clientId, String host, SnmpInputVariableBinding variableBinding) {
         super(clientId, host, variableBinding);
     }
 

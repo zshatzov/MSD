@@ -13,7 +13,7 @@ public class SnmpSetV1RequestBinding extends SnmpSetRequestBinding{
      * @param variableBinding
      */
     public SnmpSetV1RequestBinding(Integer clientId, String host,
-                                   SnmpSetVariableBinding variableBinding,
+                                   SnmpInputVariableBinding variableBinding,
                                    String communityString) {
         super(clientId, host, variableBinding);
         this.communityString = communityString;

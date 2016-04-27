@@ -1,7 +1,5 @@
 package com.avocent.dsview.net.snmp;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * An object that encapsulates all the necessary info to configure the payload
@@ -12,7 +10,7 @@ import java.io.Serializable;
  */
 public abstract class SnmpSetRequestBinding extends SnmpRequestBinding{
 
-    private final SnmpSetVariableBinding variableBinding;
+    private final SnmpInputVariableBinding variableBinding;
 
     /**
      * @param clientID A custom ID to correlate requests to responses
@@ -21,7 +19,7 @@ public abstract class SnmpSetRequestBinding extends SnmpRequestBinding{
      *
      */
 
-    public SnmpSetRequestBinding(Integer clientID, String host, SnmpSetVariableBinding variableBinding) {
+    public SnmpSetRequestBinding(Integer clientID, String host, SnmpInputVariableBinding variableBinding) {
         super(clientID, host);
         this.variableBinding = variableBinding;
     }
@@ -30,7 +28,7 @@ public abstract class SnmpSetRequestBinding extends SnmpRequestBinding{
      *
      * @return The new value for a MIB variable
      */
-    public SnmpSetVariableBinding getVariableBinding() {
+    public SnmpInputVariableBinding getVariableBinding() {
         return variableBinding;
     }
 
