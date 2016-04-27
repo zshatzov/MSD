@@ -1,7 +1,5 @@
 package com.avocent.dsview.net.snmp;
 
-import java.io.Serializable;
-
 /**
  * <p>
  *  A base class for SNMPv1 and SNMPv3 request binding.
@@ -12,32 +10,13 @@ import java.io.Serializable;
  *
  * Created by zshatzov on 4/25/2016.
  */
-public abstract class SnmpGetRequestBinding implements Serializable{
+public abstract class SnmpGetRequestBinding extends SnmpRequestBinding{
 
-    private final Integer clientId;
-    private final String host;
     private final String oid;
 
-    public SnmpGetRequestBinding(Integer clientId, String host, String oid) {
-        this.clientId = clientId;
-        this.host = host;
+    public SnmpGetRequestBinding(Integer clientID, String host, String oid) {
+        super(clientID, host);
         this.oid = oid;
-    }
-
-    /**
-     *
-     * @return Integer A client provided ID that can be used to correlate requests to responses.
-     */
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    /**
-     *
-     * @return String Either an IP address or a hostname
-     */
-    public String getHost() {
-        return host;
     }
 
     /**
@@ -51,9 +30,9 @@ public abstract class SnmpGetRequestBinding implements Serializable{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
-        sb.append("host='").append(host).append('\'');
+        sb.append("host='").append(getHost()).append('\'');
         sb.append(", oid='").append(oid).append('\'');
-        sb.append(", clientID=").append(clientId);
+        sb.append(", clientID=").append(getClientID());
         sb.append(')');
         return sb.toString();
     }

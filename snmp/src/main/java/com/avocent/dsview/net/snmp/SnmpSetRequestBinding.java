@@ -10,38 +10,19 @@ import java.io.Serializable;
  *
  * Created by zshatzov on 4/19/2016.
  */
-public abstract class SnmpSetRequestBinding implements Serializable{
+public abstract class SnmpSetRequestBinding extends SnmpRequestBinding{
 
-    private final Integer clientId;
-    private final String host;
     private final SnmpSetVariableBinding variableBinding;
     /**
      *
-     * @param clientId
+     * @param clientID
      * @param host
      * @param variableBinding
      */
 
-    public SnmpSetRequestBinding(Integer clientId, String host, SnmpSetVariableBinding variableBinding) {
-        this.clientId = clientId;
-        this.host = host;
+    public SnmpSetRequestBinding(Integer clientID, String host, SnmpSetVariableBinding variableBinding) {
+        super(clientID, host);
         this.variableBinding = variableBinding;
-    }
-
-    /**
-     * @return An ID setup by the client to correlate request with responses.
-     *
-     */
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    /**
-     *
-     * @return A hostname or an IP address of the agent.
-     */
-    public String getHost() {
-        return host;
     }
 
     /**
@@ -55,11 +36,11 @@ public abstract class SnmpSetRequestBinding implements Serializable{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(");
-        sb.append("host='").append(host).append('\'');
+        sb.append("host='").append(getHost()).append('\'');
         sb.append("oid='").append(variableBinding.getOid()).append('\'');
         sb.append("value='").append(variableBinding.getValue()).append('\'');
         sb.append("type='").append(variableBinding.getVariableType()).append('\'');
-        sb.append(", clientID=").append(clientId);
+        sb.append(", clientID=").append(getClientID());
         sb.append(')');
         return sb.toString();
     }
