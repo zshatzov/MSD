@@ -313,7 +313,8 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             ResponseEvent event = snmp.set(pdu, target);
-            SnmpResponse response = prepareSnmpResponse(event, requestBinding);
+            SnmpResponse<SnmpSetVariableBinding> response =
+                    prepareSnmpResponse(event, requestBinding);
             response.setContextEngineID(usm.getLocalEngineID().toString());
             return response;
         }catch(IOException e){
