@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * Created by zshatzov on 4/19/16.
  */
 @FunctionalInterface
-public interface SnmpGetEventListener <T extends SnmpResponse> {
+public interface SnmpGetEventListener<SnmpResponse> {
     /**
      * <p>
      * A callback method that passes the response(s) back to the client
@@ -25,5 +25,5 @@ public interface SnmpGetEventListener <T extends SnmpResponse> {
      *
      * @param results A {@link java.util.stream.Stream} of {@link SnmpResponse}
      */
-    void process(Stream<T> results);
+    void process(Stream<SnmpResponse> results);
 }

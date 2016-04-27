@@ -11,7 +11,7 @@ response.with{
     println clientID
     println errorStatusMessage
     println errorStatusCode
-    variableBinding.each{
+    variableBindings.each{
         println it.oid
         println it.value
         println it.variableTypeTextual

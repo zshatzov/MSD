@@ -8,18 +8,19 @@ import java.util.List;
 
 /**
  * <p>
- * A base class that encapsulates the GET/SET response returned from a SNMP agent.
+ * A class that encapsulates the GET/SET response returned from a SNMP agent.
  * </p>
  *
  *
  * Created by zshatzov on 4/19/2016.
  */
-public abstract class SnmpResponse<T extends SnmpVariableBinding> implements Serializable {
+public class SnmpResponse<T extends SnmpVariableBinding> implements Serializable {
 
-    protected final Integer clientID;
-    protected final List<T> variableBindings;
-    protected final String errorStatusMessage;
-    protected final int errorStatusCode;
+    private final Integer clientID;
+    private final List<T> variableBindings;
+    private final String errorStatusMessage;
+    private final int errorStatusCode;
+    private String contextEngineID;
 
     public SnmpResponse(Integer clientID, String errorStatusMessage, int errorStatusCode) {
         this.clientID = clientID;
@@ -40,7 +41,7 @@ public abstract class SnmpResponse<T extends SnmpVariableBinding> implements Ser
         variableBindings.add(variableBinding);
     }
 
-    public List<T> getVariableBinding(){
+    public List<T> getVariableBindings(){
         return unmodifiableList(variableBindings);
     }
 
@@ -58,5 +59,13 @@ public abstract class SnmpResponse<T extends SnmpVariableBinding> implements Ser
      */
     public String getErrorStatusMessage() {
         return errorStatusMessage;
+    }
+
+    public String getContextEngineID() {
+        return contextEngineID;
+    }
+
+    public void setContextEngineID(String contextEngineID) {
+        this.contextEngineID = contextEngineID;
     }
 }

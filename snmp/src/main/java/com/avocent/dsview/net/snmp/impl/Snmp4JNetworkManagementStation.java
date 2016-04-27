@@ -36,16 +36,17 @@ import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
  */
 public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
 
-    private static final Logger LOGGER = Logger.getLogger(Snmp4JNetworkManagementStation.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(
+            Snmp4JNetworkManagementStation.class.getName());
 
     /**
      * <p>Perform a synchronous SNMPv1 GET request</p>
      *
      * @param requestBinding An object that encapsulates SNMPv1 GET request parameters
-     * @return SnmpV1Response A response corresponding to the SNMPv1 GET request
+     * @return SnmpResponse A response corresponding to the SNMPv1 GET request
      */
     @Override
-    public SnmpV1Response getSnmpV1(final SnmpGetV1RequestBinding requestBinding){
+    public SnmpResponse getSnmpV1(final SnmpGetV1RequestBinding requestBinding){
 
         LOGGER.finest("Process Get SNMPv1 request");
 
@@ -86,7 +87,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                         requestBinding.getHost(), requestBinding.getOid());
             }
 
-            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
+            SnmpResponse response = new SnmpResponse(requestBinding.getClientId(),
                     errorStatusMessage, errorStatusCode);
 
             if(nonNull(event) && nonNull(event.getResponse())){
@@ -121,10 +122,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * <p>Perform a synchronous SNMPv3 GET request</p>
      *
      * @param requestBinding An object that encapsulates SNMPv3 GET request parameters
-     * @return SnmpV3Response A response object corresponding to the SNMPv3 GET request
+     * @return SnmpResponse A response object corresponding to the SNMPv3 GET request
      */
     @Override
-    public SnmpV3Response getSnmpV3(final SnmpGetV3RequestBinding requestBinding){
+    public SnmpResponse getSnmpV3(final SnmpGetV3RequestBinding requestBinding){
 
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
             LOGGER.severe("Host is either null or empty");
@@ -182,8 +183,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                         requestBinding.getHost(), requestBinding.getOid());
             }
 
-            SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
-                  requestBinding.getClientId(), errorStatusMessage, errorStatusCode);
+            SnmpResponse response = new SnmpResponse(requestBinding.getClientId(),
+                    errorStatusMessage, errorStatusCode);
+            response.setContextEngineID(usm.getLocalEngineID().toString());
 
             if(nonNull(event) && nonNull(event.getResponse())) {
                 for (VariableBinding vb : event.getResponse().getVariableBindings()) {
@@ -216,12 +218,12 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener<SnmpV1Response> callback,
+    public void getSnmpV1Async(final SnmpGetEventListener<SnmpResponse> callback,
                                final Stream<SnmpGetV1RequestBinding> requestBindings) {
 
         LOGGER.finest("Process async SNMPv1 GET requests");
 
-        List<SnmpV1Response> responses =
+        List<SnmpResponse> responses =
                 requestBindings.map(binding-> prepareAsyncGetCall(binding, this::getSnmpV1))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
@@ -236,11 +238,11 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv3 GET request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener<SnmpV3Response> callback,
+    public void getSnmpV3Async(final SnmpGetEventListener<SnmpResponse> callback,
                                final Stream<SnmpGetV3RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv3 GET requests");
 
-        List<SnmpV3Response> responses =
+        List<SnmpResponse> responses =
                 requestBindings.map(binding-> prepareAsyncGetCall(binding, this::getSnmpV3))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
@@ -252,10 +254,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * <p>A synchronous SNMPv1 SET variable binding request</p>
      *
      * @param requestBinding An object that encapsulates SNMPv1 SET request parameters
-     * @return SnmpV1Response The response corresponding to the SNMPv1 SET request
+     * @return SnmpResponse The response corresponding to the SNMPv1 SET request
      */
     @Override
-    public SnmpV1Response setSnmpV1(final SnmpSetV1RequestBinding requestBinding) {
+    public SnmpResponse setSnmpV1(final SnmpSetV1RequestBinding requestBinding) {
 
         LOGGER.finest("Process SNMPv1 SET variable binding request");
 
@@ -300,7 +302,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                         requestBinding.getHost(), requestBinding.getVariableBinding().getOid());
             }
 
-            SnmpV1Response response = new SnmpV1Response(requestBinding.getClientId(),
+            SnmpResponse response = new SnmpResponse(requestBinding.getClientId(),
                     errorStatusMessage, errorStatusCode);
 
             if(nonNull(event) && nonNull(event.getResponse())) {
@@ -334,10 +336,10 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * <p>A synchronous SNMPv3 SET variable binding request</p>
      *
      * @param requestBinding An object that encapsulates SNMPv3 SET request parameters
-     * @return SnmpV3Response The response corresponding to the SNMPv3 SET request
+     * @return SnmpResponse The response corresponding to the SNMPv3 SET request
      */
     @Override
-    public SnmpV3Response setSnmpV3(final SnmpSetV3RequestBinding requestBinding) {
+    public SnmpResponse setSnmpV3(final SnmpSetV3RequestBinding requestBinding) {
 
         LOGGER.finest("Process SNMPv3 SET variable binding request");
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
@@ -403,8 +405,9 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
                         requestBinding.getHost(), requestBinding.getVariableBinding().getOid());
             }
 
-            SnmpV3Response response = new SnmpV3Response(usm.getLocalEngineID().toString(),
-                    requestBinding.getClientId(), errorStatusMessage, errorStatusCode);
+            SnmpResponse response = new SnmpResponse(requestBinding.getClientId(),
+                    errorStatusMessage, errorStatusCode);
+            response.setContextEngineID(usm.getLocalEngineID().toString());
 
             if(nonNull(event) && nonNull(event.getResponse())) {
                 for (VariableBinding vb : event.getResponse().getVariableBindings()) {
@@ -437,11 +440,11 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv1 SET request to be processed
      */
     @Override
-    public void setSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+    public void setSnmpV1Async(SnmpGetEventListener<SnmpResponse> callback,
                                Stream<SnmpSetV1RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv1 SET requests");
 
-        List<SnmpV1Response> responses =
+        List<SnmpResponse> responses =
                 requestBindings.map(binding-> prepareAsyncSetCall(binding, this::setSnmpV1))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
@@ -456,11 +459,11 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv3 SET request to be processed
      */
     @Override
-    public void setSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+    public void setSnmpV3Async(SnmpGetEventListener<SnmpResponse> callback,
                                Stream<SnmpSetV3RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv3 SET requests");
 
-        List<SnmpV3Response> responses =
+        List<SnmpResponse> responses =
                 requestBindings.map(binding-> prepareAsyncSetCall(binding, this::setSnmpV3))
                         .map(this::getAsyncResponse)
                         .collect(Collectors.toList());
@@ -468,7 +471,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         callback.process(responses.stream());
     }
 
-    private <T extends SnmpResponse> T getAsyncResponse(CompletableFuture<T> future){
+    private SnmpResponse getAsyncResponse(CompletableFuture<SnmpResponse> future){
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -476,17 +479,17 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
         }
     }
 
-    private <T extends SnmpResponse, U extends SnmpGetRequestBinding>
-            CompletableFuture<T> prepareAsyncGetCall(U binding, Function<U, T> handler){
-        CompletableFuture<T> completableFuture =
+    private <SnmpResponse, T extends SnmpGetRequestBinding>
+            CompletableFuture<SnmpResponse> prepareAsyncGetCall(T binding, Function<T, SnmpResponse> handler){
+        CompletableFuture<SnmpResponse> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 
         return completableFuture;
     }
 
-    private <T extends SnmpResponse, U extends SnmpSetRequestBinding>
-            CompletableFuture<T> prepareAsyncSetCall(U binding, Function<U, T> handler){
-        CompletableFuture<T> completableFuture =
+    private <SnmpResponse, T extends SnmpSetRequestBinding>
+            CompletableFuture<SnmpResponse> prepareAsyncSetCall(T binding, Function<T, SnmpResponse> handler){
+        CompletableFuture<SnmpResponse> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
 
         return completableFuture;

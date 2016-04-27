@@ -11,23 +11,23 @@ import java.util.stream.Stream;
  */
 public interface NetworkManagementStation {
 
-    SnmpV1Response getSnmpV1(SnmpGetV1RequestBinding requestBinding);
+    SnmpResponse getSnmpV1(SnmpGetV1RequestBinding requestBinding);
 
-    SnmpV3Response getSnmpV3(SnmpGetV3RequestBinding requestBinding);
+    SnmpResponse getSnmpV3(SnmpGetV3RequestBinding requestBinding);
 
-    void getSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+    void getSnmpV1Async(SnmpGetEventListener<SnmpResponse> callback,
                         Stream<SnmpGetV1RequestBinding> requestBindings);
 
-    void getSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+    void getSnmpV3Async(SnmpGetEventListener<SnmpResponse> callback,
                         Stream<SnmpGetV3RequestBinding> requestBindings);
 
-    SnmpV1Response setSnmpV1(SnmpSetV1RequestBinding requestBinding);
+    SnmpResponse setSnmpV1(SnmpSetV1RequestBinding requestBinding);
 
-    SnmpV3Response setSnmpV3(SnmpSetV3RequestBinding requestBinding);
+    SnmpResponse setSnmpV3(SnmpSetV3RequestBinding requestBinding);
 
-    void setSnmpV1Async(SnmpGetEventListener<SnmpV1Response> callback,
+    void setSnmpV1Async(SnmpGetEventListener<SnmpResponse> callback,
                         Stream<SnmpSetV1RequestBinding> requestBindings);
 
-    void setSnmpV3Async(SnmpGetEventListener<SnmpV3Response> callback,
+    void setSnmpV3Async(SnmpGetEventListener<SnmpResponse> callback,
                         Stream<SnmpSetV3RequestBinding> requestBindings);
 }
