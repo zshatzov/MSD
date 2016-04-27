@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 /**
  * <p>
- * Defines a SNMPv3 synchronous and asynchronous GET/SET operations.
+ * Defines synchronous and asynchronous SNMPv3 GET/SET operations.
  * </p>
  *
  * Created by zshatzov on 4/27/2016.
