@@ -165,7 +165,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv1 request to be processed
      */
     @Override
-    public void getSnmpV1Async(final SnmpGetEventListener<SnmpResponse> callback,
+    public void getSnmpV1Async(final SnmpEventListener<SnmpResponse> callback,
                                final Stream<SnmpGetV1RequestBinding> requestBindings) {
 
         LOGGER.finest("Process async SNMPv1 GET requests");
@@ -185,7 +185,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv3 GET request to be processed
      */
     @Override
-    public void getSnmpV3Async(final SnmpGetEventListener<SnmpResponse> callback,
+    public void getSnmpV3Async(final SnmpEventListener<SnmpResponse> callback,
                                final Stream<SnmpGetV3RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv3 GET requests");
 
@@ -332,7 +332,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv1 SET request to be processed
      */
     @Override
-    public void setSnmpV1Async(SnmpGetEventListener<SnmpResponse> callback,
+    public void setSnmpV1Async(SnmpEventListener<SnmpResponse> callback,
                                Stream<SnmpSetV1RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv1 SET requests");
 
@@ -351,7 +351,7 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
      * @param requestBindings One or more SNMPv3 SET request to be processed
      */
     @Override
-    public void setSnmpV3Async(SnmpGetEventListener<SnmpResponse> callback,
+    public void setSnmpV3Async(SnmpEventListener<SnmpResponse> callback,
                                Stream<SnmpSetV3RequestBinding> requestBindings) {
         LOGGER.finest("Process async SNMPv3 SET requests");
 
