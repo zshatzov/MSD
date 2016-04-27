@@ -25,5 +25,5 @@ public interface SnmpEventListener{
      *
      * @param results A {@link java.util.stream.Stream} of {@link SnmpResponse}
      */
-    void process(Stream<SnmpResponse<SnmpOutputVariableBinding>> results);
+    void process(Stream<SnmpResponse> results);
 }

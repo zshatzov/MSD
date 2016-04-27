@@ -4,8 +4,8 @@ import com.avocent.dsview.net.snmp.impl.*
 
 vb = new SnmpInputVariableBinding('1.3.6.1.2.1.1.9.1.3.1', 'Hello World', SnmpInputVariableBinding.VariableType.OctetString)
 request = new SnmpSetV1RequestBinding(1, 'demo.snmplabs.com', vb, 'private')
-nms = new Snmp4JNetworkManagementStation()
-response = nms.setSnmpV1(request)
+nms = new Snmp4JV1Operations()
+response = nms.set(request)
 
 response.with{
     println clientID
