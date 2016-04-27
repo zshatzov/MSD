@@ -28,7 +28,7 @@ public abstract class BaseSnmpOperations {
 
     protected final Logger LOGGER = Logger.getLogger(getClass().getName());
 
-    SnmpResponse getAsyncResponse(CompletableFuture<SnmpResponse> future){
+    protected SnmpResponse getAsyncResponse(CompletableFuture<SnmpResponse> future){
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -36,7 +36,7 @@ public abstract class BaseSnmpOperations {
         }
     }
 
-    <T extends SnmpGetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncGetCall(
+    protected <T extends SnmpGetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncGetCall(
             T binding, Function<T, SnmpResponse> handler){
         CompletableFuture<SnmpResponse> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
@@ -44,7 +44,7 @@ public abstract class BaseSnmpOperations {
         return completableFuture;
     }
 
-    <T extends SnmpSetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncSetCall(
+    protected <T extends SnmpSetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncSetCall(
             T binding, Function<T, SnmpResponse> handler){
         CompletableFuture<SnmpResponse> completableFuture =
                 CompletableFuture.supplyAsync(() -> {return handler.apply(binding);});
@@ -52,7 +52,7 @@ public abstract class BaseSnmpOperations {
         return completableFuture;
     }
 
-    CommunityTarget createCommunityTarget(String address, String communityString){
+    protected CommunityTarget createCommunityTarget(String address, String communityString){
         CommunityTarget target = new CommunityTarget(GenericAddress.parse(address),
                 new OctetString(communityString));
         target.setRetries(2);
@@ -62,7 +62,7 @@ public abstract class BaseSnmpOperations {
         return target;
     }
 
-    UserTarget createUserTarget(String address, UserSecurityModel usm){
+    protected UserTarget createUserTarget(String address, UserSecurityModel usm){
 
         final UserTarget target = new UserTarget();
         target.setAddress(GenericAddress.parse(address));
@@ -83,7 +83,7 @@ public abstract class BaseSnmpOperations {
         return target;
     }
 
-    UsmUser createUsmUser(final UserSecurityModel usm){
+    protected UsmUser createUsmUser(final UserSecurityModel usm){
         LOGGER.finest("Setup USM user credetinals to establish secure communications");
         final OctetString securityName = nonNull(usm.getSecurityName())?
                 new OctetString(usm.getSecurityName()): null;
@@ -112,7 +112,7 @@ public abstract class BaseSnmpOperations {
                 privProtocol,privPassphrase);
     }
 
-    Variable convertVariableBinding(SnmpInputVariableBinding binding){
+    protected Variable convertVariableBinding(SnmpInputVariableBinding binding){
         switch (binding.getVariableType()){
             case Counter32: return new Counter32(Integer.valueOf(binding.getValue()));
             case Counter64: return new Counter64(Long.valueOf(binding.getValue()));
@@ -132,7 +132,7 @@ public abstract class BaseSnmpOperations {
         }
     }
 
-    <T extends SnmpRequestBinding> SnmpResponse prepareSnmpResponse(
+    protected <T extends SnmpRequestBinding> SnmpResponse prepareSnmpResponse(
             ResponseEvent event, T request){
         final int errorStatusCode;
         final String errorStatusMessage;
