@@ -144,7 +144,11 @@ public class Snmp4JNetworkManagementStation implements NetworkManagementStation{
             }
 
             ResponseEvent event = snmp.get(pdu, target);
-            return prepareSnmpResponse(event, requestBinding);
+            SnmpResponse<SnmpGetVariableBinding> response =
+                    prepareSnmpResponse(event, requestBinding);
+            response.setContextEngineID(usm.getLocalEngineID().toString());
+
+            return response;
         }catch(IOException e){
             LOGGER.log(Level.SEVERE, "SNMPv3 GET request failed", e);
             throw new SnmpGetException("SNMPv3 get request failed", e);
