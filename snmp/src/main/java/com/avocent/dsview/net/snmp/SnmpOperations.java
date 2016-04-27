@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 /**
  * <p>
- * Defines a SNMP synchronous and asynchronous GET/SET operations.
+ * Defines synchronous and asynchronous SNMP GET/SET operations.
  * </p>
  *
  *
