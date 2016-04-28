@@ -14,7 +14,7 @@ public final class SnmpGetV1RequestBinding extends SnmpGetRequestBinding {
     /**
      *
      * @param clientID A custom ID to correlate requests to responses
-     * @param host A hostname or IP address
+     * @param host A hostname or IP address of the remote <em>SNMP</em> agent
      * @param oid The MIB OID of a variable binding
      * @param communityString Either <em>private</em> or <em>public</em>
      */

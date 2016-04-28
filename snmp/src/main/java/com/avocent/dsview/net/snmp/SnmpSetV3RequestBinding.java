@@ -10,9 +10,10 @@ public class SnmpSetV3RequestBinding extends SnmpSetRequestBinding{
 
 
     /**
-     * @param clientId
-     * @param host
-     * @param variableBinding
+     * @param clientId A custom ID to correlate requests to responses
+     * @param host A hostname or IP address of the remote <em>SNMP</em> agent
+     * @param variableBinding An object that encapsulates the parameters to pass to the remote <em>SNMP</em>
+     *                        agent to set a new value for a particular MIB variable
      */
     public SnmpSetV3RequestBinding(Integer clientId, String host, SnmpInputVariableBinding variableBinding) {
         super(clientId, host, variableBinding);
