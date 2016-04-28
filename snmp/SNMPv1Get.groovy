@@ -3,7 +3,7 @@ import com.avocent.dsview.net.snmp.impl.*
 
 
 request = new SnmpGetV1RequestBinding(1, '66.214.208.104', '1.3.6.1.2.1.1.9.1.3.1', 'private')
-nms = new Snmp4JV1Operations()
+nms = new Snmp4JV1Service()
 response = nms.get(request)
 
 response.with{
