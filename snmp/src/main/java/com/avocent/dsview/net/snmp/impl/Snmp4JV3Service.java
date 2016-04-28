@@ -35,7 +35,7 @@ import static java.util.Objects.nonNull;
  *
  * Created by zshatzov on 4/27/2016.
  */
-public class Snmp4JV3Operations extends BaseSnmpOperations implements SnmpV3Operations{
+public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations{
 
     @Override
     public SnmpResponse get(SnmpGetV3RequestBinding requestBinding) {

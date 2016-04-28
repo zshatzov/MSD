@@ -24,7 +24,7 @@ import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
  *
  * Created by zshatzov on 4/27/2016.
  */
-public abstract class BaseSnmpOperations {
+public abstract class BaseSnmpService {
 
     protected final Logger LOGGER = Logger.getLogger(getClass().getName());
 
@@ -36,6 +36,13 @@ public abstract class BaseSnmpOperations {
         }
     }
 
+    /**
+     *
+     * @param binding An instance of {@link SnmpRequestBinding}
+     * @param handler A lambda representing the SNMP GET action to perform
+     * @param <T>
+     * @return An instance of a {@link CompletableFuture} which holds the result returned by the handler
+     */
     protected <T extends SnmpGetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncGetCall(
             T binding, Function<T, SnmpResponse> handler){
         CompletableFuture<SnmpResponse> completableFuture =
@@ -44,6 +51,13 @@ public abstract class BaseSnmpOperations {
         return completableFuture;
     }
 
+    /**
+     *
+     * @param binding An instance of {@link SnmpRequestBinding}
+     * @param handler A lambda representing the SNMP SET action to perform
+     * @param <T>
+     * @return An instance of a {@link CompletableFuture} which holds the result returned by the handler
+     */
     protected <T extends SnmpSetRequestBinding> CompletableFuture<SnmpResponse> prepareAsyncSetCall(
             T binding, Function<T, SnmpResponse> handler){
         CompletableFuture<SnmpResponse> completableFuture =
@@ -52,6 +66,12 @@ public abstract class BaseSnmpOperations {
         return completableFuture;
     }
 
+    /**
+     *
+     * @param address The host or IP address of SNMP agent
+     * @param communityString SNMPv1 variable access level <em>private</em> or <em>public</em>
+     * @return An instance of {@link CommunityTarget}
+     */
     protected CommunityTarget createCommunityTarget(String address, String communityString){
         CommunityTarget target = new CommunityTarget(GenericAddress.parse(address),
                 new OctetString(communityString));
@@ -62,6 +82,12 @@ public abstract class BaseSnmpOperations {
         return target;
     }
 
+    /**
+     *
+     * @param address The host or IP address of SNMP agent
+     * @param usm An instance of {@link UserSecurityModel} representing USM used by SNMPv3 protocol
+     * @return An instance of {@link UserTarget}
+     */
     protected UserTarget createUserTarget(String address, UserSecurityModel usm){
 
         final UserTarget target = new UserTarget();
@@ -83,6 +109,14 @@ public abstract class BaseSnmpOperations {
         return target;
     }
 
+    /**
+     * <p>
+     * A utility method to create an instance of {@link UsmUser}
+     * </p>
+     *
+     * @param usm
+     * @return
+     */
     protected UsmUser createUsmUser(final UserSecurityModel usm){
         LOGGER.finest("Setup USM user credetinals to establish secure communications");
         final OctetString securityName = nonNull(usm.getSecurityName())?
@@ -112,6 +146,14 @@ public abstract class BaseSnmpOperations {
                 privProtocol,privPassphrase);
     }
 
+    /**
+     * <p>
+     * A utillity method to convert a String value to a specific SNMP4J type instance
+     * </p>
+     *
+     * @param binding
+     * @return
+     */
     protected Variable convertVariableBinding(SnmpInputVariableBinding binding){
         switch (binding.getVariableType()){
             case Counter32: return new Counter32(Integer.valueOf(binding.getValue()));
@@ -132,6 +174,16 @@ public abstract class BaseSnmpOperations {
         }
     }
 
+    /**
+     * <p>
+     * A utility method that converts the specific <em>SNMP4J</em> response to a generic {@link SnmpResponse}
+     * </p>
+     *
+     * @param event
+     * @param request
+     * @param <T>
+     * @return
+     */
     protected <T extends SnmpRequestBinding> SnmpResponse prepareSnmpResponse(
             ResponseEvent event, T request){
         final int errorStatusCode;

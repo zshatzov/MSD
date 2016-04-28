@@ -28,7 +28,7 @@ import static java.util.Objects.nonNull;
  *
  * Created by zshatzov on 4/27/2016.
  */
-public class Snmp4JV1Operations extends BaseSnmpOperations implements SnmpV1Operations{
+public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations{
 
     @Override
     public SnmpResponse get(SnmpGetV1RequestBinding requestBinding) {
