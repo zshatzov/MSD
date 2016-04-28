@@ -12,7 +12,6 @@ public final class SnmpGetV1RequestBinding extends SnmpGetRequestBinding {
 
     private final String communityString;
     /**
-     /**
      *
      * @param clientID A custom ID to correlate requests to responses
      * @param host A hostname or IP address
