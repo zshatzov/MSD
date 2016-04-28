@@ -2,16 +2,22 @@ package com.avocent.dsview.net.snmp.impl;
 
 import com.avocent.dsview.net.snmp.*;
 import org.snmp4j.CommunityTarget;
+import org.snmp4j.Snmp;
+import org.snmp4j.TransportMapping;
 import org.snmp4j.UserTarget;
 import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.MessageProcessingModel;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.*;
 import org.snmp4j.smi.*;
+import org.snmp4j.transport.DefaultUdpTransportMapping;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.Objects.nonNull;
@@ -27,6 +33,34 @@ import static org.snmp4j.mp.SnmpConstants.SNMP_ERROR_GENERAL_ERROR;
 public abstract class BaseSnmpService {
 
     protected final Logger LOGGER = Logger.getLogger(getClass().getName());
+
+    protected Snmp createSnmpV1Instance() throws IOException{
+        final TransportMapping<UdpAddress> transport = new DefaultUdpTransportMapping();
+        final Snmp snmp = new Snmp(transport);
+        transport.listen();
+
+        return snmp;
+    }
+
+    protected Snmp createSnmpV3Instance(final String engineID) throws IOException{
+        final TransportMapping<UdpAddress> transport = new DefaultUdpTransportMapping();
+        final Snmp snmp = new Snmp(transport);
+        final USM usm;
+        if(nonNull(engineID)){
+           usm = new USM(SecurityProtocols.getInstance(),
+                    new OctetString(engineID), 0);
+        }else {
+           LOGGER.finest("Create USM with default local engine ID");
+           usm = new USM(SecurityProtocols.getInstance(),
+                    new OctetString(MPv3.createLocalEngineID()), 0);
+        }
+
+        SecurityModels.getInstance().addSecurityModel(usm);
+        transport.listen();
+
+        return snmp;
+    }
+
 
     protected SnmpResponse getAsyncResponse(CompletableFuture<SnmpResponse> future){
         try {

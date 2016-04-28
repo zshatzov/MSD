@@ -4,12 +4,9 @@ import com.avocent.dsview.net.snmp.*;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
-import org.snmp4j.TransportMapping;
 import org.snmp4j.event.ResponseEvent;
 import org.snmp4j.smi.OID;
-import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
-import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,12 +45,9 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final TransportMapping<UdpAddress> transport;
         final Snmp snmp;
         try {
-            transport = new DefaultUdpTransportMapping();
-            snmp = new Snmp(transport);
-            transport.listen();
+            snmp = createSnmpV1Instance();
         }catch (IOException e){
             LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv1 GET request", e);
             throw new SnmpGetException("Failed to configure UDP transport", e);
@@ -120,12 +114,9 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final TransportMapping<UdpAddress> transport;
         final Snmp snmp;
         try {
-            transport = new DefaultUdpTransportMapping();
-            snmp = new Snmp(transport);
-            transport.listen();
+            snmp = createSnmpV1Instance();
         }catch (IOException e){
             LOGGER.log(Level.SEVERE, "SET SNMPv1 transport configuration failed", e);
             throw new SnmpSetException("Failed to configure UDP transport", e);

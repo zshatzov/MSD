@@ -3,19 +3,12 @@ package com.avocent.dsview.net.snmp.impl;
 import com.avocent.dsview.net.snmp.*;
 import org.snmp4j.ScopedPDU;
 import org.snmp4j.Snmp;
-import org.snmp4j.TransportMapping;
 import org.snmp4j.UserTarget;
 import org.snmp4j.event.ResponseEvent;
-import org.snmp4j.mp.MPv3;
-import org.snmp4j.security.SecurityModels;
-import org.snmp4j.security.SecurityProtocols;
-import org.snmp4j.security.USM;
 import org.snmp4j.security.UsmUser;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
-import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
-import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,27 +41,16 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
     @Override
     public SnmpResponse get(SnmpGetV3RequestBinding requestBinding) {
 
+        LOGGER.finest("Process a synchronous GET SNMPv3 request");
+
         if (isNull(requestBinding.getHost()) || requestBinding.getHost().isEmpty()) {
             LOGGER.severe("Host is either null or empty");
             throw new SnmpGetException("Host is missing");
         }
 
-        final TransportMapping<UdpAddress> transport;
         final Snmp snmp;
-        final USM usm;
         try {
-            transport = new DefaultUdpTransportMapping();
-            snmp = new Snmp(transport);
-            if(nonNull(requestBinding.getEngineID())){
-                usm = new USM(SecurityProtocols.getInstance(),
-                        new OctetString(requestBinding.getEngineID()), 0);
-            }else {
-                LOGGER.finest("Create USM with default local engine ID");
-                usm = new USM(SecurityProtocols.getInstance(),
-                        new OctetString(MPv3.createLocalEngineID()), 0);
-            }
-            SecurityModels.getInstance().addSecurityModel(usm);
-            transport.listen();
+            snmp = createSnmpV3Instance(requestBinding.getEngineID());
         }catch (IOException e){
             LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv3 GET request", e);
             throw new SnmpGetException("Failed to configure UDP transport", e);
@@ -93,7 +75,7 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
 
             ResponseEvent event = snmp.get(pdu, target);
             SnmpResponse response = prepareSnmpResponse(event, requestBinding);
-            response.setContextEngineID(usm.getLocalEngineID().toString());
+            response.setContextEngineID(snmp.getUSM().getLocalEngineID().toString());
 
             return response;
         }catch(IOException e){
@@ -146,22 +128,10 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final TransportMapping<UdpAddress> transport;
+
         final Snmp snmp;
-        final USM usm;
         try {
-            transport = new DefaultUdpTransportMapping();
-            snmp = new Snmp(transport);
-            if(nonNull(requestBinding.getEngineID())){
-                usm = new USM(SecurityProtocols.getInstance(),
-                        new OctetString(requestBinding.getEngineID()), 0);
-            }else {
-                LOGGER.finest("Create USM with default local engine ID");
-                usm = new USM(SecurityProtocols.getInstance(),
-                        new OctetString(MPv3.createLocalEngineID()), 0);
-            }
-            SecurityModels.getInstance().addSecurityModel(usm);
-            transport.listen();
+            snmp = createSnmpV3Instance(requestBinding.getEngineID());
         }catch (IOException e){
             LOGGER.log(Level.SEVERE, "SET SNMPv3 transport configuration failed", e);
             throw new SnmpSetException("Failed to configure UDP transport", e);
@@ -189,7 +159,7 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
 
             ResponseEvent event = snmp.set(pdu, target);
             SnmpResponse response = prepareSnmpResponse(event, requestBinding);
-            response.setContextEngineID(usm.getLocalEngineID().toString());
+            response.setContextEngineID(snmp.getUSM().getLocalEngineID().toString());
             return response;
         }catch(IOException e){
             LOGGER.log(Level.SEVERE, "SNMPv3 SET request failed", e);
