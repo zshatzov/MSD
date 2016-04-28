@@ -17,7 +17,7 @@ req2 = new SnmpGetV3RequestBinding(2, 'demo.snmplabs.com', '1.3.6.1.2.1.1.4.0')
 req2.userSecurityModel = usm
 
 nms = new Snmp4JV3Service()
-nms.getAsync(
+nms.get(
         {Stream<SnmpResponse> responses-> responses.forEach{
             println "\n${'=>' * 50}\n"
             it.with{

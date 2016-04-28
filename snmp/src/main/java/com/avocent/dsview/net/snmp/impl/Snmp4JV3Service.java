@@ -37,6 +37,14 @@ import static java.util.Objects.nonNull;
  */
 public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations{
 
+    /**
+     * <p>Perform a synchronous <em>SNMP v3</em> GET request</p>
+     *
+     * @param requestBinding An object that encapsulates the parameters passed from the client
+     *                       to a <em>SNMP</em> agent
+     * @return An object that encapsulates the results returned from a <em>SNMP</em> agent
+     *
+     */
     @Override
     public SnmpResponse get(SnmpGetV3RequestBinding requestBinding) {
 
@@ -101,8 +109,15 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
         }
     }
 
+    /**
+     * <p>Perform an asynchronous <em>SNMP v3</em> GET request</p>
+     *
+     * @param callback A callback function that will be called once the results of the asynchronous call are available
+     * @param requestBindings A {@link Stream} of <em>SNMP</em> requests to process asynchronously
+     *
+     */
     @Override
-    public void getAsync(SnmpEventListener callback, Stream<SnmpGetV3RequestBinding> requestBindings) {
+    public void get(SnmpEventListener callback, Stream<SnmpGetV3RequestBinding> requestBindings) {
 
         LOGGER.finest("Process async SNMPv3 GET requests");
 
@@ -114,6 +129,14 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
         callback.process(responses.stream());
     }
 
+    /**
+     * <p>Perform a synchronous <em>SNMP v3</em> SET request</p>
+     *
+     * @param requestBinding An object that encapsulates the parameters passed from the client
+     *                       to a <em>SNMP</em> agent
+     * @return An object that encapsulates the results returned from a <em>SNMP</em> agent
+     *
+     */
     @Override
     public SnmpResponse set(SnmpSetV3RequestBinding requestBinding) {
 
@@ -181,8 +204,15 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
         }
     }
 
+    /**
+     * <p>Perform an asynchronous <em>SNMP v3</em> SET request</p>
+     *
+     * @param callback A callback function that will be called once the results of the asynchronous call are available
+     * @param requestBindings A {@link Stream} of <em>SNMP</em> requests to process asynchronously
+     *
+     */
     @Override
-    public void setAsync(SnmpEventListener callback, Stream<SnmpSetV3RequestBinding> requestBindings) {
+    public void set(SnmpEventListener callback, Stream<SnmpSetV3RequestBinding> requestBindings) {
 
         LOGGER.finest("Process async SNMPv3 SET requests");
 
