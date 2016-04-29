@@ -35,7 +35,7 @@ public final class SnmpGetV1RequestBinding extends SnmpGetRequestBinding {
      * @param newOID Override the origianl OID value with new value
      */
     public SnmpGetV1RequestBinding(final SnmpGetV1RequestBinding original, final String newOID){
-        this(original.getClientID(), original.getHost(), original.getOid(),
+        this(original.getClientID().intValue() + 1, original.getHost(), original.getOid(),
                 original.getCommunityString());
         this.oid = newOID;
     }
