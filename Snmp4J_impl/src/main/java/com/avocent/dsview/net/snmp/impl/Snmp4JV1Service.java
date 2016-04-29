@@ -49,11 +49,10 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
         final CommunityTarget target = createCommunityTarget(
                 address, requestBinding.getCommunityString());
 
-        PDU pdu = new PDU();
-        pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
-
         Snmp snmp = null;
         try {
+            PDU pdu = new PDU();
+            pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
             snmp = createSnmpV1Instance();
             ResponseEvent event = snmp.get(pdu, target);
@@ -112,14 +111,13 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
         final CommunityTarget target = createCommunityTarget(
                 address, requestBinding.getCommunityString());
 
-        PDU pdu = new PDU();
-        VariableBinding variableBinding = new VariableBinding(
-                new OID(requestBinding.getVariableBinding().getOid()));
-        variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
-        pdu.add(variableBinding);
-
         Snmp snmp = null;
         try {
+            PDU pdu = new PDU();
+            VariableBinding variableBinding = new VariableBinding(
+                    new OID(requestBinding.getVariableBinding().getOid()));
+            variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
+            pdu.add(variableBinding);
 
             snmp = createSnmpV1Instance();
             ResponseEvent event = snmp.set(pdu, target);

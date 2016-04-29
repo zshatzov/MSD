@@ -49,13 +49,12 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
         }
 
         final String address = String.format("udp:%s/161", requestBinding.getHost());
-        final UserTarget target;
-        final ScopedPDU pdu;
+
         Snmp snmp = null;
         try{
-            target = createUserTarget(address, requestBinding.getUserSecurityModel());
+            final UserTarget target = createUserTarget(address, requestBinding.getUserSecurityModel());
 
-            pdu = new ScopedPDU();
+            final ScopedPDU pdu  = new ScopedPDU();
             pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
             snmp = createSnmpV3Instance(requestBinding.getEngineID());
@@ -123,13 +122,11 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
 
         final String address = String.format("udp:%s/161", requestBinding.getHost());
 
-        final UserTarget target;
-        final ScopedPDU pdu;
         Snmp snmp = null;
         try{
-            target = createUserTarget(address, requestBinding.getUserSecurityModel());
+            final UserTarget target = createUserTarget(address, requestBinding.getUserSecurityModel());
 
-            pdu = new ScopedPDU();
+            final ScopedPDU pdu = new ScopedPDU();
             VariableBinding variableBinding = new VariableBinding(
                     new OID(requestBinding.getVariableBinding().getOid()));
             variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
