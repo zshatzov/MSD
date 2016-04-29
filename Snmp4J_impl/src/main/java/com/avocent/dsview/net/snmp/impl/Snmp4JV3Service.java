@@ -48,24 +48,17 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final Snmp snmp;
-        try {
-            snmp = createSnmpV3Instance(requestBinding.getEngineID());
-        }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv3 GET request", e);
-            throw new SnmpGetException("Failed to configure UDP transport", e);
-        }
-
         final String address = String.format("udp:%s/161", requestBinding.getHost());
-
         final UserTarget target;
         final ScopedPDU pdu;
+        Snmp snmp = null;
         try{
             target = createUserTarget(address, requestBinding.getUserSecurityModel());
 
             pdu = new ScopedPDU();
             pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
+            snmp = createSnmpV3Instance(requestBinding.getEngineID());
             if(nonNull(requestBinding.getUserSecurityModel())) {
                 final UsmUser usmUser = createUsmUser(requestBinding.getUserSecurityModel());
                 final OctetString userName = nonNull(requestBinding.getUserSecurityModel().getUserName())?
@@ -128,19 +121,11 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
             throw new SnmpGetException("Host is missing");
         }
 
-
-        final Snmp snmp;
-        try {
-            snmp = createSnmpV3Instance(requestBinding.getEngineID());
-        }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "SET SNMPv3 transport configuration failed", e);
-            throw new SnmpSetException("Failed to configure UDP transport", e);
-        }
-
         final String address = String.format("udp:%s/161", requestBinding.getHost());
 
         final UserTarget target;
         final ScopedPDU pdu;
+        Snmp snmp = null;
         try{
             target = createUserTarget(address, requestBinding.getUserSecurityModel());
 
@@ -150,6 +135,7 @@ public class Snmp4JV3Service extends BaseSnmpService implements SnmpV3Operations
             variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
             pdu.add(variableBinding);
 
+            snmp = createSnmpV3Instance(requestBinding.getEngineID());
             if(nonNull(requestBinding.getUserSecurityModel())) {
                 final UsmUser usmUser = createUsmUser(requestBinding.getUserSecurityModel());
                 final OctetString userName = nonNull(requestBinding.getUserSecurityModel().getUserName())?

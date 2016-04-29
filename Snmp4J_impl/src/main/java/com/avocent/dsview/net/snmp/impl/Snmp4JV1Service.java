@@ -45,14 +45,6 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final Snmp snmp;
-        try {
-            snmp = createSnmpV1Instance();
-        }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Failed to configure the transport object for SNMPv1 GET request", e);
-            throw new SnmpGetException("Failed to configure UDP transport", e);
-        }
-
         final String address = String.format("udp:%s/161", requestBinding.getHost());
         final CommunityTarget target = createCommunityTarget(
                 address, requestBinding.getCommunityString());
@@ -60,8 +52,10 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
         PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(requestBinding.getOid())));
 
+        Snmp snmp = null;
         try {
 
+            snmp = createSnmpV1Instance();
             ResponseEvent event = snmp.get(pdu, target);
             return prepareSnmpResponse(event, requestBinding);
 
@@ -114,14 +108,6 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
             throw new SnmpGetException("Host is missing");
         }
 
-        final Snmp snmp;
-        try {
-            snmp = createSnmpV1Instance();
-        }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "SET SNMPv1 transport configuration failed", e);
-            throw new SnmpSetException("Failed to configure UDP transport", e);
-        }
-
         final String address = String.format("udp:%s/161", requestBinding.getHost());
         final CommunityTarget target = createCommunityTarget(
                 address, requestBinding.getCommunityString());
@@ -132,8 +118,10 @@ public class Snmp4JV1Service extends BaseSnmpService implements SnmpV1Operations
         variableBinding.setVariable(convertVariableBinding(requestBinding.getVariableBinding()));
         pdu.add(variableBinding);
 
+        Snmp snmp = null;
         try {
 
+            snmp = createSnmpV1Instance();
             ResponseEvent event = snmp.set(pdu, target);
             return prepareSnmpResponse(event, requestBinding);
 
