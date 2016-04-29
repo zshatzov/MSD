@@ -19,12 +19,26 @@ public final class SnmpGetV1RequestBinding extends SnmpGetRequestBinding {
      * @param communityString Either <em>private</em> or <em>public</em>
      */
 
-    public SnmpGetV1RequestBinding(Integer clientID, String host, String oid,
-                                   String communityString) {
+    public SnmpGetV1RequestBinding(final Integer clientID, final String host, final String oid,
+                                   final String communityString) {
         super(clientID, host, oid);
         this.communityString = communityString;
     }
 
+    /**
+     * <p>
+     *  A copy constructor that allows a client to reuse all properties of the
+     *  original instance but override the OID
+     * </p>
+     *
+     * @param original An instance to use as template for the new instance
+     * @param newOID Override the origianl OID value with new value
+     */
+    public SnmpGetV1RequestBinding(final SnmpGetV1RequestBinding original, final String newOID){
+        this(original.getClientID(), original.getHost(), original.getOid(),
+                original.getCommunityString());
+        this.oid = newOID;
+    }
     /**
      *
      * @return The community string associated with the variable binding.

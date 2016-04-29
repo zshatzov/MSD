@@ -16,13 +16,26 @@ public final class SnmpGetV3RequestBinding extends SnmpGetRequestBinding {
 
     /**
      *
-     * @param clientId
-     * @param host
-     * @param oid
+     * @param clientId A custom ID to correlate requests to responses
+     * @param host A hostname or IP address of the remote <em>SNMP</em> agent
+     * @param oid The MIB OID of a variable binding
      */
-
-    public SnmpGetV3RequestBinding(Integer clientId, String host, String oid) {
+    public SnmpGetV3RequestBinding(final Integer clientId, final String host, String oid) {
         super(clientId, host, oid);
+    }
+
+    /**
+     * <p>
+     *  A copy constructor that allows a client to reuse all properties of the
+     *  original instance but override the OID
+     * </p>
+     *
+     * @param original An instance to use as template for the new instance
+     * @param newOID Override the origianl OID value with new value
+     */
+    public SnmpGetV3RequestBinding(final SnmpGetV3RequestBinding original, final String newOID){
+        this(original.getClientID(), original.getHost(), original.getOid());
+        this.oid = newOID;
     }
 
     /**

@@ -18,7 +18,8 @@ public class SnmpInputVariableBinding extends SnmpVariableBinding {
 
     private final VariableType variableType;
 
-    public SnmpInputVariableBinding(String oid, String value, VariableType variableType) {
+    public SnmpInputVariableBinding(final String oid, final String value,
+                                    final VariableType variableType) {
         super(oid, value);
         this.variableType = variableType;
     }

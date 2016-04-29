@@ -12,7 +12,7 @@ package com.avocent.dsview.net.snmp;
  */
 public abstract class SnmpGetRequestBinding extends SnmpRequestBinding{
 
-    private final String oid;
+    String oid;
 
     /**
      *
