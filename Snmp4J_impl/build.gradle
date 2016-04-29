@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+group 'com.avocent.dsview.net'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven{
+        name 'HSV-Artifactory'
+        url 'http://hsv-artifactory.emrsn.org:8081/artifactory/libs-release'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.avocent.dsview.net:snmp-api:1.0.0'
+    compile 'org.snmp4j:snmp4j:2.4.3'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.6'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+}
