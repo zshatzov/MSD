@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 
 group 'com.avocent.dsview.net'
 version '1.0.0'
@@ -8,14 +7,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 archivesBaseName = 'avctSnmp4JImpl'
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://hsv-artifactory.emrsn.org:8081/artifactory/libs-release")
-        }
-    }
-}
 
 repositories {
     maven{
