@@ -1,0 +1,4 @@
+.gradle/**/*.*
+.idea/**/*.*
+build/**/*.*
+Snmp4J_impl.iml
