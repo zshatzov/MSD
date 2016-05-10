@@ -1,9 +1,5 @@
 apply plugin: 'java'
 
-task generateJavadocs(type: org.gradle.api.tasks.javadoc.Javadoc){
-    source = sourceSets.main.allJava
-}
-
 group 'com.avocent.dsview.net'
 version '1.0.0'
 
